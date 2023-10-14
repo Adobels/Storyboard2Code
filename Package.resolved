@@ -1,12 +1,57 @@
 {
   "pins" : [
     {
+      "identity" : "ibdecodable",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/IBDecodable/IBDecodable.git",
+      "state" : {
+        "revision" : "64247d1342ef7c9c0f47b2805f8c2da9474d5417",
+        "version" : "0.6.0"
+      }
+    },
+    {
+      "identity" : "pathkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kylef/PathKit.git",
+      "state" : {
+        "revision" : "3bfd2737b700b9a36565a8c94f4ad2b050a5e574",
+        "version" : "1.0.1"
+      }
+    },
+    {
+      "identity" : "spectre",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kylef/Spectre.git",
+      "state" : {
+        "revision" : "26cc5e9ae0947092c7139ef7ba612e34646086c7",
+        "version" : "0.10.1"
+      }
+    },
+    {
+      "identity" : "stencil",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/stencilproject/Stencil.git",
+      "state" : {
+        "revision" : "4f222ac85d673f35df29962fc4c36ccfdaf9da5b",
+        "version" : "0.15.1"
+      }
+    },
+    {
       "identity" : "swift-argument-parser",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-argument-parser.git",
       "state" : {
         "revision" : "8f4d2753f0e4778c76d5f05ad16c74f707390531",
         "version" : "1.2.3"
+      }
+    },
+    {
+      "identity" : "swxmlhash",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/drmohundro/SWXMLHash.git",
+      "state" : {
+        "revision" : "6469881a3f30417c5bb02404ea4b69207f297592",
+        "version" : "6.0.0"
       }
     }
   ],
