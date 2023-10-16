@@ -1,14 +1,6 @@
 import UIKit
 
 class GeneratedView: UIView {
-    {% for view in views %}
-    let {{ view.identifier|default:"view" }}: {{ view.class }} = {
-        let v = {{ view.class }}()
-        // You can add additional properties, e.g., backgroundColor or frame, here if needed.
-        return v
-    }()
-
-    {% endfor %}
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -19,10 +11,22 @@ class GeneratedView: UIView {
         super.init(coder: coder)
         setupViews()
     }
+    
+    {% macro renderList(subviews) %}
+            {% for subview in subviews %}
+            {{ subview.viewInit }}
+            {% if view.subviews %}
+                {{ renderList(view.subviews) }}
+            {% endif %}
+            {% endfor %}
+        }
+    {% endmacro %}
 
     private func setupViews() {
-        {% for view in views %}
-        addSubview({{ view.identifier|default:"view" }})
-        {% endfor %}
+        {% if rootView.subviews %}
+        self {
+            {{ renderList(rootView.subviews) }}
+        }
+        {% endif %}
     }
 }

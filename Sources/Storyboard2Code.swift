@@ -1,9 +1,3 @@
-// The Swift Programming Language
-// https://docs.swift.org/swift-book
-// 
-// Swift Argument Parser
-// https://swiftpackageindex.com/apple/swift-argument-parser/documentation
- 
 import ArgumentParser
 import IBDecodable
 import Foundation
@@ -35,28 +29,28 @@ struct Storyboard2Code: ParsableCommand {
         }
     }
     
-    
-
     func generateCode(from document: IBDecodable.StoryboardDocument) throws -> String {
         let loader = FileSystemLoader.init(paths: [.init(FileManager.default.currentDirectoryPath)])
         let environment = Environment(loader: loader)
         guard let rootView = document.scenes?.first?.viewController?.viewController.rootView else {
             throw fatalError()
         }
-
+        
         var counter = 0
-
+        
+        rootView.subviews?.first?.children(of: View.self)
+        
         let views = rootView.children(of: IBDecodable.AnyView.self, recursive: true).compactMap { anyView -> [String: Any]? in
             
             counter += 1
             return [
-                "identifier": "view\(counter)",
+                "rootview": "view\(counter)",
                 "class": anyView.view.elementClass,
             ]
         }
-
+        
         let rendered = try environment.renderTemplate(name: "RootViewTemplate.stencil", context: ["views": views])
         return rendered
     }
-
+    
 }
