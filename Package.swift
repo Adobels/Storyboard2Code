@@ -8,7 +8,6 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser.git", from: "1.2.0"),
         .package(url: "https://github.com/IBDecodable/IBDecodable.git", from: "0.6.0"),
-        .package(url: "https://github.com/stencilproject/Stencil.git", from: "0.13.1"),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -18,8 +17,8 @@ let package = Package(
             dependencies: [
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
                 .product(name: "IBDecodable", package: "IBDecodable"),
-                .product(name: "Stencil", package: "Stencil"),
-            ]
+            ],
+            resources: [.process("Resources")]
         ),
     ]
 )

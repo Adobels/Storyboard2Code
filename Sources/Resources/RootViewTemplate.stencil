@@ -1,0 +1,28 @@
+import UIKit
+
+class GeneratedView: UIView {
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupViews()
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        setupViews()
+    }
+
+    private func renderList(view) {
+        {{ view.elementClass }}() {
+        {% for subview in view.subviews %}
+            {{ renderList(subview) }}
+        {% endfor %}
+        }
+    }
+
+    private func setupViews() {
+        self {
+            {{ renderList(rootView) }}
+        }
+    }
+}
