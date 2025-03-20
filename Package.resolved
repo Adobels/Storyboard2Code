@@ -1,0 +1,24 @@
+{
+  "originHash" : "c697d1545635fd2c77aa042b3fcc4d952ced371a72576b78e4a602178d037d33",
+  "pins" : [
+    {
+      "identity" : "ibdecodable",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/IBDecodable/IBDecodable.git",
+      "state" : {
+        "branch" : "master",
+        "revision" : "0ae1b9e7a297ac015cce3febf4c6b5c98474a823"
+      }
+    },
+    {
+      "identity" : "swxmlhash",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/drmohundro/SWXMLHash.git",
+      "state" : {
+        "revision" : "a853604c9e9a83ad9954c7e3d2a565273982471f",
+        "version" : "7.0.2"
+      }
+    }
+  ],
+  "version" : 3
+}
