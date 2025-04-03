@@ -1,13 +1,13 @@
 {
-  "originHash" : "c697d1545635fd2c77aa042b3fcc4d952ced371a72576b78e4a602178d037d33",
+  "originHash" : "ab33803342a11c55ef7ae74ae15de8967f1dd954e4bd60f1a1e63329e0394b88",
   "pins" : [
     {
       "identity" : "ibdecodable",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/IBDecodable/IBDecodable.git",
+      "location" : "https://github.com/Adobels/IBDecodable.git",
       "state" : {
-        "branch" : "master",
-        "revision" : "0ae1b9e7a297ac015cce3febf4c6b5c98474a823"
+        "branch" : "develop",
+        "revision" : "704147d241a4555343e891011dea7d9cf6a18a77"
       }
     },
     {

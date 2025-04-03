@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="DAK-YZ-K6x">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Mileages Create Table Controller-->
+        <scene sceneID="q2M-C3-dvo">
+            <objects>
+                <tableViewController id="DAK-YZ-K6x" customClass="MileagesCreateTableController" customModule="App" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="ceg-BX-2Vl">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="800"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="MileagesCreateDocumentCell" rowHeight="102" id="ZuI-LN-coU" customClass="MileagesCreateDocumentCell" customModule="App" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="50" width="414" height="102"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ZuI-LN-coU" id="F5B-5i-5wW">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="102"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" placeholderIntrinsicWidth="infinite" placeholderIntrinsicHeight="50" translatesAutoresizingMaskIntoConstraints="NO" id="stn-m6-xn1" customClass="MileagesCreateDocumentButtonConfigurator" customModule="App" customModuleProvider="target">
+                                            <rect key="frame" x="22" y="26" width="370" height="50"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SDP-9h-ner" customClass="BorderedButton" customModule="Designable">
+                                                    <rect key="frame" x="0.0" y="0.0" width="370" height="50"/>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                    <connections>
+                                                        <action selector="didTapDocumentManagerButton" destination="5wX-bN-1Kn" eventType="touchUpInside" id="ZUR-wf-zEp"/>
+                                                    </connections>
+                                                </view>
+                                            </subviews>
+                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="SDP-9h-ner" secondAttribute="trailing" id="Bdq-TC-JAR"/>
+                                                <constraint firstAttribute="bottom" secondItem="SDP-9h-ner" secondAttribute="bottom" id="VXs-ky-cpk"/>
+                                                <constraint firstItem="SDP-9h-ner" firstAttribute="leading" secondItem="stn-m6-xn1" secondAttribute="leading" id="fV7-lQ-Ag5"/>
+                                                <constraint firstItem="SDP-9h-ner" firstAttribute="top" secondItem="stn-m6-xn1" secondAttribute="top" id="m80-Uw-q8J"/>
+                                            </constraints>
+                                            <connections>
+                                                <outlet property="button" destination="SDP-9h-ner" id="Ykh-1l-H2O"/>
+                                            </connections>
+                                        </view>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="stn-m6-xn1" firstAttribute="centerX" secondItem="F5B-5i-5wW" secondAttribute="centerX" id="my4-Ho-PS3"/>
+                                        <constraint firstItem="stn-m6-xn1" firstAttribute="centerY" secondItem="F5B-5i-5wW" secondAttribute="centerY" id="uoB-oK-ydm"/>
+                                        <constraint firstItem="stn-m6-xn1" firstAttribute="leading" secondItem="F5B-5i-5wW" secondAttribute="leading" constant="22" id="xZp-UW-DhU"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="documentButtonConfigurator" destination="stn-m6-xn1" id="aRm-GY-nKv"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="MileagesCreateBeneficiaryCell" rowHeight="68" id="KKp-dC-Zs6" customClass="MileagesCreateBeneficiaryCell" customModule="App" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="152" width="414" height="68"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="KKp-dC-Zs6" id="zfz-tr-tbQ">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="68"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="nsk-AX-hqR">
+                                            <rect key="frame" x="22" y="24" width="370" height="20"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gx4-zX-7CA">
+                                                    <rect key="frame" x="0.0" y="0.0" width="342" height="20"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NZS-A6-Mpa" customClass="CustomLabel" customModule="Designable">
+                                                            <rect key="frame" x="0.0" y="0.0" width="32.5" height="20"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="string" keyPath="locKey" value="mileage_create.cell.beneficiary.title"/>
+                                                                <userDefinedRuntimeAttribute type="string" keyPath="textColorName" value="gray"/>
+                                                            </userDefinedRuntimeAttributes>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="dynamic-label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w9b-uI-qEu" customClass="CustomLabel" customModule="Designable">
+                                                            <rect key="frame" x="32.5" y="0.0" width="309.5" height="20"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="string" keyPath="textColorName" value="gray"/>
+                                                            </userDefinedRuntimeAttributes>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cell_lock" translatesAutoresizingMaskIntoConstraints="NO" id="Dlq-JM-jrL" customClass="CustomImageView" customModule="Designable">
+                                                    <rect key="frame" x="350" y="0.0" width="20" height="20"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="20" id="JMZ-hP-vdK"/>
+                                                        <constraint firstAttribute="width" secondItem="Dlq-JM-jrL" secondAttribute="height" id="YVx-q3-leI"/>
+                                                    </constraints>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="tintColorName" value="gray"/>
+                                                    </userDefinedRuntimeAttributes>
+                                                </imageView>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="nsk-AX-hqR" firstAttribute="leading" secondItem="zfz-tr-tbQ" secondAttribute="leading" constant="22" id="T4e-QQ-uxb"/>
+                                        <constraint firstItem="nsk-AX-hqR" firstAttribute="centerY" secondItem="zfz-tr-tbQ" secondAttribute="centerY" id="aaN-v1-OnU"/>
+                                        <constraint firstItem="nsk-AX-hqR" firstAttribute="centerX" secondItem="zfz-tr-tbQ" secondAttribute="centerX" id="xfv-PY-ig5"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="valueLabel" destination="w9b-uI-qEu" id="N6P-l5-zUW"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="MileagesCreateVehicleCell" rowHeight="68" id="sJ5-Nr-r81" customClass="MileagesCreateVehicleCell" customModule="App" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="220" width="414" height="68"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="sJ5-Nr-r81" id="GWs-6V-yVu">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="68"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="v6l-Bb-AGU">
+                                            <rect key="frame" x="22" y="24" width="370" height="20"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="1ws-Xy-XYX">
+                                                    <rect key="frame" x="0.0" y="0.0" width="342" height="20"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zxd-jS-Qxk" customClass="CustomLabel" customModule="Designable">
+                                                            <rect key="frame" x="0.0" y="0.0" width="32.5" height="20"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="string" keyPath="locKey" value="mileage_create.cell.vehicle.title"/>
+                                                                <userDefinedRuntimeAttribute type="string" keyPath="textColorName" value="gray"/>
+                                                            </userDefinedRuntimeAttributes>
+                                                        </label>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zuV-4f-Bo2">
+                                                            <rect key="frame" x="40.5" y="0.0" width="62" height="20"/>
+                                                            <subviews>
+                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f1i-Er-x6N">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="50" height="20"/>
+                                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                                </view>
+                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mileages_icon_electric" translatesAutoresizingMaskIntoConstraints="NO" id="FlV-QM-mBo">
+                                                                    <rect key="frame" x="50" y="0.0" width="12" height="20"/>
+                                                                </imageView>
+                                                            </subviews>
+                                                        </stackView>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="dynamic-label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F2a-uv-ocm" customClass="CustomLabel" customModule="Designable">
+                                                            <rect key="frame" x="110.5" y="0.0" width="231.5" height="20"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="string" keyPath="textColorName" value="gray"/>
+                                                            </userDefinedRuntimeAttributes>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cell_lock" translatesAutoresizingMaskIntoConstraints="NO" id="nJF-Ci-Irp" customClass="CustomImageView" customModule="Designable">
+                                                    <rect key="frame" x="350" y="0.0" width="20" height="20"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="20" id="Cpu-LO-CRm"/>
+                                                        <constraint firstAttribute="width" secondItem="nJF-Ci-Irp" secondAttribute="height" id="UaM-8e-JLm"/>
+                                                    </constraints>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="tintColorName" value="gray"/>
+                                                    </userDefinedRuntimeAttributes>
+                                                </imageView>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="v6l-Bb-AGU" firstAttribute="centerY" secondItem="GWs-6V-yVu" secondAttribute="centerY" id="Pr3-jj-mYU"/>
+                                        <constraint firstItem="v6l-Bb-AGU" firstAttribute="centerX" secondItem="GWs-6V-yVu" secondAttribute="centerX" id="eg6-6R-H3e"/>
+                                        <constraint firstItem="v6l-Bb-AGU" firstAttribute="leading" secondItem="GWs-6V-yVu" secondAttribute="leading" constant="22" id="f1l-FG-OxY"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="iconImageView" destination="FlV-QM-mBo" id="8WH-Jq-I5t"/>
+                                    <outlet property="valueLabel" destination="F2a-uv-ocm" id="rMr-eJ-fPF"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="MileagesCreateDistanceCell" rowHeight="68" id="i6h-Pp-Le6" customClass="MileagesCreateDistanceCell" customModule="App" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="288" width="414" height="68"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="i6h-Pp-Le6" id="eJw-9w-vHw">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="68"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="E4d-FQ-jde">
+                                            <rect key="frame" x="22" y="25" width="370" height="18"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KuY-0a-Mdo" customClass="CustomLabel" customModule="Designable">
+                                                    <rect key="frame" x="0.0" y="0.0" width="32.5" height="18"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="locKey" value="mileage_create.cell.distance.title"/>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="textColorName" value="gray"/>
+                                                    </userDefinedRuntimeAttributes>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3sk-N5-jkk" customClass="CustomLabel" customModule="Designable">
+                                                    <rect key="frame" x="40.5" y="0.0" width="329.5" height="18"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="locKey" value="mileage_create.cell.distance.value.placeholder"/>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="textColorName" value="lightGrayControl"/>
+                                                    </userDefinedRuntimeAttributes>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="E4d-FQ-jde" firstAttribute="centerX" secondItem="eJw-9w-vHw" secondAttribute="centerX" id="4P0-0z-GSc"/>
+                                        <constraint firstItem="E4d-FQ-jde" firstAttribute="centerY" secondItem="eJw-9w-vHw" secondAttribute="centerY" id="Cjg-jN-ngk"/>
+                                        <constraint firstItem="E4d-FQ-jde" firstAttribute="leading" secondItem="eJw-9w-vHw" secondAttribute="leading" constant="22" id="y8D-re-gKt"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="valueLabel" destination="3sk-N5-jkk" id="o5G-aP-Cns"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="MileagesCreateDescriptionCell" rowHeight="68" id="ytw-Wd-PSL" customClass="MileagesCreateDescriptionCell" customModule="App" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="356" width="414" height="68"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ytw-Wd-PSL" id="9bN-U3-1UF">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="68"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="l28-Fh-9Qn">
+                                            <rect key="frame" x="22" y="24.5" width="370" height="19.5"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2s6-vg-K4a" customClass="CustomLabel" customModule="Designable">
+                                                    <rect key="frame" x="0.0" y="0.5" width="32.5" height="18"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="locKey" value="mileage_create.cell.description.title"/>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="textColorName" value="gray"/>
+                                                    </userDefinedRuntimeAttributes>
+                                                </label>
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="right" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="RBL-wH-c5y" customClass="CustomTextField" customModule="Designable">
+                                                    <rect key="frame" x="40.5" y="0.0" width="329.5" height="19.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="locKeyPlaceholder" value="mileage_create.cell.description.value.placeholder"/>
+                                                    </userDefinedRuntimeAttributes>
+                                                    <connections>
+                                                        <action selector="descriptionTextFieldDidChangeValue:forEvent:" destination="DAK-YZ-K6x" eventType="editingChanged" id="80K-qx-h2J"/>
+                                                        <action selector="textFieldDidEndEditing:" destination="DAK-YZ-K6x" eventType="primaryActionTriggered" id="qgc-8X-xnI"/>
+                                                    </connections>
+                                                </textField>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="l28-Fh-9Qn" firstAttribute="centerY" secondItem="9bN-U3-1UF" secondAttribute="centerY" id="MTX-kW-f5g"/>
+                                        <constraint firstItem="l28-Fh-9Qn" firstAttribute="leading" secondItem="9bN-U3-1UF" secondAttribute="leading" constant="22" id="ZDT-lu-DKi"/>
+                                        <constraint firstItem="l28-Fh-9Qn" firstAttribute="centerX" secondItem="9bN-U3-1UF" secondAttribute="centerX" id="yrQ-2H-Oqz"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="descriptionTextField" destination="RBL-wH-c5y" id="BcR-be-1Hf"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="MileagesCreateDateCell" rowHeight="68" id="VLw-Ew-dz5" customClass="MileagesCreateDateCell" customModule="App" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="424" width="414" height="68"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="VLw-Ew-dz5" id="bnQ-oS-1rP">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="68"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Y5H-oR-dl3">
+                                            <rect key="frame" x="22" y="24" width="370" height="20"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="iG7-VS-IGm">
+                                                    <rect key="frame" x="0.0" y="1" width="342" height="18"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Ci-fx-WpH" customClass="CustomLabel" customModule="Designable">
+                                                            <rect key="frame" x="0.0" y="0.0" width="32.5" height="18"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="string" keyPath="locKey" value="mileage_create.cell.date.title"/>
+                                                                <userDefinedRuntimeAttribute type="string" keyPath="textColorName" value="gray"/>
+                                                            </userDefinedRuntimeAttributes>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IM1-JC-zgs" customClass="CustomLabel" customModule="Designable">
+                                                            <rect key="frame" x="40.5" y="0.0" width="301.5" height="18"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="string" keyPath="locKey" value="mileage_create.cell.date.value.placeholder"/>
+                                                                <userDefinedRuntimeAttribute type="string" keyPath="textColorName" value="secondary"/>
+                                                            </userDefinedRuntimeAttributes>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cell_arrow_right" translatesAutoresizingMaskIntoConstraints="NO" id="jaU-Zb-mfP" customClass="CustomImageView" customModule="Designable">
+                                                    <rect key="frame" x="350" y="0.0" width="20" height="20"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="jaU-Zb-mfP" secondAttribute="height" id="d6c-sh-ViM"/>
+                                                        <constraint firstAttribute="width" constant="20" id="uGJ-fh-8rZ"/>
+                                                    </constraints>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="tintColorName" value="secondary"/>
+                                                    </userDefinedRuntimeAttributes>
+                                                </imageView>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="Y5H-oR-dl3" firstAttribute="centerX" secondItem="bnQ-oS-1rP" secondAttribute="centerX" id="V59-Sb-PzQ"/>
+                                        <constraint firstItem="Y5H-oR-dl3" firstAttribute="leading" secondItem="bnQ-oS-1rP" secondAttribute="leading" constant="22" id="uYh-nL-m4I"/>
+                                        <constraint firstItem="Y5H-oR-dl3" firstAttribute="centerY" secondItem="bnQ-oS-1rP" secondAttribute="centerY" id="yYy-aH-j7w"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="valueLabel" destination="IM1-JC-zgs" id="wBE-n3-jml"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="MileagesCreateAffectationCell" rowHeight="68" id="lMY-6f-fyU" customClass="MileagesCreateAffectationCell" customModule="App" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="492" width="414" height="68"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="lMY-6f-fyU" id="LZm-TB-48V">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="68"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="ucu-40-zhg">
+                                            <rect key="frame" x="22" y="-295" width="370" height="658"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="dynamic-label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="vWR-mg-MP4" customClass="CustomLabel" customModule="Designable">
+                                                    <rect key="frame" x="0.0" y="320" width="97.5" height="18"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="textColorName" value="gray"/>
+                                                    </userDefinedRuntimeAttributes>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="dynamic-label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1s0-zo-LdH" customClass="CustomLabel" customModule="Designable">
+                                                    <rect key="frame" x="105.5" y="320" width="236.5" height="18"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="textColorName" value="secondary"/>
+                                                    </userDefinedRuntimeAttributes>
+                                                </label>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cell_arrow_right" translatesAutoresizingMaskIntoConstraints="NO" id="kCt-Bq-dYu" customClass="CustomImageView" customModule="Designable">
+                                                    <rect key="frame" x="350" y="319" width="20" height="20"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="20" id="MGB-HS-cAw"/>
+                                                        <constraint firstAttribute="height" constant="20" id="Vpn-a3-ckv"/>
+                                                    </constraints>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="tintColorName" value="secondary"/>
+                                                    </userDefinedRuntimeAttributes>
+                                                </imageView>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="ucu-40-zhg" firstAttribute="centerX" secondItem="LZm-TB-48V" secondAttribute="centerX" id="12e-KJ-dLM"/>
+                                        <constraint firstItem="ucu-40-zhg" firstAttribute="centerY" secondItem="LZm-TB-48V" secondAttribute="centerY" id="CDP-Pi-nlh"/>
+                                        <constraint firstItem="ucu-40-zhg" firstAttribute="leading" secondItem="LZm-TB-48V" secondAttribute="leading" constant="22" id="Raz-sV-yaG"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="arrowImageView" destination="kCt-Bq-dYu" id="2Xx-ia-SpJ"/>
+                                    <outlet property="titleLabel" destination="vWR-mg-MP4" id="gVO-c0-oyR"/>
+                                    <outlet property="valueLabel" destination="1s0-zo-LdH" id="CV6-2Z-s1d"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="MileagesCreateNoteCell" rowHeight="68" id="ee1-hm-l5s" customClass="MileagesCreateNoteCell" customModule="App" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="560" width="414" height="68"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ee1-hm-l5s" id="RiE-wc-lh8">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="68"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3AX-XF-i3l">
+                                            <rect key="frame" x="22" y="24.5" width="370" height="19.5"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xSZ-2M-NP4" customClass="CustomLabel" customModule="Designable">
+                                                    <rect key="frame" x="0.0" y="0.0" width="32.5" height="19.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="locKey" value="mileage_create.cell.note.title"/>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="textColorName" value="gray"/>
+                                                    </userDefinedRuntimeAttributes>
+                                                </label>
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="06t-I6-bmY" customClass="CustomTextField" customModule="Designable">
+                                                    <rect key="frame" x="32.5" y="0.0" width="337.5" height="19.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="locKeyPlaceholder" value="mileage_create.cell.note.value.placeholder"/>
+                                                    </userDefinedRuntimeAttributes>
+                                                    <connections>
+                                                        <action selector="noteTextFieldDidChangeValue:forEvent:" destination="DAK-YZ-K6x" eventType="editingChanged" id="7jI-pP-HvI"/>
+                                                        <action selector="textFieldDidEndEditing:" destination="DAK-YZ-K6x" eventType="primaryActionTriggered" id="gfF-qt-mcG"/>
+                                                    </connections>
+                                                </textField>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="3AX-XF-i3l" firstAttribute="centerX" secondItem="RiE-wc-lh8" secondAttribute="centerX" id="7Xm-bC-hGh"/>
+                                        <constraint firstItem="3AX-XF-i3l" firstAttribute="leading" secondItem="RiE-wc-lh8" secondAttribute="leading" constant="22" id="PyT-Mh-MVF"/>
+                                        <constraint firstItem="3AX-XF-i3l" firstAttribute="centerY" secondItem="RiE-wc-lh8" secondAttribute="centerY" id="moD-H4-JYb"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="valueTextField" destination="06t-I6-bmY" id="7o8-ea-KGG"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="DAK-YZ-K6x" id="3lI-8L-kBh"/>
+                            <outlet property="delegate" destination="DAK-YZ-K6x" id="swl-4Z-IaZ"/>
+                        </connections>
+                    </tableView>
+                    <size key="freeformSize" width="414" height="800"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5wX-bN-1Kn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-40.019999999999996" y="164.26666666666668"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="cell_arrow_right" width="6" height="11"/>
+        <image name="cell_lock" width="20" height="20"/>
+        <image name="mileages_icon_electric" width="12" height="12"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

@@ -6,12 +6,13 @@ import PackageDescription
 let package = Package(
     name: "story2code",
     dependencies: [
-        .package(url: "https://github.com/IBDecodable/IBDecodable.git", branch: "master")
+        .package(url: "https://github.com/Adobels/IBDecodable.git", branch: "develop")
     ],
     targets: [
         .executableTarget(
             name: "story2code",
-            dependencies: ["IBDecodable"]
+            dependencies: ["IBDecodable"],
+            resources: [.process("Resources")]
         ),
     ]
 )
