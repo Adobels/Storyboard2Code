@@ -12,9 +12,25 @@ let url = Bundle.module.url(forResource: "storyboard", withExtension: "xml")!
 let sb = try! StoryboardFile(url: url)
 let initialScene = sb.document.scenes!.first!
 let vc = initialScene.viewController!
+
 let cells = vc.children(of: TableViewCell.self)
+let rrr = vc.children(of: AnyView.self, recursive: true)
 let fcell = cells[0]
 let subviews = fcell.contentView
+let anyViews = subviews.children(of: AnyView.self, recursive: true)
+
+//anyViews.forEach {
+//    guard let ee: ImageView = $0.with(id: "FlV-QM-mBo") else { return }
+//    print(ee)
+//    if let key: Label = $0.with(key: "label") {
+//        print(key)
+//    }
+//}
+//
+//for anyView in anyViews {
+//    print("\(anyView.view.customClass ??  anyView.view.elementClass)")
+//}
+
 print("Cell: \(fcell.customClass)")
 printView(elements: fcell.subviews!)
 //printView(elements: subviews.subviews!)
