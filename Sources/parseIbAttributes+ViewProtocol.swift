@@ -35,23 +35,17 @@ func parseIbAttributes(of uiView: ViewProtocol) -> [String] {
     if uiView.opaque == .some(false) {
         attributes.append("isOpaque = false")
     }
-    if let verticalHuggingPriority = uiView.verticalHuggingPriority, verticalHuggingPriority != 250 {
-        attributes.append("setContentHuggingPriority(\(verticalHuggingPriority), for: .vertical)")
-    }
     if let horizontalHuggingPriority = uiView.horizontalHuggingPriority, horizontalHuggingPriority != 250 {
-        attributes.append("setContentHuggingPriority(\(horizontalHuggingPriority), for: .horizontal)")
+        attributes.append("setContentHuggingPriority(.init(\(horizontalHuggingPriority)), for: .horizontal)")
+    }
+    if let verticalHuggingPriority = uiView.verticalHuggingPriority, verticalHuggingPriority != 250 {
+        attributes.append("setContentHuggingPriority(.init(\(verticalHuggingPriority)), for: .vertical)")
     }
     if let horizontalCompressionResistancePriority = uiView.horizontalCompressionResistancePriority, horizontalCompressionResistancePriority != 750 {
-        attributes.append("setContentCompressionResistancePriority(\(horizontalCompressionResistancePriority), for: .horizontal)")
+        attributes.append("setContentCompressionResistancePriority(.init(\(horizontalCompressionResistancePriority)), for: .horizontal)")
     }
     if let verticalCompressionResistancePriority = uiView.verticalCompressionResistancePriority, verticalCompressionResistancePriority != 750 {
-        attributes.append("setContentCompressionResistancePriority(\(verticalCompressionResistancePriority), for: .vertical)")
-    }
-
-    if let userDefinedRuntimeAttributes = uiView.userDefinedRuntimeAttributes {
-        userDefinedRuntimeAttributes.forEach {
-            attributes.append("\($0.keyPath) \($0.type) \($0.value)")
-        }
+        attributes.append("setContentCompressionResistancePriority(.init(\(verticalCompressionResistancePriority)), for: .vertical)")
     }
     return attributes
 }
