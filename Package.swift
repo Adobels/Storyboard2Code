@@ -3,15 +3,17 @@
 
 import PackageDescription
 
+let storyboardDecoder = "StoryboardDecoder"
+
 let package = Package(
     name: "story2code",
     dependencies: [
-        .package(url: "https://github.com/Adobels/IBDecodable.git", branch: "develop")
+        .package(url: "https://github.com/Adobels/\(storyboardDecoder).git", branch: "develop")
     ],
     targets: [
         .executableTarget(
             name: "story2code",
-            dependencies: ["IBDecodable"],
+            dependencies: [.product(name: storyboardDecoder, package: storyboardDecoder)],
             resources: [.process("Resources")]
         ),
     ]

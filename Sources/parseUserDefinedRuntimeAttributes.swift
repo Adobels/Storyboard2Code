@@ -5,7 +5,7 @@
 //  Created by Blazej Sleboda on 05/06/2025.
 //
 
-import IBDecodable
+import StoryboardDecoder
 
 @MainActor
 func parseUserDefinedRuntimeAttributes(of uiView: ViewProtocol) -> [String] {

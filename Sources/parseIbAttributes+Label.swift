@@ -5,7 +5,7 @@
 //  Created by Blazej Sleboda on 02/04/2025.
 //
 
-import IBDecodable
+import StoryboardDecoder
 
 @MainActor
 func parseIbAttributes(of view: Label) -> [String] {

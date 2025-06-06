@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import IBDecodable
+import StoryboardDecoder
 
 let url = Bundle.module.url(forResource: "PlaceholderAccount", withExtension: "xml")!
 let sb = try! StoryboardFile(url: url)
@@ -83,7 +83,7 @@ func printViewControllerRootView(_ anyViewController: AnyViewController) {
     Context.shared.rootView = rootView
     Context.shared.rootViewProtocol = vc.rootView!
     Context.shared.ibOutlet = rootView.allConnections.compactMap { $0.connection as? Outlet }
-    Context.shared.ibAction = rootView.allConnections.compactMap { $0.connection as? IBDecodable.Action }
+    Context.shared.ibAction = rootView.allConnections.compactMap { $0.connection as? StoryboardDecoder.Action }
     guard !elements.isEmpty else { return }
     print(indent(of: level) + ".ibSubviews {")
     elements.forEach { element in
@@ -160,7 +160,7 @@ func printIbAttributes(of element: AnyView) {
         //TODO: Add parsing for UITableViewCell subclass attributes
     }
     if let stackView = element.view as? StackView {
-        //TODO: Add parsing for UIStackView subclass attributes
+        attributes.append(contentsOf: parseStackViewAttributes(stackView))
     }
     if let textField = element.view as? TextField {
         //TODO: Add parsing for UITextField subclass attributes

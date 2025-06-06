@@ -1,13 +1,13 @@
 {
-  "originHash" : "ab33803342a11c55ef7ae74ae15de8967f1dd954e4bd60f1a1e63329e0394b88",
+  "originHash" : "3024448b47e6137866482ac584a1caebd276a2210bc85a42f6ce31ff80f4ac63",
   "pins" : [
     {
-      "identity" : "ibdecodable",
+      "identity" : "storyboarddecoder",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/Adobels/IBDecodable.git",
+      "location" : "https://github.com/Adobels/StoryboardDecoder.git",
       "state" : {
         "branch" : "develop",
-        "revision" : "ab9f7b7259db590e3552f5aeaea7a34cad6c40e5"
+        "revision" : "bbfd7467675c9d311fb94060c7ffa987c4214dc6"
       }
     },
     {

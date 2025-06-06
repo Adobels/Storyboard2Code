@@ -4,7 +4,7 @@
 //
 //  Created by Blazej Sleboda on 04/06/2025.
 //
-import IBDecodable
+import StoryboardDecoder
 
 func constraintLayoutAttribute(_ attribute: Constraint.LayoutAttribute?) -> String {
     guard let attribute else { return "attribute is nil" }
