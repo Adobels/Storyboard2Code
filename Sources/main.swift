@@ -154,7 +154,7 @@ func printIbAttributes(of element: AnyView) {
         //TODO: Add parsing for UIButton subclass attributes
     }
     if let imageView = element.view as? ImageView {
-        //TODO: Add parsing for UIImageView subclass attributes
+        attributes.append(contentsOf: parseImageView(of: imageView))
     }
     if let tableViewCell = element.view as? TableViewCell {
         //TODO: Add parsing for UITableViewCell subclass attributes
