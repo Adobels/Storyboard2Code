@@ -26,7 +26,7 @@ class Context: @unchecked Sendable {
     var rootViewAny: AnyView!
     var rootView: View!
     var variableViewIbOutlet: [(viewId: String, viewClass: String)] = []
-    var variableViewIbOutlet2: [String] = []
+    var variableViewIbOutlet2: Set<String> = []
     var ibOutlet: [Outlet] = []
     var ibAction: [Action] = []
     var ibViews: Set<String> = []
@@ -88,13 +88,41 @@ func printViewControllerRootView(_ anyViewController: AnyViewController) {
     Context.shared.ibAction = rootView.allConnections.compactMap { $0.connection as? StoryboardDecoder.Action }
     Context.shared.rootViewControllerId = vc.id
     _ = {
-        // var variableViewIbOutlet2
-        let destinations = vc.allConnections.filter {
+        var destinations: Set<String> = []
+
+        vc.allConnections.filter {
             $0.connection is Outlet || $0.connection is Action
-        }.map { $0.connection.destination }
-        let constraints = rootView.children(of: Constraint.self, recursive: true)
-        let secondItem = constraints.filter { $0.firstItem != nil }.compactMap { $0.secondItem }
-        let allDestinations = destinations + secondItem
+        }.forEach { destinations.insert(sanitizedOutletName(from: $0.connection.destination)!) }
+        // var variableViewIbOutlet2
+        let viewsWithConstaints = vc.flattened.filter {
+            let constraints = $0.children(of: Constraint.self)
+            return !constraints.isEmpty
+        }
+        var viewIds: Set<String> = []
+        viewsWithConstaints.forEach { view in
+            let constaints = view.children(of: Constraint.self, recursive: false)
+            _ = { view, constaints in
+                constaints.forEach { constaint in
+                    if constaint.firstItem == .some("Q9F-Uh-SHm") {
+                        _ = 1
+                    }
+                    if constaint.secondItem == .some("Q9F-Uh-SHm") {
+                        _ = 1
+                    }
+                    if let firstItem = constaint.firstItem {
+                        viewIds.insert(sanitizedOutletName(from: firstItem)!)
+                    } else {
+                        viewIds.insert(sanitizedOutletName(from: (view as! IBIdentifiable).id)!)
+                    }
+                    if let secondItem = constaint.secondItem {
+                        viewIds.insert(sanitizedOutletName(from: secondItem)!)
+                    } else {
+                        viewIds.insert(sanitizedOutletName(from: (view as! IBIdentifiable).id)!)
+                    }
+                }
+            }(view, constaints)
+        }
+        let allDestinations: Set<String> = destinations.union(viewIds)
         Context.shared.variableViewIbOutlet2 = allDestinations
     }()
     guard !elements.isEmpty else { return }
@@ -104,6 +132,9 @@ func printViewControllerRootView(_ anyViewController: AnyViewController) {
         let elementId = sanitizedOutletName(from: (element.view as! IBIdentifiable).id)!
         print("\(elementClass)() // \(elementId)!) userLabel: \(element.view.userLabel) key: \(element.view.key) safeArea: \(sanitizedOutletName(from: (element as? View)?.viewLayoutGuide?.id))")
         Context.shared.variableViewIbOutlet.append((viewId: elementId, viewClass: elementClass))
+        if let viewIbOutlet = getIbOutletToVariable(of: element.view) {
+            print(viewIbOutlet)
+        }
         getIbOutlet(of: element.view)
         let subviews = element.view.subviews
         if let subviews, subviews.count > 0 {
@@ -121,12 +152,12 @@ func printViewControllerRootView(_ anyViewController: AnyViewController) {
 //            return partialResult + [ibView]
 //        }
 //    }
-    Context.shared.ibViews.forEach { ibViewId in
+    Context.shared.variableViewIbOutlet2.forEach { ibViewId in
         let variableIsNeeded = Context.shared.variableViewIbOutlet.first { (viewId: String, viewClass: String) in
             viewId == ibViewId
         }
         if let variableIsNeeded {
-            print("var \(variableIsNeeded.viewId): \(variableIsNeeded.viewClass)")
+            print("var \(variableIsNeeded.viewId): \(variableIsNeeded.viewClass)!")
         }
     }
 }
@@ -138,7 +169,7 @@ func printView(elements: [AnyView], level: Int = 0) {
     elements.forEach { element in
         let elementClass = element.view.customClass ?? element.view.elementClass
         let elementId = sanitizedOutletName(from: (element.view as! IBIdentifiable).id)!
-        print("\(elementClass)() // \(elementId)!) userLabel: \(element.view.userLabel) key: \(element.view.key) safeArea: \(sanitizedOutletName(from: (element as? View)?.viewLayoutGuide?.id))")
+        print("\(elementClass)() // \(elementId) userLabel: \(element.view.userLabel) key: \(element.view.key) safeArea: \(sanitizedOutletName(from: (element as? View)?.viewLayoutGuide?.id))")
         Context.shared.variableViewIbOutlet.append((viewId: elementId, viewClass: elementClass))
         if let viewIbOutlet = getIbOutletToVariable(of: element.view) {
             print(viewIbOutlet)
@@ -293,11 +324,11 @@ func printIbAttributes(_ attributes: [String]) {
 }
 
 func getIbOutletToVariable(of element: ViewProtocol) -> String? {
-    let variableViewIbOutlet = Context.shared.variableViewIbOutlet2.first { variableViewIbOutlet in
-        variableViewIbOutlet == (element as! IBIdentifiable).id
+    let viewId = sanitizedOutletName(from: (element as! IBIdentifiable).id)!
+    guard (Context.shared.variableViewIbOutlet2.contains { $0 == viewId }) else {
+        return nil
     }
-    guard let variableViewIbOutlet else { return nil }
-    return ".ibOutlet(&\(sanitizedOutletName(from: variableViewIbOutlet)!))"
+    return ".ibOutlet(&\(viewId))"
 }
 
 @MainActor

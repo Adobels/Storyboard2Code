@@ -32,10 +32,10 @@ func constraintLayoutAttribute(_ attribute: Constraint.LayoutAttribute?) -> Stri
 func printConstraintRelationOpen(_ relation: Constraint.Relation?) -> String {
     guard let relation else { return "relation is nil" }
     return switch relation {
-    case .lessThanOrEqual: "constraint(lessThanOrEqualTo:"
-    case .greaterThanOrEqual: "constraint(greaterThanOrEqualTo:"
-    case .equal: "constraint(equalTo:"
-    case .other(let string): "constraint(other:"
+    case .lessThanOrEqual: "constraint(lessThanOrEqualTo: "
+    case .greaterThanOrEqual: "constraint(greaterThanOrEqualTo: "
+    case .equal: "constraint(equalTo: "
+    case .other(let string): "constraint(other: "
     }
 }
 
