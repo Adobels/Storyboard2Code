@@ -14,7 +14,10 @@ let package = Package(
         .executableTarget(
             name: "story2code",
             dependencies: [.product(name: storyboardDecoder, package: storyboardDecoder)],
-            resources: [.process("Resources")]
+            resources: [.process("Resources")],
+            swiftSettings: [
+                .unsafeFlags(["-suppress-warnings"], .when(configuration: .debug))
+            ],
         ),
-    ]
+    ],
 )
