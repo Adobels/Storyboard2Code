@@ -25,7 +25,7 @@ func parseIbAttributes(of uiView: ViewProtocol) -> [String] {
     if let alpha = uiView.alpha, alpha != 1 {
         attributes.append("alpha = \(alpha)")
     }
-    if let backgroundColor = uiView.backgroundColor {
+    if let backgroundColor = uiView.backgroundColor?.calibratedRGB {
         attributes.append("backgroundColor = \(backgroundColor)")
     }
     if let tintColor = uiView.tintColor {

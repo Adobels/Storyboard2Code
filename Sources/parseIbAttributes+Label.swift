@@ -11,7 +11,7 @@ import StoryboardDecoder
 func parseIbAttributes(of view: Label) -> [String] {
     var attributes: [String] = []
     if let text = view.text {
-        attributes.append("text = \(text)")
+        attributes.append("text = \"\(text)\"")
     }
     if let attributedText = view.attributedText {
         attributes.append("attributedText = \"\(attributedText)\"")
@@ -41,7 +41,7 @@ func parseIbAttributes(of view: Label) -> [String] {
         attributes.append("allowsDefaultTighteningForTruncation = \(allowsDefaultTighteningForTruncation)")
     }
     if let baselineAdjustment = view.baselineAdjustment {
-        attributes.append("baselineAdjustment = \(baselineAdjustment)")
+        attributes.append("baselineAdjustment = .\(baselineAdjustment)")
     }
     if let minimumScaleFactor = view.minimumScaleFactor {
         attributes.append("minimumScaleFactor = \(minimumScaleFactor)")

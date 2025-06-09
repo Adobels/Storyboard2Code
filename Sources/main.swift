@@ -8,10 +8,11 @@
 import Foundation
 import StoryboardDecoder
 
-let url = Bundle.module.url(forResource: "PlaceholderAccount", withExtension: "xml")!
+let url = Bundle.module.url(forResource: "Biometrics", withExtension: "xml")!
 let sb = try! StoryboardFile(url: url)
 let initialScene = sb.document.scenes!.first!
 let vc: AnyViewController = initialScene.viewController!
+vc.children
 printViewControllerRootView(initialScene.viewController!)
 
 class Context: @unchecked Sendable {
@@ -20,11 +21,12 @@ class Context: @unchecked Sendable {
 
     private init() {}
 
+    var rootViewControllerId: String!
     var rootViewProtocol: ViewProtocol!
     var rootViewAny: AnyView!
     var rootView: View!
     var variableViewIbOutlet: [(viewId: String, viewClass: String)] = []
-
+    var variableViewIbOutlet2: [String] = []
     var ibOutlet: [Outlet] = []
     var ibAction: [Action] = []
     var ibViews: Set<String> = []
@@ -84,6 +86,17 @@ func printViewControllerRootView(_ anyViewController: AnyViewController) {
     Context.shared.rootViewProtocol = vc.rootView!
     Context.shared.ibOutlet = rootView.allConnections.compactMap { $0.connection as? Outlet }
     Context.shared.ibAction = rootView.allConnections.compactMap { $0.connection as? StoryboardDecoder.Action }
+    Context.shared.rootViewControllerId = vc.id
+    _ = {
+        // var variableViewIbOutlet2
+        let destinations = vc.allConnections.filter {
+            $0.connection is Outlet || $0.connection is Action
+        }.map { $0.connection.destination }
+        let constraints = rootView.children(of: Constraint.self, recursive: true)
+        let secondItem = constraints.filter { $0.firstItem != nil }.compactMap { $0.secondItem }
+        let allDestinations = destinations + secondItem
+        Context.shared.variableViewIbOutlet2 = allDestinations
+    }()
     guard !elements.isEmpty else { return }
     print(indent(of: level) + ".ibSubviews {")
     elements.forEach { element in
@@ -127,6 +140,9 @@ func printView(elements: [AnyView], level: Int = 0) {
         let elementId = sanitizedOutletName(from: (element.view as! IBIdentifiable).id)!
         print("\(elementClass)() // \(elementId)!) userLabel: \(element.view.userLabel) key: \(element.view.key) safeArea: \(sanitizedOutletName(from: (element as? View)?.viewLayoutGuide?.id))")
         Context.shared.variableViewIbOutlet.append((viewId: elementId, viewClass: elementClass))
+        if let viewIbOutlet = getIbOutletToVariable(of: element.view) {
+            print(viewIbOutlet)
+        }
         getIbOutlet(of: element.view)
         let subviews = element.view.subviews
         if let subviews, subviews.count > 0 {
@@ -276,6 +292,14 @@ func printIbAttributes(_ attributes: [String]) {
     print(".ibAttributes {\n" + allAttributes + "\n}")
 }
 
+func getIbOutletToVariable(of element: ViewProtocol) -> String? {
+    let variableViewIbOutlet = Context.shared.variableViewIbOutlet2.first { variableViewIbOutlet in
+        variableViewIbOutlet == (element as! IBIdentifiable).id
+    }
+    guard let variableViewIbOutlet else { return nil }
+    return ".ibOutlet(&\(sanitizedOutletName(from: variableViewIbOutlet)!))"
+}
+
 @MainActor
 func getIbOutlet(of element: ViewProtocol) -> [String] {
     guard let connections = element.connections else { return [] }
@@ -283,23 +307,10 @@ func getIbOutlet(of element: ViewProtocol) -> [String] {
     var output = [String]()
     if !outlets.isEmpty {
         outlets.forEach { outlet in
-            output.append("ibOutlet(&\(sanitizedOutletName(from: outlet.destination))" + "."  + "\(outlet.property)" + ")")
+            output.append("ibOutlet(&\(sanitizedOutletName(from: outlet.destination)!)" + "."  + "\(outlet.property)" + ")")
         }
     }
     return output
-}
-
-@MainActor
-func getIBActions(of element: ViewProtocol) -> [String] {
-    guard let connections = element.connections else { return [] }
-    let actions = (connections.compactMap { $0.connection as? Action })
-    var actionsToReturn: [String] = []
-    if !actions.isEmpty {
-        actions.forEach { action in
-            actionsToReturn.append("addTarget(\(action.destination)" + ", action: #selector(\(action.selector)), for: .\(action.eventType!))")
-        }
-    }
-    return actionsToReturn
 }
 
 func indent(of count: Int) -> String {
