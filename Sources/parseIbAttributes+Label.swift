@@ -17,7 +17,17 @@ func parseIbAttributes(of view: Label) -> [String] {
         attributes.append("attributedText = \"\(attributedText)\"")
     }
     if let fontDescription = view.fontDescription {
-        attributes.append("font = \(fontDescription)")
+        if case .system(let value) = fontDescription {
+            if value.weight == .some("medium") {
+                attributes.append("font = .init(weight: .medium, size: \(value.pointSize))")
+            } else if value.weight == .none {
+                attributes.append("font = .init(weight: .regular, size: \(value.pointSize))")
+            } else {
+                attributes.append("font = \(fontDescription)")
+            }
+        } else {
+            attributes.append("font = \(fontDescription)")
+        }
     }
     if let textColor = view.textColor {
         attributes.append("textColor = \(textColor)")
