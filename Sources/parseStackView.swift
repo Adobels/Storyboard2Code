@@ -9,18 +9,18 @@ import StoryboardDecoder
 
 func parseStackViewAttributes(_ stackView: StackView) -> [String] {
     var attributes: [String] = []
-    attributes.append("axis == .\(stackView.axis)")
+    attributes.append("$0.axis == .\(stackView.axis)")
     if let alignment = stackView.alignment {
-        attributes.append("alignment = .\(alignment)")
+        attributes.append("$0.alignment = .\(alignment)")
     }
     if let distribution = stackView.distribution {
-        attributes.append("distribution = .\(distribution)")
+        attributes.append("$0.distribution = .\(distribution)")
     }
     if let spacing = stackView.spacing {
-        attributes.append("spacing = \(spacing)")
+        attributes.append("$0.spacing = \(spacing)")
     }
     if let baselineRelativeArrangement = stackView.baselineRelativeArrangement {
-        attributes.append("isBaselineRelativeArrangement = \(baselineRelativeArrangement)")
+        attributes.append("$0.isBaselineRelativeArrangement = \(baselineRelativeArrangement)")
     }
     return attributes
 }

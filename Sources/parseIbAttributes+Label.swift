@@ -11,53 +11,53 @@ import StoryboardDecoder
 func parseIbAttributes(of view: Label) -> [String] {
     var attributes: [String] = []
     if let text = view.text {
-        attributes.append("text = \"\(text)\"")
+        attributes.append("$0.text = \"\(text)\"")
     }
     if let attributedText = view.attributedText {
-        attributes.append("attributedText = \"\(attributedText)\"")
+        attributes.append("$0.attributedText = \"\(attributedText)\"")
     }
     if let fontDescription = view.fontDescription {
         if case .system(let value) = fontDescription {
             if value.weight == .some("medium") {
-                attributes.append("font = .init(weight: .medium, size: \(value.pointSize))")
+                attributes.append("$0.font = .init(weight: .medium, size: \(value.pointSize))")
             } else if value.weight == .none {
-                attributes.append("font = .init(weight: .regular, size: \(value.pointSize))")
+                attributes.append("$0.font = .init(weight: .regular, size: \(value.pointSize))")
             } else {
-                attributes.append("font = \(fontDescription)")
+                attributes.append("$0.font = \(fontDescription)")
             }
         } else {
-            attributes.append("font = \(fontDescription)")
+            attributes.append("$0.font = \(fontDescription)")
         }
     }
     if let textColor = view.textColor {
-        attributes.append("textColor = \(textColor)")
+        attributes.append("$0.textColor = \(textColor)")
     }
     if let textAlignment = view.textAlignment {
-        attributes.append("textAlignment = .\(textAlignment)")
+        attributes.append("$0.textAlignment = .\(textAlignment)")
     }
     // var lineBreakStrategy: NSParagraphStyle.LineBreakStrategy
     if let isEnabled = view.isEnabled {
-        attributes.append("isEnabled = \(isEnabled)")
+        attributes.append("$0.isEnabled = \(isEnabled)")
     }
     // var enablesMarqueeWhenAncestorFocused: Bool
     // var showsExpansionTextWhenTruncated: Bool
     if let lineBreakMode = view.lineBreakMode {
-        attributes.append("lineBreakMode = .\(lineBreakMode)")
+        attributes.append("$0.lineBreakMode = .\(lineBreakMode)")
     }
     if let adjustsFontSizeToFit = view.adjustsFontSizeToFit {
-        attributes.append("adjustsFontSizeToFitWidth = \(adjustsFontSizeToFit)")
+        attributes.append("$0.adjustsFontSizeToFitWidth = \(adjustsFontSizeToFit)")
     }
     if let allowsDefaultTighteningForTruncation = view.allowsDefaultTighteningForTruncation {
-        attributes.append("allowsDefaultTighteningForTruncation = \(allowsDefaultTighteningForTruncation)")
+        attributes.append("$0.allowsDefaultTighteningForTruncation = \(allowsDefaultTighteningForTruncation)")
     }
     if let baselineAdjustment = view.baselineAdjustment {
-        attributes.append("baselineAdjustment = .\(baselineAdjustment)")
+        attributes.append("$0.baselineAdjustment = .\(baselineAdjustment)")
     }
     if let minimumScaleFactor = view.minimumScaleFactor {
-        attributes.append("minimumScaleFactor = \(minimumScaleFactor)")
+        attributes.append("$0.minimumScaleFactor = \(minimumScaleFactor)")
     }
     if let numberOfLines = view.numberOfLines {
-        attributes.append("numberOfLines = \(numberOfLines)")
+        attributes.append("$0.numberOfLines = \(numberOfLines)")
     }
     // var sizingRule: UILetterformAwareSizingRule
     // var highlightedTextColor: UIColor?

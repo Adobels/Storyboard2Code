@@ -18,16 +18,16 @@ func parseImageView(of imageView: ImageView) -> [String] {
 
     var attr = [String]()
     if let image = imageView.image {
-        attr.append("image = .\(snakeToCamelCase(image))")
+        attr.append("$0.image = .\(snakeToCamelCase(image))")
     }
     if let highlightedImage = imageView.highlightedImage {
-        attr.append("highlightedImage = .\(snakeToCamelCase(highlightedImage))")
+        attr.append("$0.highlightedImage = .\(snakeToCamelCase(highlightedImage))")
     }
     if let highlighted = imageView.highlighted {
-        attr.append("highlighted = \(highlighted)")
+        attr.append("$0.highlighted = \(highlighted)")
     }
     if let adjustsImageSizeForAccessibilityContentSizeCategory = imageView.adjustsImageSizeForAccessibilityContentSizeCategory {
-        attr.append("adjustsImageSizeForAccessibilityContentSizeCategory = \(adjustsImageSizeForAccessibilityContentSizeCategory)")
+        attr.append("$0.adjustsImageSizeForAccessibilityContentSizeCategory = \(adjustsImageSizeForAccessibilityContentSizeCategory)")
     }
     return attr
 }

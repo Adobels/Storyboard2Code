@@ -210,14 +210,14 @@ func getIBConstraints(of view: ViewProtocol) -> [String] {
     view.constraints?.forEach { constraint in
         if constraint.firstItem == nil, constraint.secondItem == nil {
             if constraint.firstAttribute == .width {
-                attributes.append("widthAnchor.constraint(equalToConstant: \(constraint.constant!))")
+                attributes.append("$0.widthAnchor.constraint(equalToConstant: \(constraint.constant!))")
             } else if constraint.firstAttribute == .height {
-                attributes.append("heightAnchor.constraint(equalToConstant: \(constraint.constant!))")
+                attributes.append("$0.heightAnchor.constraint(equalToConstant: \(constraint.constant!))")
             }
         } else {
             var strings: [String] = []
             if constraint.firstItem == nil {
-                strings.append(constraintLayoutAttribute(constraint.firstAttribute) + ".")
+                strings.append("$0." + constraintLayoutAttribute(constraint.firstAttribute) + ".")
                 strings.append(printConstraintRelationOpen(constraint.relation))
                 strings.append(sanitizedOutletName(from: constraint.secondItem)! + ".")
                 strings.append(constraintLayoutAttribute(constraint.secondAttribute))
@@ -269,8 +269,9 @@ func getIBConstraints(of view: ViewProtocol) -> [String] {
 
 @MainActor
 func printIbAttributes(_ attributes: [String]) {
-    let allAttributes = (attributes).map { "$0." + $0 }.joined(separator: "\n")
-    Context.shared.output.append(".ibAttributes {\n" + allAttributes + "\n}")
+    Context.shared.output.append(".ibAttributes {")
+    Context.shared.output.append(contentsOf: attributes)
+    Context.shared.output.append("}")
 }
 
 func getIbOutletToVariable(of element: ViewProtocol) -> String? {
