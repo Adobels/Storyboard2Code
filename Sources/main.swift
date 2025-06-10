@@ -97,14 +97,25 @@ func printViewControllerRootView(_ anyViewController: AnyViewController) {
         printIbAttributes(of: element)
     }
     Context.shared.output.append("}")
-    Context.shared.variableViewIbOutlet2.forEach { ibViewId in
+    let ibOutletsToViews: [String] = Context.shared.variableViewIbOutlet2.reduce([String](), { partialResult, ibViewId in
         let variableIsNeeded = Context.shared.variableViewIbOutlet.first { (viewId: String, viewClass: String) in
             viewId == ibViewId
         }
-        if let variableIsNeeded {
-            Context.shared.output.append("var \(variableIsNeeded.viewId): \(variableIsNeeded.viewClass)!")
+        return if let variableIsNeeded {
+            partialResult + ["var \(variableIsNeeded.viewId): \(variableIsNeeded.viewClass)!"]
+        } else {
+            partialResult
         }
-    }
+    })
+    Context.shared.output.insert(contentsOf: ibOutletsToViews, at: 0)
+//    Context.shared.variableViewIbOutlet2.forEach { ibViewId in
+//        let variableIsNeeded = Context.shared.variableViewIbOutlet.first { (viewId: String, viewClass: String) in
+//            viewId == ibViewId
+//        }
+//        if let variableIsNeeded {
+//            Context.shared.output.append("var \(variableIsNeeded.viewId): \(variableIsNeeded.viewClass)!")
+//        }
+//    }
 }
 
 @MainActor
