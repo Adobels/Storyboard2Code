@@ -42,7 +42,16 @@ func parseIbAttributes(of view: Label) -> [String] {
     // var enablesMarqueeWhenAncestorFocused: Bool
     // var showsExpansionTextWhenTruncated: Bool
     if let lineBreakMode = view.lineBreakMode {
-        attributes.append("$0.lineBreakMode = .\(lineBreakMode)")
+        let codePropertyLineBreakMode: String = switch lineBreakMode {
+        case "wordWrap": "byWordWrapping"
+        case "characterWrap": "byCharWrapping"
+        case "clip": "byClipping"
+        case "headTruncation": "byTruncatingHead"
+        case "tailTruncation": "byTruncatingTail"
+        case "middleTruncation": "byTruncatingMiddle"
+        default: fatalError()
+        }
+        attributes.append("$0.lineBreakMode = .\(codePropertyLineBreakMode)")
     }
     if let adjustsFontSizeToFit = view.adjustsFontSizeToFit {
         attributes.append("$0.adjustsFontSizeToFitWidth = \(adjustsFontSizeToFit)")
