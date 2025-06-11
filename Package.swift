@@ -19,6 +19,6 @@ let package = Package(
                 .unsafeFlags(["-suppress-warnings"], .when(configuration: .debug))
             ],
         ),
-        .testTarget(name: "UnitTests")
+        .testTarget(name: "UnitTests", dependencies: ["story2code"])
     ],
 )
