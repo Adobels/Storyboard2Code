@@ -7,7 +7,6 @@
 
 import StoryboardDecoder
 
-@MainActor
 func parseIbAttributes(of uiView: ViewProtocol) -> [String] {
     var attributes: [String] = []
     if uiView.isHidden == true {

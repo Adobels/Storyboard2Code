@@ -9,7 +9,6 @@ import StoryboardDecoder
 
 func parseStackViewAttributes(_ stackView: StackView) -> [String] {
     var attributes: [String] = []
-    attributes.append("$0.axis == .\(stackView.axis)")
     if let alignment = stackView.alignment {
         attributes.append("$0.alignment = .\(alignment)")
     }

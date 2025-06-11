@@ -7,7 +7,6 @@
 
 import StoryboardDecoder
 
-@MainActor
 func parseUserDefinedRuntimeAttributes(of uiView: ViewProtocol) -> [String] {
 
     guard let userDefinedRuntimeAttributes = uiView.userDefinedRuntimeAttributes else { return [] }

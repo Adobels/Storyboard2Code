@@ -7,7 +7,6 @@
 
 import StoryboardDecoder
 
-@MainActor
 func parseIbAttributes(of view: Label) -> [String] {
     var attributes: [String] = []
     if let text = view.text {
