@@ -34,6 +34,21 @@ class Context: @unchecked Sendable {
     var output: [String] = []
 }
 
+func printViewClassAndInit(_ element: AnyView) -> [String] {
+    let elementClass = element.view.customClass ?? element.view.elementClass
+    let elementId = sanitizedOutletName(from: (element.view as! IBIdentifiable).id)!
+    var output: [String] = []
+    output = ["\(elementClass)()"]
+    if let stackView = element.view as? StackView, stackView.isVertical {
+        output = ["\(elementClass)(axis: .vertical)"]
+    }
+    output.append(" // ")
+    output.append(elementId)
+    output.append("userLabel: \(element.view.userLabel)")
+    output.append("key: \(element.view.key)")
+    return [output.joined(separator: " ")]
+}
+
 @MainActor
 func printViewControllerRootView(_ anyViewController: AnyViewController) {
     guard let vc = anyViewController.viewController as? ViewController else {
@@ -85,7 +100,7 @@ func printViewControllerRootView(_ anyViewController: AnyViewController) {
     elements.forEach { element in
         let elementClass = element.view.customClass ?? element.view.elementClass
         let elementId = sanitizedOutletName(from: (element.view as! IBIdentifiable).id)!
-        Context.shared.output.append("\(elementClass)() // \(elementId)!) userLabel: \(element.view.userLabel) key: \(element.view.key) safeArea: \(sanitizedOutletName(from: (element as? View)?.viewLayoutGuide?.id))")
+        Context.shared.output.append(contentsOf: printViewClassAndInit(element))
         Context.shared.variableViewIbOutlet.append((viewId: elementId, viewClass: elementClass))
         if let viewIbOutlet = getIbOutletToVariable(of: element.view) {
             Context.shared.output.append(viewIbOutlet)
@@ -133,7 +148,7 @@ func printView(elements: [AnyView], level: Int = 0) {
     elements.forEach { element in
         let elementClass = element.view.customClass ?? element.view.elementClass
         let elementId = sanitizedOutletName(from: (element.view as! IBIdentifiable).id)!
-        Context.shared.output.append("\(elementClass)() // \(elementId) userLabel: \(element.view.userLabel) key: \(element.view.key) safeArea: \(sanitizedOutletName(from: (element as? View)?.viewLayoutGuide?.id))")
+        Context.shared.output.append(contentsOf: printViewClassAndInit(element))
         Context.shared.variableViewIbOutlet.append((viewId: elementId, viewClass: elementClass))
         if let viewIbOutlet = getIbOutletToVariable(of: element.view) {
             Context.shared.output.append(viewIbOutlet)
