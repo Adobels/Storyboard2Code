@@ -207,6 +207,7 @@ func printIbAttributes(of element: AnyView) {
         //TODO: Add parsing for UIActivityIndicatorView
     }
     attributes.append(contentsOf: parseIbAttributes(of: element.view))
+    attributes.append(contentsOf: parseUserDefinedRuntimeAttributes(of: element.view))
     printIbAttributes(attributes)
 }
 
