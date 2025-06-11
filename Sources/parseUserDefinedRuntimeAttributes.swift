@@ -29,7 +29,7 @@ func parseUserDefinedRuntimeAttributes(of uiView: ViewProtocol) -> [String] {
         } else if attribute.keyPath == "locKeyPlaceholder" { // 112 occurences
             attributes.append("$0.\(attribute.keyPath) = \(attribute.value!)")
         } else if attribute.keyPath == "themeStyle" { // 104 occurences
-            attributes.append("$0.\(attribute.keyPath) = \(attribute.value!)")
+            attributes.append("$0.\(attribute.keyPath) = \"\(attribute.value!)\"")
         } else if attribute.keyPath == "loaderPositionName" { // 94 occurences
             attributes.append("$0.loaderPosition = .\(attribute.value!)")
         } else if attribute.keyPath == "cornerRadius" { // 88 occurences
@@ -37,7 +37,7 @@ func parseUserDefinedRuntimeAttributes(of uiView: ViewProtocol) -> [String] {
         } else if attribute.keyPath == "loaderSizeName" { // 68 occurences
             attributes.append("$0.loaderSize = .\(attribute.value!)")
         } else if attribute.keyPath == "themeParent" { // 44 occurences
-            attributes.append("$0.\(attribute.keyPath) = \(attribute.value!)")
+            attributes.append("$0.\(attribute.keyPath) = \"\(attribute.value!)\"")
         } else if attribute.keyPath == "layer.cornerRadius" { // 20 occurences
             attributes.append("$0.\(attribute.keyPath) = \(attribute.value!)")
         } else if attribute.keyPath == "backgroundColorName" { // 20 occurences
