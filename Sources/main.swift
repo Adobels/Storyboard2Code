@@ -44,8 +44,8 @@ func printViewControllerRootView(_ anyViewController: AnyViewController) {
     let elements = rootView.subviews!
     Context.shared.rootView = rootView
     Context.shared.rootViewProtocol = vc.rootView!
-    Context.shared.ibOutlet = rootView.allConnections.compactMap { $0.connection as? Outlet }
-    Context.shared.ibAction = rootView.allConnections.compactMap { $0.connection as? StoryboardDecoder.Action }
+    Context.shared.ibOutlet = vc.allConnections.compactMap { $0.connection as? Outlet }
+    Context.shared.ibAction = vc.allConnections.compactMap { $0.connection as? Action }
     Context.shared.rootViewControllerId = vc.id
     _ = {
         var destinations: Set<String> = []
@@ -98,6 +98,13 @@ func printViewControllerRootView(_ anyViewController: AnyViewController) {
         printIbAttributes(of: element)
     }
     Context.shared.output.append("}")
+    if let constraints = rootView.constraints, !constraints.isEmpty {
+        Context.shared.output.append(".ibAttributes {")
+        if !constraints.isEmpty {
+            Context.shared.output.append(contentsOf: getIBConstraints(of: rootView))
+        }
+        Context.shared.output.append("}")
+    }
     let ibOutletsToViews: [String] = Context.shared.variableViewIbOutlet2.reduce([String](), { partialResult, ibViewId in
         let variableIsNeeded = Context.shared.variableViewIbOutlet.first { (viewId: String, viewClass: String) in
             viewId == ibViewId
@@ -203,6 +210,8 @@ func printIbAttributes(of element: AnyView) {
     printIbAttributes(attributes)
 }
 
+extension LayoutGuide: IBIdentifiable {}
+
 @MainActor
 func getIBConstraints(of view: ViewProtocol) -> [String] {
     var attributes: [String] = []
@@ -226,32 +235,66 @@ func getIBConstraints(of view: ViewProtocol) -> [String] {
                 }
                 strings.append(printConstraintRelationClose())
                 if let priority = constraint.priority {
-                    strings.append(".ibPriority(.init(\(priority))")
+                    strings.append(".ibPriority(.init(\(priority)))")
                 }
                 if let identifier = constraint.identifier {
-                    strings.append(".ibIdentifier(\(identifier)")
+                    strings.append(".ibIdentifier(\(identifier))")
                 }
             } else {
-                strings.append("\(sanitizedOutletName(from: constraint.firstItem)! + ".")")
+                var firstItem = sanitizedOutletName(from: constraint.firstItem)!
+                Context.shared.rootView.browse { element in
+                    guard let view = element as? ViewProtocol else {
+                        return true
+                    }
+                    if let layoutGuide = view.with(id: constraint.firstItem!) as LayoutGuide? {
+                        if layoutGuide.key == "safeArea" {
+                            firstItem = "\(sanitizedOutletName(from: (view as! IBIdentifiable).id)!).safeAreaLayoutGuide"
+                        } else if layoutGuide.key == "keyboard" {
+                            firstItem = "\(sanitizedOutletName(from: (view as! IBIdentifiable).id)!).keyboardLayoutGuide"
+                        } else {
+                            fatalError()
+                        }
+                        return false
+                    }
+                    return true
+                }
+                var secondItem = sanitizedOutletName(from: constraint.secondItem)!
+                Context.shared.rootView.browse { element in
+                    guard let view = element as? ViewProtocol else {
+                        return true
+                    }
+                    if let layoutGuide = view.with(id: constraint.secondItem!) as LayoutGuide? {
+                        if layoutGuide.key == "safeArea" {
+                            secondItem = "\(sanitizedOutletName(from: (view as! IBIdentifiable).id)!).safeAreaLayoutGuide"
+                        } else if layoutGuide.key == "keyboard" {
+                            secondItem = "\(sanitizedOutletName(from: (view as! IBIdentifiable).id)!).keyboardLayoutGuide"
+                        } else {
+                            fatalError()
+                        }
+                        return false
+                    }
+                    return true
+                }
+                strings.append("\(firstItem + ".")")
                 strings.append(constraintLayoutAttribute(constraint.firstAttribute) + ".")
                 strings.append(printConstraintRelationOpen(constraint.relation))
-                strings.append("\(sanitizedOutletName(from: constraint.secondItem!)! + ".")")
+                strings.append("\(secondItem + ".")")
                 strings.append(constraintLayoutAttribute(constraint.secondAttribute))
                 if let constant = constraint.constant {
                     strings.append(", constant: \(constant)")
                 }
                 strings.append(printConstraintRelationClose())
                 if let priority = constraint.priority {
-                    strings.append(".ibPriority(.init(\(priority))")
+                    strings.append(".ibPriority(.init(\(priority)))")
                 }
                 if let identifier = constraint.identifier {
-                    strings.append(".ibIdentifier(\(identifier)")
+                    strings.append(".ibIdentifier(\(identifier))")
                 }
                 //attributes.append("\(sanitizedOutletName(from: constraint.firstItem)) \(constraint.firstAttribute) \(sanitizedOutletName(from: constraint.secondItem)) \(constraint.secondAttribute) \(constraint.constant) \(constraint.priority) \(constraint.identifier)")
             }
             _ = {
                 guard let outlet = (Context.shared.ibOutlet.filter { $0.destination == constraint.id }.first) else { return }
-                strings.append(".ibOutlet(&\(outlet.id)-\(outlet.property)")
+                strings.append(".ibOutlet(&\(outlet.id)-\(outlet.property))")
             }()
             if !strings.isEmpty {
                 if let firstItem = constraint.firstItem {
