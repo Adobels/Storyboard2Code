@@ -7,6 +7,7 @@
 
 import StoryboardDecoder
 
+@MainActor
 func printViewControllerRootView(_ anyViewController: AnyViewController) {
     guard let vc = anyViewController.viewController as? ViewController else {
         Context.shared.output.append("wrong view controller")
@@ -50,7 +51,6 @@ func printViewControllerRootView(_ anyViewController: AnyViewController) {
         Context.shared.variableViewIbOutlet2 = allDestinations
     }()
     guard !elements.isEmpty else { return }
-    Context.shared.output.append("view")
     Context.shared.output.append(".ibSubviews {")
     elements.forEach { element in
         let elementClass = element.view.customClass ?? element.view.elementClass

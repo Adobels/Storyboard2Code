@@ -7,6 +7,7 @@
 
 import StoryboardDecoder
 
+@MainActor
 func printView(elements: [AnyView]) {
     guard !elements.isEmpty else { return }
     Context.shared.output.append(".ibSubviews {")

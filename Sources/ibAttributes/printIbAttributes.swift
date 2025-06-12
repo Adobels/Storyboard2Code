@@ -13,6 +13,7 @@ func printIbAttributes(_ attributes: [String]) {
     Context.shared.output.append("}")
 }
 
+@MainActor
 func printIbAttributes(of element: AnyView) {
     var attributes = [String]()
     let constraints = getIBConstraints(of: element.view).sorted()
