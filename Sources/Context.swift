@@ -23,4 +23,8 @@ class Context: @unchecked Sendable {
     var ibAction: [Action] = []
     var ibViews: Set<String> = []
     var output: [String] = []
+
+    var arrayRootViewFlattened: [ViewPropertiesForParsing] = []
+    var arrayLayoutGuideIdToParentViewId: [LayoutGuideIdToParentViewId] = []
+    var arrayConstrains: [(viewId: String, constraint: String)] = []
 }

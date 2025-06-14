@@ -7,6 +7,10 @@
 
 import StoryboardDecoder
 
+// xxxxx self.lgyyyy
+// xxxxx viewddd.lgyyyy
+// xxxxx $0.lgyyyy
+
 @MainActor
 func getIBConstraints(of view: ViewProtocol) -> [String] {
     var attributes: [String] = []
@@ -17,13 +21,13 @@ func getIBConstraints(of view: ViewProtocol) -> [String] {
  
         } else if constraint.firstItem == nil {
             strings.append("$0." + constraintLayoutAttribute(constraint.firstAttribute) + ".")
-            strings.append(printConstraintRelationOpen(constraint.relation))
+            strings.append("(")
             strings.append(sanitizedOutletName(from: constraint.secondItem)! + ".")
             strings.append(constraintLayoutAttribute(constraint.secondAttribute))
             if let constant = constraint.constant {
                 strings.append(", constant: \(constant)")
             }
-            strings.append(printConstraintRelationClose())
+            strings.append(")")
             if let priority = constraint.priority {
                 strings.append(".ibPriority(.init(\(priority)))")
             }
@@ -77,6 +81,7 @@ func getIBConstraints(of view: ViewProtocol) -> [String] {
             }
             return true
         }
+
         var secondItem = sanitizedOutletName(from: constraintWithBothItems.secondItem)!
         Context.shared.rootView.browse { element in
             guard let view = element as? ViewProtocol else {
@@ -116,6 +121,13 @@ func getIBConstraints(of view: ViewProtocol) -> [String] {
     return attributes
 }
 
-#Playground {
+func printConstraintRelationClose() -> String { ")" }
 
+func parseConstraint(_ constraint: Constraint) -> [String] {
+    var strings = [String]()
+    if constraint.firstItem == nil {
+        strings.append("$0")
+    }
+    strings.append(constraintLayoutAttribute(constraint.firstAttribute))
+    return strings
 }

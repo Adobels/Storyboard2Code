@@ -7,6 +7,9 @@ let storyboardDecoder = "StoryboardDecoder"
 
 let package = Package(
     name: "story2code",
+    platforms: [
+        .iOS(.v14),
+    ],
     dependencies: [
         .package(url: "https://github.com/Adobels/\(storyboardDecoder).git", branch: "develop")
     ],

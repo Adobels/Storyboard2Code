@@ -16,11 +16,13 @@ func printIbAttributes(_ attributes: [String]) {
 @MainActor
 func printIbAttributes(of element: AnyView) {
     var attributes = [String]()
-    let constraints = getIBConstraints(of: element.view).sorted()
+    /*let constraints = getIBConstraints(of: element.view).sorted()
     if !constraints.isEmpty {
         attributes.append("// ibOutlet: \(sanitizedOutletName(from: (element.view as! IBIdentifiable).id)!)")
         attributes.append(contentsOf: getIBConstraints(of: element.view).sorted())
-    }
+    }*/
+    let constraintsFound = Context.shared.arrayConstrains.filter { $0.viewId == sanitizedOutletName(from: (element.view as! IBIdentifiable).id)! }
+    constraintsFound.forEach { attributes.append($0.constraint) }
     attributes.append(contentsOf: getIBActions(of: element.view))
     attributes.append(contentsOf: getIbOutlet(of: element.view))
     if let label = element.view as? Label {
