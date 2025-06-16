@@ -32,12 +32,12 @@ func constraintLayoutAttribute(_ attribute: Constraint.LayoutAttribute?) -> Stri
 func printConstraintRelationOpen(_ relation: Constraint.Relation?) -> String {
     guard let relation else { return "relation is nil" }
     return switch relation {
-    case .lessThanOrEqual: "constraint(lessThanOrEqualTo: "
-    case .greaterThanOrEqual: "constraint(greaterThanOrEqualTo: "
-    case .equal: "constraint(equalTo: "
-    case .other(let string): "constraint(other: "
+    case .lessThanOrEqual: "lessThanOrEqualTo: "
+    case .greaterThanOrEqual: "greaterThanOrEqualTo: "
+    case .equal: "equalTo: "
+    case .other(let string): "other: "
     }
-    "constraint(lessThanOrEqualTo: secondAnchor, const"
+    "lessThanOrEqualTo: secondAnchor, const"
 }
 
 struct ContextForIBConstraints {
@@ -70,17 +70,25 @@ struct S2CConstraint {
     }
 
     mutating func convertConstraintRelationBetweenItemsUIViewKitCode(with context: ContextForIBConstraints) -> (viewId: String, String)? {
-        guard var secondItem else {
-            return nil
+        guard secondItem != nil else { return nil }
+        if firstItem == nil {
+            firstItem = context.constraintParentViewId
         }
         reverseFirstAndSecondItemIfNeeded(with: context)
         let firstItemLayoutGuide: LayoutGuideIdToParentViewId? = context.arrayLayoutGuideIdToParentViewId.first(where: { item in
             item.layoutGuideId == firstItem
         })
+        if let firstItemLayoutGuide {
+            firstItem = firstItemLayoutGuide.parentViewId
+        }
         let secondItemLayoutGuide: LayoutGuideIdToParentViewId? = context.arrayLayoutGuideIdToParentViewId.first(where: { item in
             item.layoutGuideId == secondItem
         })
-        let secondItemResolved = secondItemLayoutGuide?.parentViewId ?? secondItem
+        if let secondItemLayoutGuide {
+            secondItem = secondItemLayoutGuide.parentViewId
+        }
+        guard let firstItem else { fatalError() }
+        guard let secondItem else { fatalError() }
         var components: [String] = []
         components.append("$0")
         if let firstItemLayoutGuide {
@@ -88,8 +96,8 @@ struct S2CConstraint {
         }
         components.append(".\(firstAttribute)Anchor")
         components.append(".constraint(")
-        components.append("\(relation): ")
-        components.append("\(sanitizedOutletName(from: secondItemResolved)!)")
+        components.append("\(printConstraintRelationOpen(relation))")
+        components.append("\(sanitizedOutletName(from: secondItem)!)")
         if let secondItemLayoutGuide {
             components.append(".\(storyboardLayoutGuideKeyToCode(secondItemLayoutGuide))")
         }
@@ -98,9 +106,12 @@ struct S2CConstraint {
             components.append(", constant: \(constant)")
         }
         components.append(")")
-        if let priority { components.append(".ibPriority(.init\(priority)") }
+        if let priority { components.append(".ibPriority(.init(\(priority)))") }
         if let identifier { components.append(".ibIdentifier(\"\(identifier)\")") }
-        return (viewId: sanitizedOutletName(from: firstItemLayoutGuide?.parentViewId ?? firstItem ?? context.constraintParentViewId)!, components.joined())
+        let viewId = sanitizedOutletName(from: firstItem)!
+        let constraintConverted = components.joined()
+        Context.shared.arrayConstrains.append((viewId: viewId, constraintConverted))
+        return (viewId: viewId, constraintConverted)
     }
 
     func convertConstraintWidthOrHeightToUIViewKitCode() -> String? {
@@ -116,14 +127,14 @@ struct S2CConstraint {
         }
         components.append(".\(relation)ToConstant: \(constant ?? 0)")
         components.append(")")
-        if let priority { components.append(".ibPriority(.init\(priority)") }
+        if let priority { components.append(".ibPriority(.init(\(priority)))") }
         if let identifier { components.append(".ibIdentifier(\"\(identifier)\")") }
         return components.joined()
     }
 
     mutating func reverseFirstAndSecondItemIfNeeded(with context: ContextForIBConstraints) {
         if needReverseFirstAndSecondItem(with: context) {
-            let firstItem = firstItem
+            let firstItem = firstItem ?? context.constraintParentViewId
             self.firstItem = secondItem!
             self.secondItem = firstItem
             if let constant { self.constant = -constant }
@@ -137,17 +148,20 @@ struct S2CConstraint {
 
     func needReverseFirstAndSecondItem(with context: ContextForIBConstraints) -> Bool {
         guard let secondItem else { return false }
-        let firstItemIndex = context.arrayLayoutGuideIdToParentViewId.firstIndex { item in
+        let firstItemResolved = context.arrayLayoutGuideIdToParentViewId.first { item in
             item.layoutGuideId == firstItem
-        } ?? context.arrayRootViewFlattened.firstIndex(where: { item in
-            item.id == context.constraintParentViewId
+        }?.parentViewId ?? firstItem ?? context.constraintParentViewId
+        let firstItemIndex = context.arrayRootViewFlattened.firstIndex(where: { item in
+            item.id == firstItemResolved
         })!
-        let secondItemIndex = context.arrayLayoutGuideIdToParentViewId.firstIndex { item in
+
+        let secondItemResolved = context.arrayLayoutGuideIdToParentViewId.first { item in
             item.layoutGuideId == secondItem
-        } ?? context.arrayRootViewFlattened.firstIndex(where: { item in
-            item.id == secondItem
-        })!
-        return secondItemIndex < firstItemIndex
+        }?.parentViewId ?? secondItem
+        let secondItemIndex = context.arrayRootViewFlattened.firstIndex { item in
+            item.id == secondItemResolved
+        }!
+        return firstItemIndex < secondItemIndex
     }
 
     func storyboardLayoutGuideKeyToCode(_ layoutGuide: LayoutGuideIdToParentViewId) -> String {
@@ -157,6 +171,12 @@ struct S2CConstraint {
         default: fatalError()
         }
     }
+
+//    static func resolveItem(_ item: S2CConstraint, _ layoutGuideIdToParentViewId: LayoutGuideIdToParentViewId, parentViewId: String) -> String {
+//        let itemResolved = context.arrayLayoutGuideIdToParentViewId.first { item in
+//            item.layoutGuideId == firstItem
+//        }?.parentViewId ?? firstItem ?? context.constraintParentViewId
+//    }
 }
 
 struct LayoutGuideIdToParentViewId {

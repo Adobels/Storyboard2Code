@@ -10,6 +10,7 @@ import StoryboardDecoder
 // xxxxx self.lgyyyy
 // xxxxx viewddd.lgyyyy
 // xxxxx $0.lgyyyy
+/*
 
 @MainActor
 func getIBConstraints(of view: ViewProtocol) -> [String] {
@@ -131,3 +132,4 @@ func parseConstraint(_ constraint: Constraint) -> [String] {
     strings.append(constraintLayoutAttribute(constraint.firstAttribute))
     return strings
 }
+*/

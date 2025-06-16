@@ -15,6 +15,6 @@ convertStoryboard2Code(initialScene.viewController!)
 
 @MainActor
 func convertStoryboard2Code(_ anyViewController: AnyViewController) {
-    printViewControllerRootView(initialScene.viewController!)
+    printViewControllerRootView(anyViewController)
     print(Context.shared.output.joined(separator: "\n"))
 }
