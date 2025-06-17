@@ -13,6 +13,7 @@ func printViewControllerRootView(_ anyViewController: AnyViewController) {
         Context.shared.output.append("wrong view controller")
         return
     }
+    Context.shared.viewController = anyViewController
     let rootView: View = vc.rootView as! View
     let elements = rootView.subviews!
     Context.shared.rootView = rootView
@@ -20,6 +21,9 @@ func printViewControllerRootView(_ anyViewController: AnyViewController) {
     Context.shared.ibOutlet = vc.allConnections.compactMap { $0.connection as? Outlet }
     Context.shared.ibAction = vc.allConnections.compactMap { $0.connection as? Action }
     Context.shared.rootViewControllerId = vc.id
+    _ = {
+        Context.shared.viewControllerIBOutlets = arrayViewIdToProperty(anyViewController: Context.shared.viewController)
+    }()
     _ = {
         var anyViews: [ViewProtocol] = rootView.children(of: AnyView.self, recursive: true).map { $0.view }
         anyViews.insert(rootView, at: 0)
@@ -30,10 +34,6 @@ func printViewControllerRootView(_ anyViewController: AnyViewController) {
                 elementClass: item.element.elementClass,
                 verticalPositionIndex: item.offset
             )
-        }
-        let constraints: [(viewId: String, constraints: [Constraint])] = anyViews.map {
-            let result = (viewId: ($0 as! IBIdentifiable).id, constraints: $0.children(of: Constraint.self, recursive: false))
-            return result
         }
         var arrayLayoutGuideIdToParentViewId: [LayoutGuideIdToParentViewId] = []
         rootView.browse(skipSelf: false) { item in

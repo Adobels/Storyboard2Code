@@ -9,6 +9,7 @@ import Foundation
 
 func sanitizedOutletName(from outletName: String?) -> String? {
     guard let outletName else { return outletName }
+    guard outletName.contains(where: { $0 == "-" }) else { return outletName } // guards against sanitizing outletNames which are properties
     let noDigits = outletName.replacingOccurrences(of: "[0-9]", with: "", options: .regularExpression)
     let withUnderscores = noDigits.replacingOccurrences(of: "-", with: "_")
     let components = withUnderscores

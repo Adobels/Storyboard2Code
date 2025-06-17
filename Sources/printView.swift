@@ -16,10 +16,18 @@ func printView(elements: [AnyView]) {
         let elementId = sanitizedOutletName(from: (element.view as! IBIdentifiable).id)!
         Context.shared.output.append(contentsOf: printViewClassAndInit(element))
         Context.shared.variableViewIbOutlet.append((viewId: elementId, viewClass: elementClass))
-        if let viewIbOutlet = getIbOutletToVariable(of: element.view) {
-            Context.shared.output.append(viewIbOutlet)
-        }
-        getIbOutlet(of: element.view)
+        _ = {
+            var viewIsOutletedInViewController: Bool = false
+            Context.shared.viewControllerIBOutlets.forEach { outlet in
+                if outlet.viewId == elementId {
+                    Context.shared.output.append(".ibOutlet(&\(outlet.property))")
+                    viewIsOutletedInViewController = true
+                }
+            }
+            if !viewIsOutletedInViewController, let viewIbOutlet = getIbOutletToVariable(of: element.view) {
+                Context.shared.output.append(viewIbOutlet)
+            }
+        }()
         let subviews = element.view.subviews
         if let subviews, subviews.count > 0 {
             printView(elements: subviews)

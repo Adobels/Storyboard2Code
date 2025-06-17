@@ -18,3 +18,16 @@ func getIbOutlet(of element: ViewProtocol) -> [String] {
     }
     return output
 }
+
+func arrayViewIdToProperty(anyViewController: AnyViewController) -> [(viewId: String, property: String)]  {
+    //guard let outlets = (anyViewController.nested.connections?.compactMap { $0 as? Outlet }) else { return [] }
+    var outlets = (anyViewController.nested.connections?.compactMap { $0.connection as? Outlet })?
+        .reduce(into: [(String, String)]()) { acc, outlet in acc.append((sanitizedOutletName(from: outlet.destination)!, outlet.property) )
+    } ?? []
+    outlets.append((sanitizedOutletName(from: (anyViewController.nested.rootView as! IBIdentifiable).id)!, "view"))
+    return outlets
+}
+
+func generateIbOutlet(for outlet: Outlet) -> String {
+    "ibOutlet(&\(outlet.property))"
+}

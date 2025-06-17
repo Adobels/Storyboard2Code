@@ -13,12 +13,14 @@ class Context: @unchecked Sendable {
 
     private init() {}
 
+    var viewController: AnyViewController!
     var rootViewControllerId: String!
     var rootViewProtocol: ViewProtocol!
     var rootViewAny: AnyView!
     var rootView: View!
     var variableViewIbOutlet: [(viewId: String, viewClass: String)] = []
     var variableViewIbOutlet2: Set<String> = []
+    var viewControllerIBOutlets: [(viewId: String, property: String)] = []
     var ibOutlet: [Outlet] = []
     var ibAction: [Action] = []
     var ibViews: Set<String> = []

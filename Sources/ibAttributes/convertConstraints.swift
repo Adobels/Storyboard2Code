@@ -87,8 +87,12 @@ struct S2CConstraint {
         if let secondItemLayoutGuide {
             secondItem = secondItemLayoutGuide.parentViewId
         }
-        guard let firstItem else { fatalError() }
-        guard let secondItem else { fatalError() }
+        guard var firstItem else { fatalError() }
+        guard var secondItem else { fatalError() }
+        let secondItemViewControlerOutlet = Context.shared.viewControllerIBOutlets.first(where: { $0.viewId == sanitizedOutletName(from: secondItem)! })
+        if let secondItemViewControlerOutlet {
+            secondItem = secondItemViewControlerOutlet.property
+        }
         var components: [String] = []
         components.append("$0")
         if let firstItemLayoutGuide {
