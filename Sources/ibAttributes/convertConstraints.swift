@@ -6,7 +6,7 @@
 //
 import StoryboardDecoder
 
-func constraintLayoutAttribute(_ attribute: Constraint.LayoutAttribute?) -> String {
+private func constraintLayoutAttribute(_ attribute: Constraint.LayoutAttribute?) -> String {
     guard let attribute else { return "attribute is nil" }
     return switch attribute {
     case .left: "leftAnchor"
@@ -29,7 +29,7 @@ func constraintLayoutAttribute(_ attribute: Constraint.LayoutAttribute?) -> Stri
     }
 }
 
-func printConstraintRelationOpen(_ relation: Constraint.Relation?) -> String {
+private func transformRelationToString(_ relation: Constraint.Relation?) -> String {
     guard let relation else { return "relation is nil" }
     return switch relation {
     case .lessThanOrEqual: "lessThanOrEqualTo: "
@@ -96,7 +96,7 @@ struct S2CConstraint {
         }
         components.append(".\(firstAttribute)Anchor")
         components.append(".constraint(")
-        components.append("\(printConstraintRelationOpen(relation))")
+        components.append("\(transformRelationToString(relation))")
         components.append("\(sanitizedOutletName(from: secondItem)!)")
         if let secondItemLayoutGuide {
             components.append(".\(storyboardLayoutGuideKeyToCode(secondItemLayoutGuide))")
@@ -106,8 +106,8 @@ struct S2CConstraint {
             components.append(", constant: \(constant)")
         }
         components.append(")")
-        if let priority { components.append(".ibPriority(.init(\(priority)))") }
-        if let identifier { components.append(".ibIdentifier(\"\(identifier)\")") }
+        if let ibPriority = convertPriorityToCode() { components.append(ibPriority) }
+        if let ibIdentifier = convertIdentifierToCode() { components.append(ibIdentifier) }
         let viewId = sanitizedOutletName(from: firstItem)!
         let constraintConverted = components.joined()
         Context.shared.arrayConstrains.append((viewId: viewId, constraintConverted))
@@ -127,8 +127,8 @@ struct S2CConstraint {
         }
         components.append(".\(relation)ToConstant: \(constant ?? 0)")
         components.append(")")
-        if let priority { components.append(".ibPriority(.init(\(priority)))") }
-        if let identifier { components.append(".ibIdentifier(\"\(identifier)\")") }
+        if let ibPriority = convertPriorityToCode() { components.append(ibPriority) }
+        if let ibIdentifier = convertIdentifierToCode() { components.append(ibIdentifier) }
         return components.joined()
     }
 
@@ -171,12 +171,15 @@ struct S2CConstraint {
         default: fatalError()
         }
     }
+}
 
-//    static func resolveItem(_ item: S2CConstraint, _ layoutGuideIdToParentViewId: LayoutGuideIdToParentViewId, parentViewId: String) -> String {
-//        let itemResolved = context.arrayLayoutGuideIdToParentViewId.first { item in
-//            item.layoutGuideId == firstItem
-//        }?.parentViewId ?? firstItem ?? context.constraintParentViewId
-//    }
+private extension S2CConstraint {
+    func convertPriorityToCode() -> String? {
+        if let priority { ".ibPriority(.init(\(priority)))" } else { nil }
+    }
+    func convertIdentifierToCode() -> String? {
+        if let identifier { ".ibIdentifier(\"\(identifier)\")" } else { nil }
+    }
 }
 
 struct LayoutGuideIdToParentViewId {
