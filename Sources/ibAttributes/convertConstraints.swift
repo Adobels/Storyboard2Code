@@ -54,14 +54,14 @@ struct S2CConstraint {
     var secondItem: String?
     let secondAttribute: Constraint.LayoutAttribute?
     let multiplier: String?
-    let priority: Int?
-    var constant: Int?
+    let priority: Float?
+    var constant: Float?
     let identifier: String?
     let id: String
 
     mutating func convertToCode(with context: ContextForIBConstraints) -> (viewId: String, constraint: String) {
         if let code = convertConstraintWidthOrHeightToUIViewKitCode() {
-            return (firstItem ?? context.constraintParentViewId, code)
+            return (sanitizedOutletName(from: firstItem ?? context.constraintParentViewId)!, code)
         } else if let code = convertConstraintRelationBetweenItemsUIViewKitCode(with: context) {
             return code
         } else {

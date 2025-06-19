@@ -1,5 +1,5 @@
 {
-  "originHash" : "3024448b47e6137866482ac584a1caebd276a2210bc85a42f6ce31ff80f4ac63",
+  "originHash" : "010eccb283d868111468bea0d20a3f501b050e8265dbaa3dd406ef82da7b588c",
   "pins" : [
     {
       "identity" : "storyboarddecoder",
@@ -7,7 +7,7 @@
       "location" : "https://github.com/Adobels/StoryboardDecoder.git",
       "state" : {
         "branch" : "develop",
-        "revision" : "33a5912fbc2fdb5c780b5053a8eb27bf5109e7bf"
+        "revision" : "a12aa65e1d8f29b51630cedf737f1a19fc668b2e"
       }
     },
     {
