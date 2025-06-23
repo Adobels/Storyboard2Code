@@ -18,9 +18,9 @@ func parseIbAttributes(of view: Label) -> [String] {
     if let fontDescription = view.fontDescription {
         if case .system(let value) = fontDescription {
             if value.weight == .some("medium") {
-                attributes.append("$0.font = .init(weight: .medium, size: \(value.pointSize))")
+                attributes.append("$0.font = .init(weight: .medium, size: \(floatToString(value.pointSize)))")
             } else if value.weight == .none {
-                attributes.append("$0.font = .init(weight: .regular, size: \(value.pointSize))")
+                attributes.append("$0.font = .init(weight: .regular, size: \(floatToString(value.pointSize)))")
             } else {
                 attributes.append("$0.font = \(fontDescription)")
             }

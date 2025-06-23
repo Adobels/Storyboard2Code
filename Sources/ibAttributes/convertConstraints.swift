@@ -5,6 +5,7 @@
 //  Created by Blazej Sleboda on 04/06/2025.
 //
 import StoryboardDecoder
+import math_h
 
 private func constraintLayoutAttribute(_ attribute: Constraint.LayoutAttribute?) -> String {
     guard let attribute else { return "attribute is nil" }
@@ -107,10 +108,10 @@ struct S2CConstraint {
         }
         components.append(".\(secondAttribute!)Anchor")
         if let constant {
-            components.append(", constant: \(constant)")
+            components.append(", constant: \(floatToString(constant))")
         }
         if let multiplier = convertMultiplierToFloat() {
-            components.append(", multiplier: \(multiplier)")
+            components.append(", multiplier: \(floatToString(multiplier))")
         }
         components.append(")")
         if let ibPriority = convertPriorityToCode() { components.append(ibPriority) }
@@ -132,7 +133,7 @@ struct S2CConstraint {
         } else {
             return nil
         }
-        components.append(".\(relation)ToConstant: \(constant ?? 0)")
+        components.append(".\(relation)ToConstant: \(floatToString(constant ?? 0))")
         components.append(")")
         if let ibPriority = convertPriorityToCode() { components.append(ibPriority) }
         if let ibIdentifier = convertIdentifierToCode() { components.append(ibIdentifier) }
@@ -182,7 +183,13 @@ struct S2CConstraint {
 
 private extension S2CConstraint {
     func convertPriorityToCode() -> String? {
-        if let priority { ".ibPriority(.init(\(priority)))" } else { nil }
+        if let priority {
+            if priority == floorf(priority) {
+                return ".ibPriority(.init(\(Int(priority)))"
+            } else {
+                return ".ibPriority(.init(\(priority))"
+            }
+        } else { return nil }
     }
     func convertIdentifierToCode() -> String? {
         if let identifier { ".ibIdentifier(\"\(identifier)\")" } else { nil }
@@ -214,4 +221,3 @@ struct ViewPropertiesForParsing {
         customClass ?? elementClass
     }
 }
-
