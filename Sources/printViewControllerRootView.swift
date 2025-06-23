@@ -117,7 +117,7 @@ func printViewControllerRootView(_ anyViewController: AnyViewController) {
     }
     Context.shared.output.append("}")
     //printIbAttributes(getIBConstraints(of: rootView).sorted())
-    let ibOutletsToViews: [String] = Context.shared.variableViewIbOutlet2.reduce([String](), { partialResult, ibViewId in
+    let ibOutletsToViews: [String] = Context.shared.variableViewIbOutlet2.sorted().reduce([String](), { partialResult, ibViewId in
         let variableIsNeeded = Context.shared.variableViewIbOutlet.first { (viewId: String, viewClass: String) in
             viewId == ibViewId
         }
