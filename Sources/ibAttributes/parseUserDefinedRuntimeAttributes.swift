@@ -28,7 +28,11 @@ func parseUserDefinedRuntimeAttributes(of uiView: ViewProtocol) -> [String] {
         } else if attribute.keyPath == "locKeyPlaceholder" { // 112 occurences
             attributes.append("$0.\(attribute.keyPath) = \(attribute.value!)")
         } else if attribute.keyPath == "themeStyle" { // 104 occurences
-            attributes.append("$0.\(attribute.keyPath) = \"\(attribute.value!)\"")
+            if uiView.customClass == "LargeButton" {
+                attributes.append("$0.style = .\(attribute.value!)")
+            } else {
+                attributes.append("$0.themeStyle = \"\(attribute.value!)\"")
+            }
         } else if attribute.keyPath == "loaderPositionName" { // 94 occurences
             attributes.append("$0.loaderPosition = .\(attribute.value!)")
         } else if attribute.keyPath == "cornerRadius" { // 88 occurences
