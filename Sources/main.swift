@@ -8,13 +8,15 @@
 import Foundation
 import StoryboardDecoder
 
-let url = Bundle.module.url(forResource: "Biometrics", withExtension: "xml")!
+let url = Bundle.module.url(forResource: "Login", withExtension: "xml")!
 let sb = try! StoryboardFile(url: url)
 let initialScene = sb.document.scenes!.first!
-convertStoryboard2Code(initialScene.viewController!)
+let result = convertStoryboard2Code(initialScene.viewController!)
 
 @MainActor
-func convertStoryboard2Code(_ anyViewController: AnyViewController) {
+@discardableResult
+func convertStoryboard2Code(_ anyViewController: AnyViewController) -> [String] {
     printViewControllerRootView(anyViewController)
     print(Context.shared.output.joined(separator: "\n"))
+    return Context.shared.output
 }

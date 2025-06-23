@@ -9,10 +9,7 @@ import StoryboardDecoder
 
 @MainActor
 func printViewControllerRootView(_ anyViewController: AnyViewController) {
-    guard let vc = anyViewController.viewController as? ViewController else {
-        Context.shared.output.append("wrong view controller")
-        return
-    }
+    guard let vc = anyViewController.viewController as? ViewController else { fatalError() }
     Context.shared.viewController = anyViewController
     let rootView: View = vc.rootView as! View
     let elements = rootView.subviews!

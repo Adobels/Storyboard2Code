@@ -109,6 +109,9 @@ struct S2CConstraint {
         if let constant {
             components.append(", constant: \(constant)")
         }
+        if let multiplier = convertMultiplierToFloat() {
+            components.append(", multiplier: \(multiplier)")
+        }
         components.append(")")
         if let ibPriority = convertPriorityToCode() { components.append(ibPriority) }
         if let ibIdentifier = convertIdentifierToCode() { components.append(ibIdentifier) }
@@ -183,6 +186,16 @@ private extension S2CConstraint {
     }
     func convertIdentifierToCode() -> String? {
         if let identifier { ".ibIdentifier(\"\(identifier)\")" } else { nil }
+    }
+    func convertMultiplierToFloat() -> Float? {
+        guard let multiplier, multiplier != nil else { return nil }
+        let components = multiplier.components(separatedBy: ":")
+        if components.count > 1 {
+            let mulitplierValue = Float(components.first!)! / Float(components.last!)!
+            return mulitplierValue
+        } else {
+            return .init(multiplier)!
+        }
     }
 }
 
