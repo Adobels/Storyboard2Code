@@ -127,14 +127,13 @@ struct S2CConstraint {
         var components: [String] = []
         components.append("$0")
         if firstAttribute == .height {
-            components.append(".height(")
+            components.append(".heightAnchor")
         } else if firstAttribute == .width {
-            components.append(".width(")
+            components.append(".widthAnchor")
         } else {
-            return nil
+            fatalError()
         }
-        components.append(".\(relation)ToConstant: \(floatToString(constant ?? 0))")
-        components.append(")")
+        components.append(".constraint(\(relation)ToConstant: \(floatToString(constant ?? 0)))")
         if let ibPriority = convertPriorityToCode() { components.append(ibPriority) }
         if let ibIdentifier = convertIdentifierToCode() { components.append(ibIdentifier) }
         return components.joined()
@@ -185,9 +184,9 @@ private extension S2CConstraint {
     func convertPriorityToCode() -> String? {
         if let priority {
             if priority == floorf(priority) {
-                return ".ibPriority(.init(\(Int(priority)))"
+                return ".ibPriority(.init(\(Int(priority))))"
             } else {
-                return ".ibPriority(.init(\(priority))"
+                return ".ibPriority(.init(\(priority)))"
             }
         } else { return nil }
     }
