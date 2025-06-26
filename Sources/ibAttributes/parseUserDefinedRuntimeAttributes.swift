@@ -18,7 +18,11 @@ func parseUserDefinedRuntimeAttributes(of uiView: ViewProtocol) -> [String] {
         if attribute.keyPath == "locKey" { // 788 occurences
             // "locKey always has a value, checked with regex in the project "
             // <userDefinedRuntimeAttribute[^>]*keyPath="locKey"(?![^>]*value=)
-            attributes.append("$0.text = \(fixLocKey(value: attribute.value!))")
+            if uiView.elementClass == "UIButton" {
+                attributes.append("$0.setTitle(\(fixLocKey(value: attribute.value!)), for: .normal)")
+            } else {
+                attributes.append("$0.text = \(fixLocKey(value: attribute.value!))")
+            }
         } else if attribute.keyPath == "textColorName" { // 545 occurences
             attributes.append("$0.textColor = Colors.\(attribute.value!)")
         } else if attribute.keyPath == "tintColorName" { // 288 occurences
@@ -26,7 +30,7 @@ func parseUserDefinedRuntimeAttributes(of uiView: ViewProtocol) -> [String] {
         } else if attribute.keyPath == "textLineSpacing" { // 160 occurences
             attributes.append("$0.\(attribute.keyPath) = \(attribute.value!)")
         } else if attribute.keyPath == "locKeyPlaceholder" { // 112 occurences
-            attributes.append("$0.\(attribute.keyPath) = \(attribute.value!)")
+            attributes.append("$0.\(attribute.keyPath) = \(fixLocKey(value: attribute.value!))")
         } else if attribute.keyPath == "themeStyle" { // 104 occurences
             if uiView.customClass == "LargeButton" {
                 attributes.append("$0.style = .\(attribute.value!)")
@@ -100,13 +104,18 @@ func parseUserDefinedRuntimeAttributes(of uiView: ViewProtocol) -> [String] {
     return attributes
 }
 
-private func fixLocKey(value: Any?) -> String {
+func lowercaseFirstLetterOfString(_ string: String) -> String {
+    guard let first = string.first else { return string }
+    return first.lowercased() + string.dropFirst()
+}
+
+func fixLocKey(value: Any?) -> String {
     guard let value, let stringValue = value as? String else { return "error" }
-    var locKeyComponents = stringValue.split(separator: .init(".")).map { String($0) }
-    guard let lastComponent = locKeyComponents.popLast() else {
-        fatalError("I supose that locKey always has two or more components separated by dot")
-    }
-    locKeyComponents = locKeyComponents.map { $0.capitalized }
-    locKeyComponents.append(lastComponent)
-    return "Loc." + locKeyComponents.joined(separator: ".")
+    var components = stringValue
+        .components(separatedBy: "_")
+        .map { $0.capitalized }
+        .joined()
+        .components(separatedBy: ".")
+    components[components.count - 1] = lowercaseFirstLetterOfString(components[components.count - 1])
+    return "Loc." + components.joined(separator: ".")
 }
