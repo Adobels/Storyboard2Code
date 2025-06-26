@@ -16,6 +16,7 @@ struct S2COutlet {
     let viewId: String
     let property: String
     let destination: String
+    let isOutletToDestination: Bool
 }
 
 @MainActor
@@ -40,9 +41,9 @@ func printViewControllerRootView(_ anyViewController: AnyViewController) {
                     (item.element as? IBIdentifiable)?.id == .some(outlet.destination)
                 }!
                 if currentViewOffset > viewDestination.offset  {
-                    outlets.append(S2COutlet(viewId: viewId, property: outlet.property, destination: outlet.destination))
+                    outlets.append(S2COutlet(viewId: viewId, property: outlet.property, destination: outlet.destination, isOutletToDestination: true))
                 } else {
-                    outlets.append(S2COutlet(viewId: outlet.destination, property: outlet.property, destination: viewId))
+                    outlets.append(S2COutlet(viewId: outlet.destination, property: outlet.property, destination: viewId, isOutletToDestination: false))
                 }
             }
             return true

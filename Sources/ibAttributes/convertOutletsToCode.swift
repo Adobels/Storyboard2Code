@@ -1,5 +1,5 @@
 //
-//  getIbOutlet.swift
+//  convertOutletsToCode.swift
 //  story2code
 //
 //  Created by Blazej Sleboda on 11/06/2025.
@@ -13,7 +13,11 @@ func convertOutletsToCode(of element: ViewProtocol) -> [String] {
     Context.shared.ibOutlet.filter { outlet in
         outlet.viewId == viewId
     }.forEach { outlet in
-        output.append("$0.\(outlet.property) = \(sanitizedOutletName(from: outlet.destination)!)")
+        if outlet.isOutletToDestination {
+            output.append("$0.\(outlet.property) = \(sanitizedOutletName(from: outlet.destination)!)")
+        } else {
+            output.append("$0.ibOutlet(&\(sanitizedOutletName(from: outlet.destination)!).\(outlet.property))")
+        }
     }
     return output
 }
