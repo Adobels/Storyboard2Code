@@ -7,6 +7,17 @@
 
 import StoryboardDecoder
 
+struct S2CView {
+    let id: String
+    let elementClass: String
+    let customClass: String?
+}
+struct S2COutlet {
+    let viewId: String
+    let property: String
+    let destination: String
+}
+
 @MainActor
 func printViewControllerRootView(_ anyViewController: AnyViewController) {
     guard let vc = anyViewController.viewController as? ViewController else { fatalError() }
@@ -15,7 +26,29 @@ func printViewControllerRootView(_ anyViewController: AnyViewController) {
     let elements = rootView.subviews!
     Context.shared.rootView = rootView
     Context.shared.rootViewProtocol = vc.rootView!
-    Context.shared.ibOutlet = vc.allConnections.compactMap { $0.connection as? Outlet }
+    //Context.shared.ibOutlet = vc.allConnections.compactMap { $0.connection as? Outlet }
+    _ = {
+        let viewFlattened = vc.flattened.enumerated()
+        var outlets: [S2COutlet] = []
+        rootView.browse { element in
+            guard let anyView = element as? ViewProtocol else { return true }
+            guard let outlet = (anyView.connections?.compactMap { (($0 as? AnyConnection)?.connection as? Outlet) }) else { return true }
+            let viewId = (anyView as! IBIdentifiable).id
+            let currentViewOffset = viewFlattened.first { item in (item.element as? IBIdentifiable)?.id == viewId }!.offset
+            outlet.forEach { outlet in
+                let viewDestination = viewFlattened.first { item in
+                    (item.element as? IBIdentifiable)?.id == .some(outlet.destination)
+                }!
+                if currentViewOffset > viewDestination.offset  {
+                    outlets.append(S2COutlet(viewId: viewId, property: outlet.property, destination: outlet.destination))
+                } else {
+                    outlets.append(S2COutlet(viewId: outlet.destination, property: outlet.property, destination: viewId))
+                }
+            }
+            return true
+        }
+        Context.shared.ibOutlet = outlets
+    }()
     Context.shared.ibAction = vc.allConnections.compactMap { $0.connection as? Action }
     Context.shared.rootViewControllerId = vc.id
     _ = {
@@ -108,7 +141,6 @@ func printViewControllerRootView(_ anyViewController: AnyViewController) {
         if let viewIbOutlet = getIbOutletToVariable(of: element.view) {
             Context.shared.output.append(viewIbOutlet)
         }
-        getIbOutlet(of: element.view)
         let subviews = element.view.subviews
         if let subviews, subviews.count > 0 {
             printView(elements: subviews)
