@@ -45,7 +45,7 @@ func printIbAttributes(of element: AnyView) {
         attributes.append(contentsOf: parseSwitch(of: uiswitch))
     }
     if let scrollView = element.view as? ScrollView {
-        //TODO: Add parsing for ScrollView subclass attributes
+        attributes.append(contentsOf: parseUIScrollView(of: scrollView))
     }
     if let collectionViewcell = element.view as? CollectionViewCell {
         //TODO: Add parsing for UICollectionViewCell
@@ -54,7 +54,7 @@ func printIbAttributes(of element: AnyView) {
         //TODO: Add parsing for UIDatePicker
     }
     if let textView = element.view as? TextView {
-        //TODO: Add parsing for UITextView
+        attributes.append(contentsOf: parseUITextView(of: textView))
     }
     if let pageControl = element.view as? PageControl {
         attributes.append(contentsOf: parseUIPageControl(of: pageControl))

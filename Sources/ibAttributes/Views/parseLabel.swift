@@ -16,20 +16,10 @@ func parseIbAttributes(of view: Label) -> [String] {
         attributes.append("$0.attributedText = \"\(attributedText)\"")
     }
     if let fontDescription = view.fontDescription {
-        if case .system(let value) = fontDescription {
-            if value.weight == .some("medium") {
-                attributes.append("$0.font = .init(weight: .medium, size: \(floatToString(value.pointSize)))")
-            } else if value.weight == .none {
-                attributes.append("$0.font = .init(weight: .regular, size: \(floatToString(value.pointSize)))")
-            } else {
-                attributes.append("$0.font = \(fontDescription)")
-            }
-        } else {
-            attributes.append("$0.font = \(fontDescription)")
-        }
+        attributes.append("$0.font = \(fontDescriptionToCode(fontDescription))")
     }
     if let textColor = view.textColor {
-        attributes.append("$0.textColor = \(textColor)")
+        attributes.append("$0.textColor = \(colorToCode(textColor))")
     }
     if let textAlignment = view.textAlignment {
         attributes.append("$0.textAlignment = .\(textAlignment)")
