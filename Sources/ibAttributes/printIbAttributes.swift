@@ -16,11 +16,6 @@ func printIbAttributes(_ attributes: [String]) {
 @MainActor
 func printIbAttributes(of element: AnyView) {
     var attributes = [String]()
-    /*let constraints = getIBConstraints(of: element.view).sorted()
-    if !constraints.isEmpty {
-        attributes.append("// ibOutlet: \(sanitizedOutletName(from: (element.view as! IBIdentifiable).id)!)")
-        attributes.append(contentsOf: getIBConstraints(of: element.view).sorted())
-    }*/
     let constraintsFound = Context.shared.arrayConstrains.filter { $0.viewId == sanitizedOutletName(from: (element.view as! IBIdentifiable).id)! }
     constraintsFound.forEach { attributes.append($0.constraint) }
     attributes.append(contentsOf: getIBActions(of: element.view))
@@ -47,7 +42,7 @@ func printIbAttributes(of element: AnyView) {
         //TODO: Add parsing for TableView subclass attributes
     }
     if let uiswitch = element.view as? Switch {
-        //TODO: Add parsing for Switch subclass attributes
+        attributes.append(contentsOf: parseSwitch(of: uiswitch))
     }
     if let scrollView = element.view as? ScrollView {
         //TODO: Add parsing for ScrollView subclass attributes
@@ -62,16 +57,16 @@ func printIbAttributes(of element: AnyView) {
         //TODO: Add parsing for UITextView
     }
     if let pageControl = element.view as? PageControl {
-        //TODO: Add parsing for UIPageControl
+        attributes.append(contentsOf: parseUIPageControl(of: pageControl))
     }
     if let collectionView = element.view as? CollectionView {
         //TODO: Add parsing for UICollectionView
     }
     if let pickerView = element.view as? PickerView {
-        //TODO: Add parsing for UIPickerView
+        attributes.append(contentsOf: parseUIPickerView(of: pickerView))
     }
     if let activityIndicatorView = element.view as? ActivityIndicatorView {
-        //TODO: Add parsing for UIActivityIndicatorView
+        attributes.append(contentsOf: parseUIActivityIndicatorView(of: activityIndicatorView))
     }
     attributes.append(contentsOf: parseIbAttributes(of: element.view))
     attributes.append(contentsOf: parseUserDefinedRuntimeAttributes(of: element.view))
