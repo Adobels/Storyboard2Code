@@ -68,7 +68,7 @@ func printIbAttributes(of element: AnyView) {
     if let activityIndicatorView = element.view as? ActivityIndicatorView {
         attributes.append(contentsOf: parseUIActivityIndicatorView(of: activityIndicatorView))
     }
-    attributes.append(contentsOf: parseIbAttributes(of: element.view))
+    attributes.append(contentsOf: parseUIView(of: element.view))
     attributes.append(contentsOf: parseUserDefinedRuntimeAttributes(of: element.view))
     printIbAttributes(attributes)
 }
