@@ -36,7 +36,7 @@ func printIbAttributes(of element: AnyView) {
         attributes.append(contentsOf: parseStackViewAttributes(stackView))
     }
     if let textField = element.view as? TextField {
-        //TODO: Add parsing for UITextField subclass attributes
+        attributes.append(contentsOf: parseUITextField(of: textField))
     }
     if let tableView = element.view as? TableView {
         //TODO: Add parsing for TableView subclass attributes
