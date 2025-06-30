@@ -12,12 +12,18 @@ func parseUIView(of view: ViewProtocol) -> [String] {
     if let value = view.contentMode  {
         result.append("$0.contentMode = .\(value)")
     }
-    // missing support for Semantic
-    // missing support for tag
+    if let value = view.semanticContentAttribute {
+        result.append("$0.semanticContentAttribute = .\(value)")
+    }
+    if let value = view.tag {
+        result.append("$0.tag = \(value)")
+    }
     if let value = view.userInteractionEnabled {
         result.append("$0.isUserInteractionEnabled = \(value)")
     }
-    // missing support for multiple Touch
+    if let value = view.multipleTouchEnabled {
+        result.append("$0.isMultipleTouchEnabled = \(value)")
+    }
     if let value = view.alpha {
         result.append("$0.alpha = \(value)")
     }
@@ -33,14 +39,16 @@ func parseUIView(of view: ViewProtocol) -> [String] {
     if let value = view.isHidden {
         result.append("$0.isHidden = \(value)")
     }
-    // missing support for clearsContextBeforeDrawing
+    if let value = view.clearsContextBeforeDrawing {
+        result.append("$0.clearsContextBeforeDrawing = \(value)")
+    }
     if let value = view.clipsSubviews {
         result.append("$0.clipsToBounds = \(value)")
     }
-    // missing support for autoresizesSubviews
-
+    if let value = view.autoresizesSubviews {
+        result.append("$0.autoresizesSubviews = \(value)")
+    }
     // Size Inspector properties
-
     if let horizontalHuggingPriority = view.horizontalHuggingPriority, horizontalHuggingPriority != 250 {
         result.append("$0.setContentHuggingPriority(\(resistancePriorityToCode(horizontalHuggingPriority)), for: .horizontal)")
     }
