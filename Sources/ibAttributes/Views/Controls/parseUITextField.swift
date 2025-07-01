@@ -9,6 +9,7 @@ import StoryboardDecoder
 
 func parseUITextField(of textField: TextField) -> [String] {
     var result = [String]()
+    result.append(contentsOf: parseUIControl(of: textField))
     if let text = textField.text {
         result.append("$0.text = \"\(text)\"")
     }
@@ -84,35 +85,5 @@ func parseUITextField(of textField: TextField) -> [String] {
     if let value = textField.textInputTraits?.secureTextEntry {
         result.append("$0.secureTextEntry = \(value)")
     }
-    // -- UIControl
-    if let value = textField.contentHorizontalAlignment {
-        result.append("$0.contentHorizontalAlignment = .\(value)")
-    }
-    if let value = textField.contentVerticalAlignment {
-        result.append("$0.contentVerticalAlignment = .\(value)")
-    }
-    // missing support for Menu : Shows as Primary Action
-    if let value = textField.isSelected {
-        result.append("$0.isSelected = \(value)")
-    }
-    if let value = textField.isEnabled {
-        result.append("$0.isEnabled = \(value)")
-    }
-    if let value = textField.isHighlighted {
-        result.append("$0.isHighlighted = \(value)")
-    }
-    // missing support for Tooltip
     return result
-}
-
-
-struct TextFieldWrapper {
-
-    let textField: TextField
-
-    init(with textField: TextField) {
-        self.textField = textField
-    }
-
-    var textContentType: String? { textField.textInputTraits?.textContentType }
 }

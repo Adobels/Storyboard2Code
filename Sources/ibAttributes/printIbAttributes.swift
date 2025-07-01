@@ -20,6 +20,7 @@ func printIbAttributes(of element: AnyView) {
     constraintsFound.forEach { attributes.append($0.constraint) }
     attributes.append(contentsOf: getIBActions(of: element.view))
     attributes.append(contentsOf: convertOutletsToCode(of: element.view))
+    attributes.append(contentsOf: parseUIView(of: element.view))
     if let label = element.view as? Label {
         attributes.append(contentsOf: parseIbAttributes(of: label))
     }
@@ -42,7 +43,7 @@ func printIbAttributes(of element: AnyView) {
         //TODO: Add parsing for TableView subclass attributes
     }
     if let uiswitch = element.view as? Switch {
-        attributes.append(contentsOf: parseSwitch(of: uiswitch))
+        attributes.append(contentsOf: parseUISwitch(of: uiswitch))
     }
     if let scrollView = element.view as? ScrollView {
         attributes.append(contentsOf: parseUIScrollView(of: scrollView))
@@ -68,7 +69,6 @@ func printIbAttributes(of element: AnyView) {
     if let activityIndicatorView = element.view as? ActivityIndicatorView {
         attributes.append(contentsOf: parseUIActivityIndicatorView(of: activityIndicatorView))
     }
-    attributes.append(contentsOf: parseUIView(of: element.view))
     attributes.append(contentsOf: parseUserDefinedRuntimeAttributes(of: element.view))
     printIbAttributes(attributes)
 }

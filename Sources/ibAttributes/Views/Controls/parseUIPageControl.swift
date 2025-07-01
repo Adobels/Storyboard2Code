@@ -9,6 +9,7 @@ import StoryboardDecoder
 
 func parseUIPageControl(of pageControl: PageControl) -> [String] {
     var output: [String] = .init()
+    output.append(contentsOf: parseUIControl(of: pageControl))
     if let numberOfPages = pageControl.numberOfPages {
         output.append("$0.numberOfPages = \(numberOfPages)")
     }

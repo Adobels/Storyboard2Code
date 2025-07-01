@@ -5,11 +5,11 @@
 //  Created by Blazej Sleboda on 26/06/2025.
 //
 
-import Foundation
 import StoryboardDecoder
 
-func parseSwitch(of switchView: Switch) -> [String] {
+func parseUISwitch(of switchView: Switch) -> [String] {
     var attr = [String]()
+    attr.append(contentsOf: parseUIControl(of: switchView))
     if switchView.on {
         attr.append("$0.setOn(true, animated: false)")
     }
