@@ -52,7 +52,7 @@ func printIbAttributes(of element: AnyView) {
         //TODO: Add parsing for UICollectionViewCell
     }
     if let datePicker = element.view as? DatePicker {
-        //TODO: Add parsing for UIDatePicker
+        attributes.append(contentsOf: parseUIDatePicker(of: datePicker))
     }
     if let textView = element.view as? TextView {
         attributes.append(contentsOf: parseUITextView(of: textView))
