@@ -71,19 +71,19 @@ func printViewControllerRootView(_ anyViewController: AnyViewController) {
             if let view = item as? View {
                 [view.safeArea, view.keyboard].compactMap { $0 }.forEach {
                     arrayLayoutGuideIdToParentViewId.append(
-                        .init(layoutGuideId: $0.id, layoutGuideKey: $0.key, parentViewId: $0.id)
+                        .init(layoutGuideId: $0.id, layoutGuideKey: $0.key, parentViewId: view.id)
                     )
                 }
             }
             if let view = item as? (any ScrollViewProtocol) {
                 [view.safeArea, view.keyboard].compactMap { $0 }.forEach {
                     arrayLayoutGuideIdToParentViewId.append(
-                        .init(layoutGuideId: $0.id, layoutGuideKey: $0.key, parentViewId: $0.id)
+                        .init(layoutGuideId: $0.id, layoutGuideKey: $0.key, parentViewId: view.id)
                     )
                 }
                 [view.contentLayoutGuide, view.frameLayoutGuide].compactMap { $0 }.forEach {
                     arrayLayoutGuideIdToParentViewId.append(
-                        .init(layoutGuideId: $0.id, layoutGuideKey: $0.key, parentViewId: $0.id)
+                        .init(layoutGuideId: $0.id, layoutGuideKey: $0.key, parentViewId: view.id)
                     )
                 }
             }
