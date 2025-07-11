@@ -15,10 +15,10 @@ func parseUIDatePicker(of view: DatePicker) -> [String] {
     if let value = view.contentMode {
         result.append("$0.datePickerMode = .\(value)") // time, date, dateAndTime, yearAndMonth, countDownTimer
     }
-    //missing support view.locale
-    if let value = view.minuteInterval {
-        result.append("$0.minuteInterval = \(value)")
+    if let value = view.locale {
+        result.append("$0.locale = .\(value)")
     }
+    result.append("$0.minuteInterval = \(view.minuteInterval)")
     if let value = view.date {
         result.append("$0.date = \(value)")
     }

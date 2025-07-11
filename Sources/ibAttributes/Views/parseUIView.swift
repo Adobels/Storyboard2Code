@@ -36,7 +36,7 @@ func parseUIView(of view: ViewProtocol) -> [String] {
     if let value = view.opaque {
         result.append("$0.isOpaque = \(value)")
     }
-    if let value = view.isHidden {
+    if let value = view.hidden {
         result.append("$0.isHidden = \(value)")
     }
     if let value = view.clearsContextBeforeDrawing {

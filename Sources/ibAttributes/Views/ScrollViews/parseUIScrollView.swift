@@ -62,12 +62,12 @@ private struct UIKitUIScrollView {
 
     let scrollView: ScrollView
 
-    var indicatorStyle: ScrollView.IndicatorStyle? { scrollView.indicatorStyle }
+    var indicatorStyle: IndicatorStyle? { scrollView.indicatorStyle }
     var showsHorizontalScrollIndicator: Bool? { scrollView.showsHorizontalScrollIndicator }
     var showsVerticalScrollIndicator: Bool? { scrollView.showsVerticalScrollIndicator }
     var isScrollEnabled: Bool? { scrollView.scrollEnabled }
-    var isPagingEnabled: Bool? { scrollView.isPagingEnabled }
-    var isDirectionalLockEnabled: Bool? { scrollView.isDirectionalLockEnabled }
+    var isPagingEnabled: Bool? { scrollView.pagingEnabled }
+    var isDirectionalLockEnabled: Bool? { scrollView.directionalLockEnabled }
     var bounces: Bool? { scrollView.bounces }
     var bouncesZoom: Bool? { scrollView.bouncesZoom }
     var alwaysBounceHorizontal: Bool? { scrollView.alwaysBounceHorizontal }

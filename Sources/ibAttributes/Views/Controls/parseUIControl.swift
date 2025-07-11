@@ -14,16 +14,20 @@ func parseUIControl(of control: ControlProtocol) -> [String] {
     if let value = control.contentVerticalAlignment {
         result.append("$0.contentVerticalAlignment = .\(value)")
     }
-    // missing support for Menu : Shows as Primary Action
-    if let value = control.isSelected {
+    if let value = control.showsMenuAsPrimaryAction {
+        result.append("$0.showsMenuAsPrimaryAction = \(value)")
+    }
+    if let value = control.selected {
         result.append("$0.isSelected = \(value)")
     }
-    if let value = control.isEnabled {
+    if let value = control.enabled {
         result.append("$0.isEnabled = \(value)")
     }
-    if let value = control.isHighlighted {
+    if let value = control.highlighted {
         result.append("$0.isHighlighted = \(value)")
     }
-    // missing support for Tooltip
+    if let value = control.toolTip {
+        result.append("$0.toolTip = \(value)")
+    }
     return result
 }

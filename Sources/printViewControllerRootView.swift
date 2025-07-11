@@ -68,11 +68,24 @@ func printViewControllerRootView(_ anyViewController: AnyViewController) {
         }
         var arrayLayoutGuideIdToParentViewId: [LayoutGuideIdToParentViewId] = []
         rootView.browse(skipSelf: false) { item in
-            guard let anyView = item as? ViewProtocol else { return true }
-            if let view = anyView as? View, let viewLayoutGuide = view.viewLayoutGuide {
-                arrayLayoutGuideIdToParentViewId.append(
-                    .init(layoutGuideId: viewLayoutGuide.id, layoutGuideKey: viewLayoutGuide.key, parentViewId: view.id)
-                )
+            if let view = item as? View {
+                [view.safeArea, view.keyboard].compactMap { $0 }.forEach {
+                    arrayLayoutGuideIdToParentViewId.append(
+                        .init(layoutGuideId: $0.id, layoutGuideKey: $0.key, parentViewId: $0.id)
+                    )
+                }
+            }
+            if let view = item as? (any ScrollViewProtocol) {
+                [view.safeArea, view.keyboard].compactMap { $0 }.forEach {
+                    arrayLayoutGuideIdToParentViewId.append(
+                        .init(layoutGuideId: $0.id, layoutGuideKey: $0.key, parentViewId: $0.id)
+                    )
+                }
+                [view.contentLayoutGuide, view.frameLayoutGuide].compactMap { $0 }.forEach {
+                    arrayLayoutGuideIdToParentViewId.append(
+                        .init(layoutGuideId: $0.id, layoutGuideKey: $0.key, parentViewId: $0.id)
+                    )
+                }
             }
             return true
         }

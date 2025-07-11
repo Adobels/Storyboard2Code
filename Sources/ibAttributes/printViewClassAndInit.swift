@@ -12,8 +12,8 @@ func printViewClassAndInit(_ element: AnyView) -> [String] {
     let elementId = sanitizedOutletName(from: (element.view as! IBIdentifiable).id)!
     var output: [String] = []
     output = ["\(elementClass)()"]
-    if let stackView = element.view as? StackView, stackView.isVertical {
-        output = ["\(elementClass)(axis: .vertical)"]
+    if let stackView = element.view as? StackView, let axis = stackView.axis {
+        output = ["\(elementClass)(axis: .\(axis)"]
     }
     output.append("// ")
     output.append(elementId)

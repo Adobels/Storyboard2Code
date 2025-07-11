@@ -15,8 +15,8 @@ func parseUIActivityIndicatorView(of element: ActivityIndicatorView) -> [String]
     if let color = element.color {
         attr.append("$0.color = .\(colorToCode(color))")
     }
-    if let isAnimating = element.isAnimating {
-        attr.append("$0.isAnimating = \(isAnimating)")
+    if let value = element.animating {
+        attr.append("$0.isAnimating = \(value)")
     }
     if let hidesWhenStopped = element.hidesWhenStopped {
         attr.append("$0.hidesWhenStopped = \(hidesWhenStopped)")

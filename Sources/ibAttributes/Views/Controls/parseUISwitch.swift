@@ -10,8 +10,8 @@ import StoryboardDecoder
 func parseUISwitch(of switchView: Switch) -> [String] {
     var attr = [String]()
     attr.append(contentsOf: parseUIControl(of: switchView))
-    if switchView.on {
-        attr.append("$0.setOn(true, animated: false)")
+    if let value = switchView.on {
+        attr.append("$0.setOn(\(value), animated: false)")
     }
     if let color = switchView.onTintColor {
         attr.append("$0.onTintColor = .\(color)")

@@ -25,8 +25,8 @@ func parseIbAttributes(of view: Label) -> [String] {
         attributes.append("$0.textAlignment = .\(textAlignment)")
     }
     // var lineBreakStrategy: NSParagraphStyle.LineBreakStrategy
-    if let isEnabled = view.isEnabled {
-        attributes.append("$0.isEnabled = \(isEnabled)")
+    if let value = view.enabled {
+        attributes.append("$0.isEnabled = \(value)")
     }
     // var enablesMarqueeWhenAncestorFocused: Bool
     // var showsExpansionTextWhenTruncated: Bool
@@ -45,8 +45,8 @@ func parseIbAttributes(of view: Label) -> [String] {
     if let adjustsFontSizeToFit = view.adjustsFontSizeToFit {
         attributes.append("$0.adjustsFontSizeToFitWidth = \(adjustsFontSizeToFit)")
     }
-    if let allowsDefaultTighteningForTruncation = view.allowsDefaultTighteningForTruncation {
-        attributes.append("$0.allowsDefaultTighteningForTruncation = \(allowsDefaultTighteningForTruncation)")
+    if let value = view.adjustsLetterSpacingToFitWidth {
+        attributes.append("$0.allowsDefaultTighteningForTruncation = \(value)")
     }
     if let baselineAdjustment = view.baselineAdjustment {
         attributes.append("$0.baselineAdjustment = .\(baselineAdjustment)")
