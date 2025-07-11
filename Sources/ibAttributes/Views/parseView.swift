@@ -9,6 +9,7 @@ import StoryboardDecoder
 
 func parseView(of view: ViewProtocol) -> [String] {
     var result: [String] = []
+    // contentMode should be parsed only in ImageView
 //    if let value = view.contentMode  {
 //        result.append("$0.contentMode = .\(value)")
 //    }

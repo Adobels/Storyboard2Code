@@ -16,7 +16,6 @@ func parseImageView(of imageView: ImageView) -> [String] {
         return ([first] + rest).joined()
     }
 
-
     var attr = [String]()
     if let value = imageView.contentMode {
         attr.append("$0.conentMode = .\(value)")

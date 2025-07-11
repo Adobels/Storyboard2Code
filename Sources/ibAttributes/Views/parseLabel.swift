@@ -9,9 +9,10 @@ import StoryboardDecoder
 
 func parseIbAttributes(of view: Label) -> [String] {
     var attributes: [String] = []
-    if let text = view.text {
-        attributes.append("$0.text = \"\(text)\"")
-    }
+    // Client project uses user runtime attributes to set the title
+//    if let text = view.text {
+//        attributes.append("$0.text = \"\(text)\"")
+//    }
     if let attributedText = view.attributedText {
         attributes.append("$0.attributedText = \"\(attributedText)\"")
     }
@@ -60,12 +61,8 @@ func parseIbAttributes(of view: Label) -> [String] {
     if let numberOfLines = view.numberOfLines {
         attributes.append("$0.numberOfLines = \(numberOfLines)")
     }
-    // var sizingRule: UILetterformAwareSizingRule
-    // var highlightedTextColor: UIColor?
-    // var isHighlighted: Bool
-    // var preferredVibrancy: UILabelVibrancy
-    // var shadowColor: UIColor?
-    // var shadowOffset: CGSize
-    // var preferredMaxLayoutWidth: CGFloat
+    if let value = view.shadowOffset {
+        attributes.append("$0.shadowOffset = \(value)")
+    }
     return attributes
 }
