@@ -54,6 +54,9 @@ func parseIbAttributes(of view: Label) -> [String] {
     if let minimumScaleFactor = view.minimumScaleFactor {
         attributes.append("$0.minimumScaleFactor = \(minimumScaleFactor)")
     }
+    if let value = view.minimumFontSize {
+        attributes.append("$0.minimumFontSize = \(value)")
+    }
     if let numberOfLines = view.numberOfLines {
         attributes.append("$0.numberOfLines = \(numberOfLines)")
     }

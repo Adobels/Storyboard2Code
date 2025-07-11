@@ -18,6 +18,9 @@ func parseStackViewAttributes(_ stackView: StackView) -> [String] {
     if let spacing = stackView.spacing {
         attributes.append("$0.spacing = \(spacing)")
     }
+    if let value = stackView.spacingType {
+        attributes.append("$0.spacingType = \(value)")
+    }
     if let baselineRelativeArrangement = stackView.baselineRelativeArrangement {
         attributes.append("$0.isBaselineRelativeArrangement = \(baselineRelativeArrangement)")
     }

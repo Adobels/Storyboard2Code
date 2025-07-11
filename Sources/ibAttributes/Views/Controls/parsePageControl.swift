@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  parsePageControl.swift
 //  story2code
 //
 //  Created by Blazej Sleboda on 26/06/2025.
@@ -7,9 +7,10 @@
 
 import StoryboardDecoder
 
-func parseUIPageControl(of pageControl: PageControl) -> [String] {
+func parsePageControl(of pageControl: PageControl) -> [String] {
     var output: [String] = .init()
-    output.append(contentsOf: parseUIControl(of: pageControl))
+    output.append(contentsOf: parseView(of: pageControl))
+    output.append(contentsOf: parseControl(of: pageControl))
     if let numberOfPages = pageControl.numberOfPages {
         output.append("$0.numberOfPages = \(numberOfPages)")
     }

@@ -1,12 +1,12 @@
 //
-//  parseUIControl.swift
+//  parseControl.swift
 //  story2code
 //
 //  Created by Blazej Sleboda on 01/07/2025.
 //
 import StoryboardDecoder
 
-func parseUIControl(of control: ControlProtocol) -> [String] {
+func parseControl(of control: ControlProtocol) -> [String] {
     var result = [String]()
     if let value = control.contentHorizontalAlignment {
         result.append("$0.contentHorizontalAlignment = .\(value)")

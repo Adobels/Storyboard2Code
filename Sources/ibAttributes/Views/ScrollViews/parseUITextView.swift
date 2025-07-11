@@ -9,6 +9,10 @@ import StoryboardDecoder
 
 func parseUITextView(of textView: TextView) -> [String] {
     var arrStrings = [String]()
+    arrStrings.append(contentsOf: parseView(of: textView))
+    if let view = textView as? ScrollViewProtocol {
+        arrStrings.append(contentsOf: parseScrollView(of: view))
+    } else { fatalError() }
     // Text View: Not all members are parsed
     if let text = textView.text {
         arrStrings.append("$0.text = \"\(text)\"")
@@ -21,13 +25,6 @@ func parseUITextView(of textView: TextView) -> [String] {
     }
     if let textAlignment = textView.textAlignment {
         arrStrings.append("$0.textAlignment = .\(textAlignment)")
-    }
-    // Scroll View: Not all members are parsed
-    if let value = textView.showsHorizontalScrollIndicator {
-        arrStrings.append("$0.showsHorizontalScrollIdicator = \(value)")
-    }
-    if let value = textView.showsVerticalScrollIndicator {
-        arrStrings.append("$0.showsVerticalScrollIndicator = \(value)")
     }
     return arrStrings
 }

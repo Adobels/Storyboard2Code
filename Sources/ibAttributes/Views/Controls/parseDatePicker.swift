@@ -1,5 +1,5 @@
 //
-//  parseUIDatePicker.swift
+//  parseDatePicker.swift
 //  story2code
 //
 //  Created by Blazej Sleboda on 01/07/2025.
@@ -7,8 +7,10 @@
 
 import StoryboardDecoder
 
-func parseUIDatePicker(of view: DatePicker) -> [String] {
+func parseDatePicker(of view: DatePicker) -> [String] {
     var result = [String]()
+    result.append(contentsOf: parseView(of: view))
+    result.append(contentsOf: parseControl(of: view))
     if let value = view.style {
         result.append("$0.datePickerStyle = .\(value)") // automatic, compact, inline, wheels
     }

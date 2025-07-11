@@ -20,7 +20,7 @@ func printIbAttributes(of element: AnyView) {
     constraintsFound.forEach { attributes.append($0.constraint) }
     attributes.append(contentsOf: getIBActions(of: element.view))
     attributes.append(contentsOf: convertOutletsToCode(of: element.view))
-    attributes.append(contentsOf: parseUIView(of: element.view))
+    attributes.append(contentsOf: parseView(of: element.view))
     if let label = element.view as? Label {
         attributes.append(contentsOf: parseIbAttributes(of: label))
     }
@@ -37,37 +37,37 @@ func printIbAttributes(of element: AnyView) {
         attributes.append(contentsOf: parseStackViewAttributes(stackView))
     }
     if let textField = element.view as? TextField {
-        attributes.append(contentsOf: parseUITextField(of: textField))
+        attributes.append(contentsOf: parseTextField(of: textField))
     }
     if let tableView = element.view as? TableView {
         //TODO: Add parsing for TableView subclass attributes
     }
     if let uiswitch = element.view as? Switch {
-        attributes.append(contentsOf: parseUISwitch(of: uiswitch))
+        attributes.append(contentsOf: parseSwitch(of: uiswitch))
     }
     if let scrollView = element.view as? ScrollView {
-        attributes.append(contentsOf: parseUIScrollView(of: scrollView))
+        attributes.append(contentsOf: parseScrollView(of: scrollView))
     }
     if let collectionViewcell = element.view as? CollectionViewCell {
         //TODO: Add parsing for UICollectionViewCell
     }
     if let datePicker = element.view as? DatePicker {
-        attributes.append(contentsOf: parseUIDatePicker(of: datePicker))
+        attributes.append(contentsOf: parseDatePicker(of: datePicker))
     }
     if let textView = element.view as? TextView {
         attributes.append(contentsOf: parseUITextView(of: textView))
     }
     if let pageControl = element.view as? PageControl {
-        attributes.append(contentsOf: parseUIPageControl(of: pageControl))
+        attributes.append(contentsOf: parsePageControl(of: pageControl))
     }
     if let collectionView = element.view as? CollectionView {
         //TODO: Add parsing for UICollectionView
     }
     if let pickerView = element.view as? PickerView {
-        attributes.append(contentsOf: parseUIPickerView(of: pickerView))
+        attributes.append(contentsOf: parsePickerView(of: pickerView))
     }
     if let activityIndicatorView = element.view as? ActivityIndicatorView {
-        attributes.append(contentsOf: parseUIActivityIndicatorView(of: activityIndicatorView))
+        attributes.append(contentsOf: parseActivityIndicatorView(of: activityIndicatorView))
     }
     attributes.append(contentsOf: parseUserDefinedRuntimeAttributes(of: element.view))
     printIbAttributes(attributes)

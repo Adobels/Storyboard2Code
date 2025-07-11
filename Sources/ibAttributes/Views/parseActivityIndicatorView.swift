@@ -1,5 +1,5 @@
 //
-//  parseUIActivityIndicatorView.swift
+//  parseActivityIndicatorView.swift
 //  story2code
 //
 //  Created by Blazej Sleboda on 26/06/2025.
@@ -7,8 +7,9 @@
 
 import StoryboardDecoder
 
-func parseUIActivityIndicatorView(of element: ActivityIndicatorView) -> [String] {
+func parseActivityIndicatorView(of element: ActivityIndicatorView) -> [String] {
     var attr: [String] = .init()
+    attr.append(contentsOf: parseView(of: element))
     if let style = element.style {
         attr.append("$0.style = .\(style)")
     }

@@ -1,5 +1,5 @@
 //
-//  parseUITextField.swift
+//  parseTextField.swift
 //  story2code
 //
 //  Created by Blazej Sleboda on 30/06/2025.
@@ -7,9 +7,10 @@
 
 import StoryboardDecoder
 
-func parseUITextField(of textField: TextField) -> [String] {
+func parseTextField(of textField: TextField) -> [String] {
     var result = [String]()
-    result.append(contentsOf: parseUIControl(of: textField))
+    result.append(contentsOf: parseView(of: textField))
+    result.append(contentsOf: parseControl(of: textField))
     if let text = textField.text {
         result.append("$0.text = \"\(text)\"")
     }
@@ -84,6 +85,9 @@ func parseUITextField(of textField: TextField) -> [String] {
     }
     if let value = textField.textInputTraits?.secureTextEntry {
         result.append("$0.secureTextEntry = \(value)")
+    }
+    if let value = textField.allowsEditingTextAttributes {
+        result.append("$0.allowsEditingTextAttributes = \(value)")
     }
     return result
 }
