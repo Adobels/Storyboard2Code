@@ -8,7 +8,7 @@
 import Foundation
 import StoryboardDecoder
 
-let url = Bundle.module.url(forResource: "Login", withExtension: "xml")!
+let url = Bundle.module.url(forResource: "Biometrics", withExtension: "xml")!
 let sb = try! StoryboardFile(url: url)
 let initialScene = sb.document.scenes!.first!
 let result = convertStoryboard2Code(initialScene.viewController!)
@@ -17,6 +17,12 @@ let result = convertStoryboard2Code(initialScene.viewController!)
 @discardableResult
 func convertStoryboard2Code(_ anyViewController: AnyViewController) -> [String] {
     printViewControllerRootView(anyViewController)
+    if let viewController = anyViewController.viewController as? ViewController {
+        Context.shared.output.append(contentsOf: parseViewController(viewController))
+        if initialScene.customObjects?.isEmpty == .some(false) {
+            Context.shared.output.append("view controller has additional views to parse")
+        }
+    }
     print(Context.shared.output.joined(separator: "\n"))
     return Context.shared.output
 }
