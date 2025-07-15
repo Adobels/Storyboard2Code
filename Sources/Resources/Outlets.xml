@@ -29,8 +29,16 @@
                                 <color key="backgroundColor" systemColor="labelColor"/>
                                 <connections>
                                     <outlet property="myLabel" destination="F4V-5R-wfO" id="TpH-vp-ine"/>
+                                    <outlet property="myLabel" destination="F4V-5R-wf1" id="TpH-vp-ind"/>
                                 </connections>
                             </view>
+<label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F4V-5R-wf1">
+    <rect key="frame" x="175" y="415" width="42" height="21"/>
+    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+    <nil key="textColor"/>
+    <nil key="highlightedColor"/>
+</label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemGreenColor"/>

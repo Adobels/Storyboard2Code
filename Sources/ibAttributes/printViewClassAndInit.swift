@@ -13,7 +13,7 @@ func printViewClassAndInit(_ element: AnyView) -> [String] {
     var output: [String] = []
     output = ["\(elementClass)()"]
     if let stackView = element.view as? StackView, let axis = stackView.axis {
-        output = ["\(elementClass)(axis: .\(axis)"]
+        output = ["\(elementClass)(axis: .\(axis))"]
     }
     output.append("// ")
     output.append(elementId)

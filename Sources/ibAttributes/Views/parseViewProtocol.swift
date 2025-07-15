@@ -49,15 +49,6 @@ func parseViewProtocol(of view: ViewProtocol) -> [String] {
     if let value = view.clipsSubviews {
         result.append("$0.clipsToBounds = \(value)")
     }
-    if let value = view.userInteractionEnabled {
-        result.append("$0.isUserInteractionEnabled = \(value)")
-    }
-    if let value = view.tag {
-        result.append("$0.tag = \(value)")
-    }
-    if let value = view.alpha {
-        result.append("$0.alpha = \(value)")
-    }
 //    if let value = view.autoresizesSubviews {
 //        result.append("$0.autoresizesSubviews = \(value)")
 //    }
@@ -76,9 +67,6 @@ func parseViewProtocol(of view: ViewProtocol) -> [String] {
     }
     if let verticalCompressionResistancePriority = view.verticalCompressionResistancePriority, verticalCompressionResistancePriority != 750 {
         result.append("$0.setContentCompressionResistancePriority(\(resistancePriorityToCode(verticalCompressionResistancePriority)), for: .vertical)")
-    }
-    if let value = view.backgroundColor {
-        result.append("$0.backgroundColor = \(colorToCode(value))")
     }
     if let value = view.layoutMargins {
         result.append("$0.layoutMargins = .init(top: \(value.top ?? 0), left: \(value.left ?? 0), bottom: \(value.bottom ?? 0), right: \(value.right ?? 0))")

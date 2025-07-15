@@ -19,7 +19,7 @@ func parseImageView(of imageView: ImageView) -> [String] {
     var attr = [String]()
     attr.append(contentsOf: parseViewProtocol(of: imageView))
     if let value = imageView.contentMode {
-        attr.append("$0.conentMode = .\(value)")
+        attr.append("$0.contentMode = .\(value)")
     }
     if let image = imageView.image {
         attr.append("$0.image = .\(snakeToCamelCase(image))")

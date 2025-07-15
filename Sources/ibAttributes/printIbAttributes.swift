@@ -8,6 +8,7 @@
 import StoryboardDecoder
 
 func printIbAttributes(_ attributes: [String]) {
+    guard !attributes.isEmpty else { return }
     Context.shared.output.append(".ibAttributes {")
     Context.shared.output.append(contentsOf: attributes)
     Context.shared.output.append("}")

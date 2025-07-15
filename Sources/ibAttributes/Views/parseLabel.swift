@@ -32,26 +32,21 @@ func parseIbAttributes(of view: Label) -> [String] {
     }
     // var enablesMarqueeWhenAncestorFocused: Bool
     // var showsExpansionTextWhenTruncated: Bool
-    if let lineBreakMode = view.lineBreakMode {
-        let codePropertyLineBreakMode: String = switch lineBreakMode {
-        case "wordWrap": "byWordWrapping"
-        case "characterWrap": "byCharWrapping"
-        case "clip": "byClipping"
-        case "headTruncation": "byTruncatingHead"
-        case "tailTruncation": "byTruncatingTail"
-        case "middleTruncation": "byTruncatingMiddle"
-        default: fatalError()
+    if let value = lineBreakModeToCode(view.lineBreakMode) {
+        if value != "lineBreakMode" {
+            attributes.append("$0.lineBreakMode = .\(value)")
         }
-        attributes.append("$0.lineBreakMode = .\(codePropertyLineBreakMode)")
     }
     if let adjustsFontSizeToFit = view.adjustsFontSizeToFit {
         attributes.append("$0.adjustsFontSizeToFitWidth = \(adjustsFontSizeToFit)")
     }
-    if let value = view.adjustsLetterSpacingToFitWidth {
+    if let value = view.adjustsLetterSpacingToFitWidth, value {
         attributes.append("$0.allowsDefaultTighteningForTruncation = \(value)")
     }
     if let baselineAdjustment = view.baselineAdjustment {
-        attributes.append("$0.baselineAdjustment = .\(baselineAdjustment)")
+        if baselineAdjustment != "byTruncatingTail" {
+            attributes.append("$0.baselineAdjustment = .\(baselineAdjustment)")
+        }
     }
     if let minimumScaleFactor = view.minimumScaleFactor {
         attributes.append("$0.minimumScaleFactor = \(minimumScaleFactor)")
