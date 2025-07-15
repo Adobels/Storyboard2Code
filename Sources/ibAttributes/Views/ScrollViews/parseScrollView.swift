@@ -9,59 +9,8 @@ import StoryboardDecoder
 
 func parseScrollView(of scrollView: ScrollViewProtocol) -> [String] {
     var result = [String]()
-    result.append(contentsOf: parseView(of: scrollView))
-    let scrollView = UIKitUIScrollView(scrollView: scrollView)
-    if let value = scrollView.contentInsetAdjustmentBehavior {
-        result.append("$0.contentInsetAdjustmentBehavior = \(value)")
-    }
-    if let value = scrollView.scrollIndicatorInsets {
-        result.append("$0.scrollIndicatorInsets = \(value)")
-    }
-    if let value = scrollView.indicatorStyle {
-        result.append("$0.indicatorStyle = .\(value)")
-    }
-    if let value = scrollView.showsHorizontalScrollIndicator {
-        result.append("$0.showsHorizontalScrollIndicator = \(value)")
-    }
-    if let value = scrollView.showsVerticalScrollIndicator {
-        result.append("$0.showsVerticalScrollIndicator = \(value)")
-    }
-    if let value = scrollView.isScrollEnabled {
-        result.append("$0.isScrollEnabled = \(value)")
-    }
-    if let value = scrollView.isPagingEnabled {
-        result.append("$0.isPagingEnabled = \(value)")
-    }
-    if let value = scrollView.isDirectionalLockEnabled {
-        result.append("$0.isDirectionalLockEnabled = \(value)")
-    }
-    if let value = scrollView.bounces {
-        result.append("$0.bounces = \(value)")
-    }
-    if let value = scrollView.bouncesZoom {
-        result.append("$0.bouncesZoom = \(value)")
-    }
-    if let value = scrollView.alwaysBounceHorizontal {
-        result.append("$0.alwaysBounceHorizontal = \(value)")
-    }
-    if let value = scrollView.alwaysBounceVertical {
-        result.append("$0.alwaysBounceVertical = \(value)")
-    }
-    if let value = scrollView.minimumZoomScale {
-        result.append("$0.minimumZoomScale = \(value)")
-    }
-    if let value = scrollView.maximumZoomScale {
-        result.append("$0.maximumZoomScale = \(value)")
-    }
-    if let value = scrollView.delaysContentTouches {
-        result.append("$0.delaysContentTouches = \(value)")
-    }
-    if let value = scrollView.canCancelContentTouches {
-        result.append("$0.canCancelContentTouches = \(value)")
-    }
-    if let value = scrollView.keyboardDismissMode {
-        result.append("$0.keyboardDismissMode = .\(value)")
-    }
+    result.append(contentsOf: parseViewProtocol(of: scrollView))
+    result.append(contentsOf: parseScrollViewProtocol(of: scrollView))
     return result
 }
 

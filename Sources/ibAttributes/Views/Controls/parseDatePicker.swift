@@ -9,8 +9,8 @@ import StoryboardDecoder
 
 func parseDatePicker(of view: DatePicker) -> [String] {
     var result = [String]()
-    result.append(contentsOf: parseView(of: view))
-    result.append(contentsOf: parseControl(of: view))
+    result.append(contentsOf: parseViewProtocol(of: view))
+    result.append(contentsOf: parseControlProtocol(of: view))
     if let value = view.style {
         result.append("$0.datePickerStyle = .\(value)") // automatic, compact, inline, wheels
     }

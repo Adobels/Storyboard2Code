@@ -9,7 +9,7 @@ import StoryboardDecoder
 
 func parseActivityIndicatorView(of element: ActivityIndicatorView) -> [String] {
     var attr: [String] = .init()
-    attr.append(contentsOf: parseView(of: element))
+    attr.append(contentsOf: parseViewProtocol(of: element))
     if let style = element.style {
         attr.append("$0.style = .\(style)")
     }

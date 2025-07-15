@@ -9,6 +9,7 @@ import StoryboardDecoder
 
 func parseStackViewAttributes(_ stackView: StackView) -> [String] {
     var attributes: [String] = []
+    attributes.append(contentsOf: parseViewProtocol(of: stackView))
     if let alignment = stackView.alignment {
         attributes.append("$0.alignment = .\(alignment)")
     }

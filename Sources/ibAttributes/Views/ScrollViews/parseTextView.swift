@@ -9,10 +9,8 @@ import StoryboardDecoder
 
 func parseUITextView(of textView: TextView) -> [String] {
     var arrStrings = [String]()
-    arrStrings.append(contentsOf: parseView(of: textView))
-    if let view = textView as? ScrollViewProtocol {
-        arrStrings.append(contentsOf: parseScrollView(of: view))
-    } else { fatalError() }
+    arrStrings.append(contentsOf: parseViewProtocol(of: textView))
+    arrStrings.append(contentsOf: parseScrollViewProtocol(of: textView))
     // Text View: Not all members are parsed
     if let text = textView.text {
         arrStrings.append("$0.text = \"\(text)\"")

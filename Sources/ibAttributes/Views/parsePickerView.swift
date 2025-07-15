@@ -9,6 +9,6 @@ import StoryboardDecoder
 
 func parsePickerView(of pickerView: PickerView) -> [String] {
     var result = [String]()
-    result.append(contentsOf: parseView(of: pickerView))
+    result.append(contentsOf: parseViewProtocol(of: pickerView))
     return result
 }

@@ -13,6 +13,7 @@ func parseIbAttributes(of view: Label) -> [String] {
 //    if let text = view.text {
 //        attributes.append("$0.text = \"\(text)\"")
 //    }
+    attributes.append(contentsOf: parseViewProtocol(of: view))
     if let attributedText = view.attributedText {
         attributes.append("$0.attributedText = \"\(attributedText)\"")
     }

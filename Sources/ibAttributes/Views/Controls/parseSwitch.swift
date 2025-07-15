@@ -9,8 +9,8 @@ import StoryboardDecoder
 
 func parseSwitch(of switchView: Switch) -> [String] {
     var attr = [String]()
-    attr.append(contentsOf: parseView(of: switchView))
-    attr.append(contentsOf: parseControl(of: switchView))
+    attr.append(contentsOf: parseViewProtocol(of: switchView))
+    attr.append(contentsOf: parseControlProtocol(of: switchView))
     if let value = switchView.on {
         attr.append("$0.setOn(\(value), animated: false)")
     }

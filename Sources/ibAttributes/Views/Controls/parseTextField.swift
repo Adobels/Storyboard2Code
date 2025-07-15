@@ -9,8 +9,8 @@ import StoryboardDecoder
 
 func parseTextField(of textField: TextField) -> [String] {
     var result = [String]()
-    result.append(contentsOf: parseView(of: textField))
-    result.append(contentsOf: parseControl(of: textField))
+    result.append(contentsOf: parseViewProtocol(of: textField))
+    result.append(contentsOf: parseControlProtocol(of: textField))
     if let text = textField.text {
         result.append("$0.text = \"\(text)\"")
     }

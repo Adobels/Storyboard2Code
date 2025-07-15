@@ -9,6 +9,8 @@ import StoryboardDecoder
 
 func parseButton(of view: Button) -> [String] {
     var result: [String] = []
+    result.append(contentsOf: parseViewProtocol(of: view))
+    result.append(contentsOf: parseControlProtocol(of: view))
     if let value = view.lineBreakMode {
         result.append("$0.lineBreakMode = \(value)")
     }

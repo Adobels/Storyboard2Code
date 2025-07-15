@@ -20,12 +20,14 @@ func printIbAttributes(of element: AnyView) {
     constraintsFound.forEach { attributes.append($0.constraint) }
     attributes.append(contentsOf: getIBActions(of: element.view))
     attributes.append(contentsOf: convertOutletsToCode(of: element.view))
-    attributes.append(contentsOf: parseView(of: element.view))
+    if let view = element.view as? View {
+        attributes.append(contentsOf: parseView(of: view))
+    }
     if let label = element.view as? Label {
         attributes.append(contentsOf: parseIbAttributes(of: label))
     }
     if let button = element.view as? Button {
-        //TODO: Add parsing for UIButton subclass attributes
+        attributes.append(contentsOf: parseButton(of: button))
     }
     if let imageView = element.view as? ImageView {
         attributes.append(contentsOf: parseImageView(of: imageView))
