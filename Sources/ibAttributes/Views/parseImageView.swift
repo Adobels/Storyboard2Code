@@ -8,14 +8,6 @@
 import StoryboardDecoder
 
 func parseImageView(of imageView: ImageView) -> [String] {
-
-    func snakeToCamelCase(_ string: String) -> String {
-        let components = string.split(separator: "_")
-        guard let first = components.first?.lowercased() else { return "" }
-        let rest = components.dropFirst().map { $0.capitalized }
-        return ([first] + rest).joined()
-    }
-
     var attr = [String]()
     attr.append(contentsOf: parseViewProtocol(of: imageView))
     if let value = imageView.contentMode {

@@ -27,7 +27,7 @@ func parseTextField(of textField: TextField) -> [String] {
         result.append("$0.textAlignment = .\(value)")
     }
     if let value = textField.placeholder {
-        result.append("$0.placeholder = .\(value)")
+        result.append("$0.placeholder = \"\(value)\"")
     }
     // missing background image property
     // missing background disabled image property
@@ -45,47 +45,12 @@ func parseTextField(of textField: TextField) -> [String] {
         result.append("$0.minimumFontSize = \(value)")
     }
     if let value = textField.adjustsFontSizeToFit {
-        result.append("$0.adjustsFontSizeToFit = \(value)")
+        result.append("$0.adjustsFontSizeToFitWidth = \(value)")
     }
     if let value = textField.sizingRule {
         result.append("$0.sizingRule = \(value)")
     }
-    if let value = textField.textInputTraits?.textContentType { // In IB: Content Type
-        result.append("$0.textContentType = \(value)")
-    }
-    if let value = textField.textInputTraits?.autocapitalizationType { // In IB: Capitalization
-        result.append("$0.autocapitalizationType = .\(value)")
-    }
-    if let value = textField.textInputTraits?.autocorrectionType {
-        result.append("$0.autocorrectionType = \(value)")
-    }
-    if let value = textField.textInputTraits?.spellCheckingType {
-        result.append("$0.spellCheckingType = \(value)")
-    }
-    if let value = textField.textInputTraits?.keyboardType {
-        result.append("$0.spellCheckingType = \(value)")
-    }
-    if let value = textField.textInputTraits?.keyboardAppearance {
-        result.append("$0.keyboardAppearance = \(value)")
-    }
-    if let value = textField.textInputTraits?.returnKeyType {
-        result.append("$0.returnKeyType = \(value)")
-    }
-    if let value = textField.textInputTraits?.smartDashesType {
-        result.append("$0.smartDashesType = \(value)")
-    }
-    if let value = textField.textInputTraits?.smartInsertDeleteType {
-        result.append("$0.smartInsertDeleteType = \(value)")
-    }
-    if let value = textField.textInputTraits?.smartQuotesType {
-        result.append("$0.smartQuotesType = \(value)")
-    }
-    if let value = textField.textInputTraits?.enablesReturnKeyAutomatically {
-        result.append("$0.enablesReturnKeyAutomatically = \(value)")
-    }
-    if let value = textField.textInputTraits?.secureTextEntry {
-        result.append("$0.secureTextEntry = \(value)")
-    }
+    result.append(contentsOf: parseTextInputTraits(textField.textInputTraits))
     if let value = textField.allowsEditingTextAttributes {
         result.append("$0.allowsEditingTextAttributes = \(value)")
     }

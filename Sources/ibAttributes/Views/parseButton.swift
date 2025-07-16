@@ -24,31 +24,31 @@ func parseButton(of view: Button) -> [String] {
         if let value = state.title, let stateKey = state.key {
             result.append("$0.setTitle(\"\(value)\", for: .\(stateKey))")
         }
-        if let value = state.image {
-            result.append("$0.setImage(\(value), for: .\(state.key))")
+        if let value = state.image, let stateKey = state.key {
+            result.append("$0.setImage(.\(snakeToCamelCase(value)), for: .\(stateKey))")
         }
-        if let value = state.backgroundImage {
-            result.append("$0.setBackgroundImage(\(value), for: .\(state.key))")
+        if let value = state.backgroundImage, let stateKey = state.key {
+            result.append("$0.setBackgroundImage(.\(snakeToCamelCase(value)), for: .\(stateKey))")
         }
-        if let value = state.titleColor {
-            result.append("$0.setTitleColor(\(value), for: .\(state.key))")
+        if let value = state.titleColor, let stateKey = state.key {
+            result.append("$0.setTitleColor(\(value), for: .\(stateKey))")
         }
-        if let value = state.titleShadowColor {
-            result.append("$0.setTitleShadowColor(\(value), for: .\(state.key))")
+        if let value = state.titleShadowColor, let stateKey = state.key {
+            result.append("$0.setTitleShadowColor(\(value), for: .\(stateKey))")
         }
         if let value = state.color { fatalError() }
     }
     if let value = view.fontDescription {
         result.append("$0.titleLabel?.font = \(fontDescriptionToCode(value))")
     }
-    if let value = view.imageEdgeInsets {
+    if let value = view.titleEdgeInsets, let value = parseInset(value)  {
+        result.append("$0.titleEdgeInsets = \(value)")
+    }
+    if let value = view.imageEdgeInsets, let value = parseInset(value)  {
         result.append("$0.imageEdgeInsets = \(value)")
     }
-    if let value = view.contentEdgeInsets {
+    if let value = view.contentEdgeInsets, let value = parseInset(value)  {
         result.append("$0.contentEdgeInsets = \(value)")
-    }
-    if let value = view.imageEdgeInsets {
-        result.append("$0.imageEdgeInsets = \(value)")
     }
     return result
 }

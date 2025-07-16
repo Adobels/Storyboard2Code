@@ -140,16 +140,15 @@ struct S2CConstraint {
     }
 
     mutating func reverseFirstAndSecondItemIfNeeded(with context: ContextForIBConstraints) {
-        if needReverseFirstAndSecondItem(with: context) {
-            let firstItem = firstItem ?? context.constraintParentViewId
-            self.firstItem = secondItem!
-            self.secondItem = firstItem
-            if let constant { self.constant = -constant }
-            switch relation {
-            case .lessThanOrEqual: relation = .greaterThanOrEqual
-            case .greaterThanOrEqual: relation = .lessThanOrEqual
-            case .equal, .other: break
-            }
+        guard needReverseFirstAndSecondItem(with: context) else { return }
+        let firstItem = firstItem ?? context.constraintParentViewId
+        self.firstItem = secondItem!
+        self.secondItem = firstItem
+        if let constant { self.constant = -constant }
+        switch relation {
+        case .lessThanOrEqual: relation = .greaterThanOrEqual
+        case .greaterThanOrEqual: relation = .lessThanOrEqual
+        case .equal, .other: break
         }
     }
 
