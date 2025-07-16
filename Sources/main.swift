@@ -15,7 +15,7 @@ let result = convertStoryboard2Code(initialScene.viewController!)
 
 @MainActor
 @discardableResult
-func convertStoryboard2Code(_ anyViewController: AnyViewController) -> [String] {
+public func convertStoryboard2Code(_ anyViewController: AnyViewController) -> [String] {
     printViewControllerRootView(anyViewController)
     if let viewController = anyViewController.viewController as? ViewController {
         Context.shared.output.append(contentsOf: parseViewController(viewController))

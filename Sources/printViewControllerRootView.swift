@@ -110,6 +110,7 @@ func printViewControllerRootView(_ anyViewController: AnyViewController) {
                 return s2cConstraintNew.convertToCode(with: .init(constraintParentViewId: (view as! IBIdentifiable).id, arrayLayoutGuideIdToParentViewId: Context.shared.arrayLayoutGuideIdToParentViewId, arrayRootViewFlattened: Context.shared.arrayRootViewFlattened))
             }
             s2cConstraints.append(contentsOf: s2cConstraintsLocal)
+            // TODO: Delete it
             Context.shared.arrayConstrains = s2cConstraints
             return true
         }

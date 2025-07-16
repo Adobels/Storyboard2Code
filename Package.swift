@@ -22,6 +22,10 @@ let package = Package(
                 .unsafeFlags(["-suppress-warnings"], .when(configuration: .debug))
             ],
         ),
-        .testTarget(name: "UnitTests", dependencies: ["story2code"])
+        .testTarget(
+            name: "UnitTests",
+            dependencies: ["story2code"],
+            resources: [Resource.process("Resources")]
+        )
     ],
 )

@@ -7,53 +7,13 @@
 import StoryboardDecoder
 import math_h
 
-private func constraintLayoutAttribute(_ attribute: Constraint.LayoutAttribute?) -> String {
-    guard let attribute else { return "attribute is nil" }
-    return switch attribute {
-    case .left: "leftAnchor"
-    case .right: "rightAnchor"
-    case .top: "topAnchor"
-    case .bottom: "bottomAnchor"
-    case .leading: "leadingAnchor"
-    case .trailing: "trailingAnchor"
-    case .width: "widthAnchor"
-    case .height: "heightAnchor"
-    case .centerX: "centerXAnchor"
-    case .centerY: "centerYAnchor"
-    case .leftMargin: "layoutMarginsGuide.leftAnchor"
-    case .rightMargin: "layoutMarginsGuide.rightAnchor"
-    case .topMargin: "layoutMarginsGuide.topAnchor"
-    case .bottomMargin: "layoutMarginsGuide.bottomAnchor"
-    case .leadingMargin: "layoutMarginsGuide.leadingAnchor"
-    case .trailingMargin: "layoutMarginsGuide.trailingAnchor"
-    case .other(let string): "other"
-    }
-}
-
-private func transformRelationToString(_ relation: Constraint.Relation?) -> String {
-    guard let relation else { return "relation is nil" }
-    return switch relation {
-    case .lessThanOrEqual: "lessThanOrEqualTo: "
-    case .greaterThanOrEqual: "greaterThanOrEqualTo: "
-    case .equal: "equalTo: "
-    case .other(let string): "other: "
-    }
-    "lessThanOrEqualTo: secondAnchor, const"
-}
-
-struct ContextForIBConstraints {
-    var constraintParentViewId: String
-    var arrayLayoutGuideIdToParentViewId: [LayoutGuideIdToParentViewId]
-    var arrayRootViewFlattened: [ViewPropertiesForParsing]
-}
-
 struct S2CConstraint {
 
     var firstItem: String?
-    let firstAttribute: Constraint.LayoutAttribute
+    var firstAttribute: Constraint.LayoutAttribute
     var relation: Constraint.Relation
     var secondItem: String?
-    let secondAttribute: Constraint.LayoutAttribute?
+    var secondAttribute: Constraint.LayoutAttribute?
     let multiplier: String?
     let priority: Float?
     var constant: Float?
@@ -70,7 +30,24 @@ struct S2CConstraint {
         }
     }
 
-    mutating func convertConstraintRelationBetweenItemsUIViewKitCode(with context: ContextForIBConstraints) -> (viewId: String, String)? {
+    fileprivate func extractedFunc1(_ firstItemLayoutGuide: LayoutGuideIdToParentViewId?, _ secondItem: String, _ secondItemLayoutGuide: LayoutGuideIdToParentViewId?, _ firstItem: String) -> (viewId: String, String)? {
+        convertConstraintToCode(
+            firstItem,
+            storyboardLayoutGuideKeyToCode(firstItemLayoutGuide?.layoutGuideKey),
+            "\(firstAttribute)",
+            transformRelationToString(relation),
+            secondItem,
+            storyboardLayoutGuideKeyToCode(secondItemLayoutGuide?.layoutGuideKey),
+            { if let secondAttribute { "\(firstAttribute)" } else { nil } }(),
+            constant: constant,
+            multiplier: multiplier,
+            priority: priority,
+            identifier: identifier
+        )
+    }
+
+
+    private mutating func convertConstraintRelationBetweenItemsUIViewKitCode(with context: ContextForIBConstraints) -> (viewId: String, String)? {
         guard secondItem != nil else { return nil }
         if firstItem == nil {
             firstItem = context.constraintParentViewId
@@ -94,35 +71,14 @@ struct S2CConstraint {
         if let secondItemViewControlerOutlet {
             secondItem = secondItemViewControlerOutlet.property
         }
-        var components: [String] = []
-        components.append("$0")
-        if let firstItemLayoutGuide {
-            components.append(".\(storyboardLayoutGuideKeyToCode(firstItemLayoutGuide))")
+        let result = extractedFunc1(firstItemLayoutGuide, secondItem, secondItemLayoutGuide, firstItem)
+        if let result  {
+            Context.shared.arrayConstrains.append(result)
         }
-        components.append(".\(firstAttribute)Anchor")
-        components.append(".constraint(")
-        components.append("\(transformRelationToString(relation))")
-        components.append("\(sanitizedOutletName(from: secondItem)!)")
-        if let secondItemLayoutGuide {
-            components.append(".\(storyboardLayoutGuideKeyToCode(secondItemLayoutGuide))")
-        }
-        components.append(".\(secondAttribute!)Anchor")
-        if let constant {
-            components.append(", constant: \(floatToString(constant))")
-        }
-        if let multiplier = convertMultiplierToFloat() {
-            components.append(", multiplier: \(floatToString(multiplier))")
-        }
-        components.append(")")
-        if let ibPriority = convertPriorityToCode() { components.append(ibPriority) }
-        if let ibIdentifier = convertIdentifierToCode() { components.append(ibIdentifier) }
-        let viewId = sanitizedOutletName(from: firstItem)!
-        let constraintConverted = components.joined()
-        Context.shared.arrayConstrains.append((viewId: viewId, constraintConverted))
-        return (viewId: viewId, constraintConverted)
+        return result
     }
 
-    func convertConstraintWidthOrHeightToUIViewKitCode() -> String? {
+    private func convertConstraintWidthOrHeightToUIViewKitCode() -> String? {
         guard secondItem == nil else { return nil }
         var components: [String] = []
         components.append("$0")
@@ -134,16 +90,19 @@ struct S2CConstraint {
             fatalError()
         }
         components.append(".constraint(\(relation)ToConstant: \(floatToString(constant ?? 0)))")
-        if let ibPriority = convertPriorityToCode() { components.append(ibPriority) }
-        if let ibIdentifier = convertIdentifierToCode() { components.append(ibIdentifier) }
+        if let ibPriority = convertPriority(priority) { components.append(ibPriority) }
+        if let ibIdentifier = convertIdentifierToCode(identifier) { components.append(ibIdentifier) }
         return components.joined()
     }
 
-    mutating func reverseFirstAndSecondItemIfNeeded(with context: ContextForIBConstraints) {
+    private mutating func reverseFirstAndSecondItemIfNeeded(with context: ContextForIBConstraints) {
         guard needReverseFirstAndSecondItem(with: context) else { return }
         let firstItem = firstItem ?? context.constraintParentViewId
+        let tmpFirstAttribute = firstAttribute
         self.firstItem = secondItem!
+        self.firstAttribute = secondAttribute!
         self.secondItem = firstItem
+        self.secondAttribute = tmpFirstAttribute
         if let constant { self.constant = -constant }
         switch relation {
         case .lessThanOrEqual: relation = .greaterThanOrEqual
@@ -152,7 +111,7 @@ struct S2CConstraint {
         }
     }
 
-    func needReverseFirstAndSecondItem(with context: ContextForIBConstraints) -> Bool {
+    private func needReverseFirstAndSecondItem(with context: ContextForIBConstraints) -> Bool {
         guard let secondItem else { return false }
         let firstItemResolved = context.arrayLayoutGuideIdToParentViewId.first { item in
             item.layoutGuideId == firstItem
@@ -170,29 +129,92 @@ struct S2CConstraint {
         return firstItemIndex < secondItemIndex
     }
 
-    func storyboardLayoutGuideKeyToCode(_ layoutGuide: LayoutGuideIdToParentViewId) -> String {
-        switch layoutGuide.layoutGuideKey {
-        case "safeArea": "safeAreaLayoutGuide"
-        case "keyboard": "keyboardLayoutGuide"
-        default: fatalError()
-        }
+//    private func storyboardLayoutGuideKeyToCode(_ layoutGuide: LayoutGuideIdToParentViewId) -> String {
+//        switch layoutGuide.layoutGuideKey {
+//        case "safeArea": "safeAreaLayoutGuide"
+//        case "keyboard": "keyboardLayoutGuide"
+//        default: fatalError()
+//        }
+//    }
+}
+
+func convertConstraintToCode(
+    _ firstItem: String,
+    _ firstItemLayoutGuide: String?,
+    _ firstAttribute: String,
+    _ relation: String,
+    _ secondItem: String,
+    _ secondItemLayoutGuide: String?,
+    _ secondAttribute: String?,
+    constant: Float?,
+    multiplier: String?,
+    priority: Float?,
+    identifier: String?
+) -> (viewId: String, String)? {
+    var components: [String] = []
+    components.append("$0")
+    if let firstItemLayoutGuide, let decoded = storyboardLayoutGuideKeyToCode(firstItemLayoutGuide) {
+        components.append("." + decoded)
+    }
+    components.append(convertLayoutAttributeToAnchor("\(firstAttribute)"))
+    components.append(".constraint(")
+    components.append("\(transformRelationToString(relation))")
+    components.append("\(sanitizedOutletName(from: secondItem)!)")
+    if let secondItemLayoutGuide {
+        components.append(".\(storyboardLayoutGuideKeyToCode(secondItemLayoutGuide))")
+    }
+    components.append(convertLayoutAttributeToAnchor("\(secondAttribute!)"))
+    if let constant {
+        components.append(", " + convertConstant(constant))
+    }
+    if let multiplier, let multiplierCode = convertMultiplierToCode(multiplier){
+        components.append(", " + multiplierCode)
+    }
+    components.append(")")
+    if let ibPriority = convertPriority(priority) { components.append(ibPriority) }
+    if let ibIdentifier = convertIdentifierToCode(identifier) { components.append(ibIdentifier) }
+    let viewId = sanitizedOutletName(from: firstItem)!
+    let constraintConverted = components.joined()
+    return (viewId: viewId, constraintConverted)
+}
+
+func storyboardLayoutGuideKeyToCode(_ layoutGuideKey: String?) -> String? {
+    guard let layoutGuideKey else { return nil }
+    guard !layoutGuideKey.isEmpty else { return nil }
+    return switch layoutGuideKey {
+    case "safeArea": "safeAreaLayoutGuide"
+    case "keyboard": "keyboardLayoutGuide"
+    default: fatalError()
     }
 }
 
-private extension S2CConstraint {
-    func convertPriorityToCode() -> String? {
-        if let priority {
-            if priority == floorf(priority) {
-                return ".ibPriority(.init(\(Int(priority))))"
-            } else {
-                return ".ibPriority(.init(\(priority)))"
-            }
-        } else { return nil }
+func convertLayoutAttribute(_ layoutAttribute: String) -> String {
+    return switch layoutAttribute {
+    case "topMargin": "top"
+    case "leadingMargin": "leading"
+    case "trailingMargin": "trailing"
+    case "leftMargin": "left"
+    case "rightMargin": "right"
+    case "bottomMargin": "bottom"
+    default: layoutAttribute
     }
-    func convertIdentifierToCode() -> String? {
-        if let identifier { ".ibIdentifier(\"\(identifier)\")" } else { nil }
-    }
-    func convertMultiplierToFloat() -> Float? {
+}
+
+//func convertLayoutAttributeToAnchor(_ layoutAttribute: String) -> String? {
+//    guard !layoutAttribute.isEmpty else { return  nil }
+//    return "." + convertLayoutAttribute(layoutAttribute) + "Anchor"
+//}
+
+func convertIdentifierToCode(_ identifier: String?) -> String? {
+    guard let identifier, !identifier.isEmpty else { return nil }
+    return ".ibIdentifier(\"" + identifier + "\")"
+}
+
+func convertMultiplierToCode(_ multiplier: String?) -> String? {
+    guard let multiplier, !multiplier.isEmpty else { return nil }
+    guard let multiplier = convertMultiplierToFloat(multiplier) else { return "" }
+    return "multiplier: " + String(floatToString(multiplier))
+    func convertMultiplierToFloat(_ multiplier: String?) -> Float? {
         guard let multiplier, multiplier != nil else { return nil }
         let components = multiplier.components(separatedBy: ":")
         if components.count > 1 {
@@ -202,6 +224,32 @@ private extension S2CConstraint {
             return .init(multiplier)!
         }
     }
+}
+
+func convertConstant(_ constant: Float) -> String {
+    "constant: " + floatToString(constant)
+}
+
+func convertPriority(_ priority: Float?) -> String? {
+    guard let priority else { return nil }
+    return ".ibPriority(" + convertPriorityValue(Int(priority)) + ")"
+    func convertPriorityValue(_ value: Int) -> String {
+        if value == 250 {
+            ".defaultLow"
+        } else if value == 750 {
+            ".defaultHigh"
+        } else if value == 1000 {
+            ".required"
+        } else {
+            ".init(" + String(value) + ")"
+        }
+    }
+}
+
+struct ContextForIBConstraints {
+    var constraintParentViewId: String
+    var arrayLayoutGuideIdToParentViewId: [LayoutGuideIdToParentViewId]
+    var arrayRootViewFlattened: [ViewPropertiesForParsing]
 }
 
 struct LayoutGuideIdToParentViewId {
@@ -217,5 +265,42 @@ struct ViewPropertiesForParsing {
     let verticalPositionIndex: Int
     func customClassOrElementClass() -> String {
         customClass ?? elementClass
+    }
+}
+
+func convertLayoutAttributeToAnchor(_ layoutAttribute: String) -> String {
+    return switch layoutAttribute {
+    case "left": ".leftAnchor"
+    case "right": ".rightAnchor"
+    case "top": ".topAnchor"
+    case "bottom": ".bottomAnchor"
+    case "leading": ".leadingAnchor"
+    case "trailing": ".trailingAnchor"
+    case "width": ".widthAnchor"
+    case "height": ".heightAnchor"
+    case "centerX": ".centerXAnchor"
+    case "centerY": ".centerYAnchor"
+    case "leftMargin": ".layoutMarginsGuide.leftAnchor"
+    case "rightMargin": ".layoutMarginsGuide.rightAnchor"
+    case "topMargin": ".layoutMarginsGuide.topAnchor"
+    case "bottomMargin": ".layoutMarginsGuide.bottomAnchor"
+    case "leadingMargin": ".layoutMarginsGuide.leadingAnchor"
+    case "trailingMargin": ".layoutMarginsGuide.trailingAnchor"
+    default: ".other"
+    }
+}
+
+func transformRelationToString(_ relation: Constraint.Relation) -> String {
+    transformRelationToString("\(relation)")
+}
+
+func transformRelationToString(_ relation: String?) -> String {
+    guard let relation else { return "relation is nil" }
+    return switch relation {
+    case "lessThanOrEqual": "lessThanOrEqualTo: "
+    case "greaterThanOrEqual": "greaterThanOrEqualTo: "
+    case "equal": "equalTo: "
+    case "other": "other: "
+    default: fatalError()
     }
 }

@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="3lS-rl-bAf">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Password Controller-->
+        <scene sceneID="IO2-Qs-v6S">
+            <objects>
+                <viewController id="3lS-rl-bAf" customClass="PasswordController" customModule="App" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="pKi-7h-cVb">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="background_login" translatesAutoresizingMaskIntoConstraints="NO" id="zIe-ud-T2u">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <gestureRecognizers/>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BCH-cq-un7">
+                                <rect key="frame" x="0.0" y="48" width="414" height="255.5"/>
+                                <subviews>
+                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Db-gM-ySN">
+                                        <rect key="frame" x="157" y="77.5" width="100" height="100"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="100" placeholder="YES" id="YlL-h1-BjO"/>
+                                            <constraint firstAttribute="height" constant="100" placeholder="YES" id="nyq-4s-Cac"/>
+                                        </constraints>
+                                    </imageView>
+                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Vu-9o-ksa">
+                                        <rect key="frame" x="33" y="34" width="50" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="50" placeholder="YES" id="BVu-O7-2tz"/>
+                                            <constraint firstAttribute="height" constant="50" placeholder="YES" id="VSf-Uu-pt5"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="0Db-gM-ySN" secondAttribute="bottom" constant="10" id="5e9-IO-1Ez"/>
+                                    <constraint firstItem="8Vu-9o-ksa" firstAttribute="leading" secondItem="BCH-cq-un7" secondAttribute="leading" constant="33" id="B7T-qs-CAP"/>
+                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="8Vu-9o-ksa" secondAttribute="bottom" constant="16" id="C5V-aK-Dj2"/>
+                                    <constraint firstItem="0Db-gM-ySN" firstAttribute="top" relation="greaterThanOrEqual" secondItem="BCH-cq-un7" secondAttribute="top" constant="20" id="Jrk-th-GYJ"/>
+                                    <constraint firstItem="8Vu-9o-ksa" firstAttribute="top" secondItem="BCH-cq-un7" secondAttribute="top" constant="34" id="KRg-L1-VX4"/>
+                                    <constraint firstItem="0Db-gM-ySN" firstAttribute="centerY" secondItem="BCH-cq-un7" secondAttribute="centerY" priority="750" id="YVx-m4-KnQ"/>
+                                    <constraint firstItem="0Db-gM-ySN" firstAttribute="centerX" secondItem="BCH-cq-un7" secondAttribute="centerX" id="zBG-Mt-9kN"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="WX4-pb-dXk">
+                                <rect key="frame" x="39.5" y="303.5" width="335" height="209.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="label" lineBreakMode="tailTruncation" numberOfLines="0" minimumScaleFactor="0.25" translatesAutoresizingMaskIntoConstraints="NO" id="hTZ-gY-d3V" customClass="CustomLabel" customModule="Designable">
+                                        <rect key="frame" x="0.0" y="0.0" width="335" height="42"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="35"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="locKey" value="forgot.title"/>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="themeStyle" value="title"/>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="themeParent" value="login"/>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="textLineSpacing">
+                                                <integer key="value" value="6"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wMR-8T-ftn" customClass="CustomLabel" customModule="Designable">
+                                        <rect key="frame" x="0.0" y="62" width="335" height="19.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="locKey" value="forgot.cell.identifier.header"/>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="themeStyle" value="text"/>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="themeParent" value="login"/>
+                                        </userDefinedRuntimeAttributes>
+                                    </label>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="label" adjustsFontSizeToFit="NO" minimumFontSize="16" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="ZV1-Ag-5fm" customClass="LargeTextField" customModule="Designable">
+                                        <rect key="frame" x="0.0" y="91.5" width="335" height="48"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="48" id="vc1-bK-jXf"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" enablesReturnKeyAutomatically="YES" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="locKeyPlaceholder" value="forgot.cell.identifier.placeholder"/>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="themeParent" value="login"/>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <outlet property="delegate" destination="3lS-rl-bAf" id="d9E-8c-moA"/>
+                                        </connections>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="infinite" placeholderIntrinsicHeight="50" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uvr-Qa-8Qh" customClass="LargeButton" customModule="Designable">
+                                        <rect key="frame" x="0.0" y="159.5" width="335" height="50"/>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <state key="normal" title="LargeButton"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="locKey" value="forgot.button.reset"/>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="themeStyle" value="confirm"/>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="themeParent" value="login"/>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="loaderPositionName" value="center"/>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="send:" destination="3lS-rl-bAf" eventType="touchUpInside" id="1FX-RW-ADb"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="ZV1-Ag-5fm" secondAttribute="trailing" id="0Qp-UF-hq9"/>
+                                    <constraint firstItem="ZV1-Ag-5fm" firstAttribute="leading" secondItem="WX4-pb-dXk" secondAttribute="leading" id="GHD-2W-on1"/>
+                                    <constraint firstItem="hTZ-gY-d3V" firstAttribute="top" secondItem="WX4-pb-dXk" secondAttribute="top" id="Ggg-Vy-P7p"/>
+                                    <constraint firstItem="Uvr-Qa-8Qh" firstAttribute="top" secondItem="ZV1-Ag-5fm" secondAttribute="bottom" constant="20" id="Pth-Po-4VV"/>
+                                    <constraint firstItem="wMR-8T-ftn" firstAttribute="top" secondItem="hTZ-gY-d3V" secondAttribute="bottom" constant="20" id="f3e-z9-UYP"/>
+                                    <constraint firstItem="hTZ-gY-d3V" firstAttribute="leading" secondItem="WX4-pb-dXk" secondAttribute="leading" id="fn7-1H-ERF"/>
+                                    <constraint firstAttribute="trailing" secondItem="hTZ-gY-d3V" secondAttribute="trailing" id="gb3-QC-lQW"/>
+                                    <constraint firstAttribute="trailing" secondItem="wMR-8T-ftn" secondAttribute="trailing" id="hE2-cH-IAj"/>
+                                    <constraint firstAttribute="trailing" secondItem="Uvr-Qa-8Qh" secondAttribute="trailing" id="hF7-WF-T6X"/>
+                                    <constraint firstAttribute="bottom" secondItem="Uvr-Qa-8Qh" secondAttribute="bottom" id="iEB-z9-SHK"/>
+                                    <constraint firstItem="Uvr-Qa-8Qh" firstAttribute="leading" secondItem="WX4-pb-dXk" secondAttribute="leading" id="j6r-B0-SvW"/>
+                                    <constraint firstItem="wMR-8T-ftn" firstAttribute="leading" secondItem="WX4-pb-dXk" secondAttribute="leading" id="n2M-nk-3uh"/>
+                                    <constraint firstItem="ZV1-Ag-5fm" firstAttribute="top" secondItem="wMR-8T-ftn" secondAttribute="bottom" constant="10" id="uiW-4k-ONT"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="infinite" placeholderIntrinsicHeight="50" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kyd-BE-YAY" customClass="LargeButton" customModule="Designable">
+                                <rect key="frame" x="39.5" y="799" width="335" height="50"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <state key="normal" title="LargeButton"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="locKey" value="forgot.button.cancel"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="themeStyle" value="cancel"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="themeParent" value="login"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="dismiss:" destination="3lS-rl-bAf" eventType="touchUpInside" id="Y9k-nc-GUe"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="1l3-KK-xG7"/>
+                        <keyboardLayoutGuide key="keyboard" id="YE5-Pe-agX"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="zIe-ud-T2u" firstAttribute="top" secondItem="pKi-7h-cVb" secondAttribute="top" id="2ry-gF-VPR"/>
+                            <constraint firstItem="BCH-cq-un7" firstAttribute="leading" secondItem="1l3-KK-xG7" secondAttribute="leading" id="371-HH-qIs"/>
+                            <constraint firstAttribute="bottom" secondItem="zIe-ud-T2u" secondAttribute="bottom" id="3UJ-df-LQe"/>
+                            <constraint firstItem="zIe-ud-T2u" firstAttribute="leading" secondItem="pKi-7h-cVb" secondAttribute="leading" id="4lR-Mn-p4N"/>
+                            <constraint firstItem="Kyd-BE-YAY" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="pKi-7h-cVb" secondAttribute="bottom" constant="-20" id="FEU-Qi-cYJ"/>
+                            <constraint firstItem="WX4-pb-dXk" firstAttribute="bottomMargin" relation="lessThanOrEqual" secondItem="YE5-Pe-agX" secondAttribute="top" priority="750" constant="-54" id="G2F-Vi-Qre"/>
+                            <constraint firstItem="Kyd-BE-YAY" firstAttribute="bottom" secondItem="1l3-KK-xG7" secondAttribute="bottom" priority="750" constant="-13" id="Ki0-1S-3cY"/>
+                            <constraint firstItem="Kyd-BE-YAY" firstAttribute="centerX" secondItem="pKi-7h-cVb" secondAttribute="centerX" id="Xee-N1-6gE"/>
+                            <constraint firstItem="Kyd-BE-YAY" firstAttribute="top" relation="greaterThanOrEqual" secondItem="WX4-pb-dXk" secondAttribute="bottom" constant="200" id="YF4-Yh-Twb"/>
+                            <constraint firstItem="WX4-pb-dXk" firstAttribute="top" secondItem="BCH-cq-un7" secondAttribute="bottom" id="Ym8-w9-Ffx"/>
+                            <constraint firstItem="WX4-pb-dXk" firstAttribute="width" secondItem="pKi-7h-cVb" secondAttribute="width" multiplier="0.81" id="Z4j-6K-4Ft"/>
+                            <constraint firstItem="Kyd-BE-YAY" firstAttribute="width" secondItem="WX4-pb-dXk" secondAttribute="width" id="a6o-3j-aEQ"/>
+                            <constraint firstItem="BCH-cq-un7" firstAttribute="top" secondItem="1l3-KK-xG7" secondAttribute="top" id="a8E-w8-p2a"/>
+                            <constraint firstItem="WX4-pb-dXk" firstAttribute="centerY" secondItem="pKi-7h-cVb" secondAttribute="centerY" priority="500" constant="-40" id="aVr-Ha-fWU"/>
+                            <constraint firstItem="BCH-cq-un7" firstAttribute="trailing" secondItem="1l3-KK-xG7" secondAttribute="trailing" id="gL9-Q9-1UT"/>
+                            <constraint firstItem="WX4-pb-dXk" firstAttribute="centerX" secondItem="pKi-7h-cVb" secondAttribute="centerX" id="pIZ-f0-eGZ"/>
+                            <constraint firstAttribute="trailing" secondItem="zIe-ud-T2u" secondAttribute="trailing" id="snO-sN-2Ml"/>
+                        </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="lI2-pm-e4S" appends="YES" id="aPb-Cr-B1t"/>
+                        </connections>
+                    </view>
+                    <connections>
+                        <outlet property="buttonConfirm" destination="Uvr-Qa-8Qh" id="WiV-2g-rHf"/>
+                        <outlet property="fieldIdentifier" destination="ZV1-Ag-5fm" id="oXu-Ni-sTn"/>
+                        <outlet property="logoCenter" destination="0Db-gM-ySN" id="VIQ-cn-YSl"/>
+                        <outlet property="logoTopLeft" destination="8Vu-9o-ksa" id="rdv-mW-GMa"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fpY-gt-bnK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="lI2-pm-e4S">
+                    <connections>
+                        <action selector="dismissKeyboardWithGesture:" destination="3lS-rl-bAf" id="Wph-Y0-bhA"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="-494.20289855072468" y="3959.5982142857142"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="background_login" width="1125" height="2001"/>
+    </resources>
+</document>
