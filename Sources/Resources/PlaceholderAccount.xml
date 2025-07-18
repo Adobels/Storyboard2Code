@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="UVb-vR-s9d">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Placeholder Account Controller-->
+        <scene sceneID="C14-D3-w06">
+            <objects>
+                <viewController id="UVb-vR-s9d" customClass="PlaceholderAccountController" customModule="App" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="6FL-Vd-iYU">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="200"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="7zw-6F-Dve">
+                                <rect key="frame" x="23" y="31.5" width="274" height="137.5"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="z6p-Lt-h0Y">
+                                        <rect key="frame" x="100.5" y="0.0" width="73" height="63"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="249" verticalCompressionResistancePriority="749" image="placeholder_logo_default" translatesAutoresizingMaskIntoConstraints="NO" id="3SW-7X-bFT">
+                                                <rect key="frame" x="0.0" y="0.0" width="73" height="63"/>
+                                            </imageView>
+                                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="JIv-hP-deq" customClass="LoaderView" customModule="Designable">
+                                                <rect key="frame" x="11.5" y="0.0" width="50" height="0.0"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="loaderSizeName" value="large"/>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="tintColorName" value="gray"/>
+                                                </userDefinedRuntimeAttributes>
+                                            </imageView>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="749" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="W0I-ow-P2J">
+                                        <rect key="frame" x="81.5" y="87" width="111.5" height="50.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="dynamic-label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RMR-OL-WH3" customClass="CustomLabel" customModule="Designable">
+                                                <rect key="frame" x="0.0" y="0.0" width="111.5" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="textLineSpacing">
+                                                        <real key="value" value="6"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="textColorName" value="black"/>
+                                                </userDefinedRuntimeAttributes>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="dynamic-label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i5n-RF-mau" customClass="CustomLabel" customModule="Designable">
+                                                <rect key="frame" x="0.0" y="32.5" width="111.5" height="18"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="textLineSpacing">
+                                                        <real key="value" value="6"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="textColorName" value="gray"/>
+                                                </userDefinedRuntimeAttributes>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="ojE-He-nyi"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="7zw-6F-Dve" firstAttribute="top" relation="greaterThanOrEqual" secondItem="6FL-Vd-iYU" secondAttribute="top" priority="999" identifier="placeholder Stack View Image Text &gt;= Top" id="GSk-WY-IAm"/>
+                            <constraint firstItem="7zw-6F-Dve" firstAttribute="leading" secondItem="6FL-Vd-iYU" secondAttribute="leading" constant="23" id="TCf-aq-gif"/>
+                            <constraint firstItem="7zw-6F-Dve" firstAttribute="centerY" secondItem="6FL-Vd-iYU" secondAttribute="centerY" identifier="placeholder Stack View Image Text center Y" id="aoO-Tq-qKd"/>
+                            <constraint firstItem="7zw-6F-Dve" firstAttribute="centerX" secondItem="6FL-Vd-iYU" secondAttribute="centerX" id="b4l-8h-qfs"/>
+                        </constraints>
+                    </view>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="320" height="200"/>
+                    <connections>
+                        <outlet property="imageView" destination="3SW-7X-bFT" id="ctW-vB-9rz"/>
+                        <outlet property="labelMessage" destination="i5n-RF-mau" id="rh9-gQ-04O"/>
+                        <outlet property="labelTitle" destination="RMR-OL-WH3" id="5ku-4L-AU0"/>
+                        <outlet property="loader" destination="JIv-hP-deq" id="6U9-wR-jpr"/>
+                        <outlet property="stackViewImage" destination="z6p-Lt-h0Y" id="BMO-3f-UUB"/>
+                        <outlet property="stackViewImageText" destination="7zw-6F-Dve" id="OjO-fP-uBO"/>
+                        <outlet property="stackViewText" destination="W0I-ow-P2J" id="AzF-oR-8ss"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Cgd-Q1-MXX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-33.333333333333336" y="26.785714285714285"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="placeholder_logo_default" width="73" height="63"/>
+    </resources>
+</document>
