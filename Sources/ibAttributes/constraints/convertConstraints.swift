@@ -58,23 +58,22 @@ func storyboardLayoutGuideKeyToCode(_ layoutGuideKey: String?) -> String? {
 }
 
 struct ContextForIBConstraints {
+
     var constraintParentViewId: String
     var arrayLayoutGuideIdToParentViewId: [LayoutGuideIdToParentViewId]
     var arrayRootViewFlattened: [ViewPropertiesForParsing]
-}
 
-struct LayoutGuideIdToParentViewId {
-    let layoutGuideId: String
-    let layoutGuideKey: String
-    let parentViewId: String
-}
+    struct LayoutGuideIdToParentViewId {
+        let layoutGuideId: String
+        let layoutGuideKey: String
+        let parentViewId: String
+    }
 
-struct ViewPropertiesForParsing {
-    let id: String
-    let customClass: String?
-    let elementClass: String
-    let verticalPositionIndex: Int
-    func customClassOrElementClass() -> String {
-        customClass ?? elementClass
+    struct ViewPropertiesForParsing {
+        let id: String
+        let customClass: String?
+        let elementClass: String
+        let verticalPositionIndex: Int
+        func customClassOrElementClass() -> String { customClass ?? elementClass }
     }
 }

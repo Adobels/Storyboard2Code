@@ -59,14 +59,14 @@ func printViewControllerRootView(_ anyViewController: AnyViewController) {
         var anyViews: [ViewProtocol] = rootView.children(of: AnyView.self, recursive: true).map { $0.view }
         anyViews.insert(rootView, at: 0)
         Context.shared.arrayRootViewFlattened = anyViews.enumerated().map { item in
-            ViewPropertiesForParsing(
+            ContextForIBConstraints.ViewPropertiesForParsing(
                 id: (item.element as! IBIdentifiable).id,
                 customClass: item.element.customClass,
                 elementClass: item.element.elementClass,
                 verticalPositionIndex: item.offset
             )
         }
-        var arrayLayoutGuideIdToParentViewId: [LayoutGuideIdToParentViewId] = []
+        var arrayLayoutGuideIdToParentViewId: [ContextForIBConstraints.LayoutGuideIdToParentViewId] = []
         rootView.browse(skipSelf: false) { item in
             if let view = item as? View {
                 [view.safeArea, view.keyboard].compactMap { $0 }.forEach {

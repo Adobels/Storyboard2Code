@@ -40,7 +40,7 @@ struct S2CConstraint {
         }
     }
 
-    fileprivate func extractedFunc1(_ firstItemLayoutGuide: LayoutGuideIdToParentViewId?, _ secondItem: String, _ secondItemLayoutGuide: LayoutGuideIdToParentViewId?, _ firstItem: String) -> (viewId: String, String)? {
+    fileprivate func extractedFunc1(_ firstItemLayoutGuide: ContextForIBConstraints.LayoutGuideIdToParentViewId?, _ secondItem: String, _ secondItemLayoutGuide: ContextForIBConstraints.LayoutGuideIdToParentViewId?, _ firstItem: String) -> (viewId: String, String)? {
         convertResolvedConstraintToCode(
             resolvedFirstItem: firstItem,
             resolvedFirstItemLayoutGuideKey: storyboardLayoutGuideKeyToCode(firstItemLayoutGuide?.layoutGuideKey),
@@ -63,13 +63,13 @@ struct S2CConstraint {
             firstItem = context.constraintParentViewId
         }
         reverseFirstAndSecondItemIfNeeded(with: context)
-        let firstItemLayoutGuide: LayoutGuideIdToParentViewId? = context.arrayLayoutGuideIdToParentViewId.first(where: { item in
+        let firstItemLayoutGuide: ContextForIBConstraints.LayoutGuideIdToParentViewId? = context.arrayLayoutGuideIdToParentViewId.first(where: { item in
             item.layoutGuideId == firstItem
         })
         if let firstItemLayoutGuide {
             firstItem = firstItemLayoutGuide.parentViewId
         }
-        let secondItemLayoutGuide: LayoutGuideIdToParentViewId? = context.arrayLayoutGuideIdToParentViewId.first(where: { item in
+        let secondItemLayoutGuide: ContextForIBConstraints.LayoutGuideIdToParentViewId? = context.arrayLayoutGuideIdToParentViewId.first(where: { item in
             item.layoutGuideId == secondItem
         })
         if let secondItemLayoutGuide {
