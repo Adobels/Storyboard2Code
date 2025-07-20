@@ -30,7 +30,3 @@ func arrayViewIdToProperty(anyViewController: AnyViewController) -> [(viewId: St
     outlets.append((sanitizedOutletName(from: (anyViewController.nested.rootView as! IBIdentifiable).id)!, "view"))
     return outlets
 }
-
-func generateIbOutlet(for outlet: Outlet) -> String {
-    "ibOutlet(&\(outlet.property))"
-}

@@ -21,19 +21,6 @@ struct ConverterConstraint {
     var id: String
 }
 
-struct StoryboardConstraint: Equatable, Identifiable {
-    var firstItem: String?
-    var firstAttribute: String
-    var relation: String?
-    var secondItem: String?
-    var secondAttribute: String?
-    var multiplier: String?
-    let priority: Float?
-    var constant: Float?
-    let identifier: String?
-    let id: String
-}
-
 func reverseFirstAndSecondItemIfNeededWithHierarchy(_ hierarchy: [HierarchyElement], constraint: ConverterConstraint) -> ConverterConstraint {
     guard let secondItem = constraint.secondItem else { return constraint }
     let firstItemViewId = hierarchy.first { $0.eId == constraint.firstItem }?.vId ?? constraint.firstItem

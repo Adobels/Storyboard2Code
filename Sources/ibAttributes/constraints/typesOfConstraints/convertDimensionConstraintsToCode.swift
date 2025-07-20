@@ -20,7 +20,7 @@ func convertDimensionConstraintsToCode(
         case "equal": "equalToConstant"
         case "greaterThanOrEqual": "greaterThanOrEqualToConstant"
         case "lessThanOrEqual": "lessThanOrEqualToConstant"
-        default: throw AppError.noName
+        default: throw AppError.thisCodeShouldNotExecute
         }
     }
     do {

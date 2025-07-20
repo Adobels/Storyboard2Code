@@ -7,10 +7,6 @@
 
 import StoryboardDecoder
 
-func convertRelationToCode(_ relation: Constraint.Relation) -> String? {
-    convertRelationToCode("\(relation)")
-}
-
 func convertRelationToCode(_ relation: String?) -> String {
     switch relation ?? "equal" {
     case "lessThanOrEqual": "lessThanOrEqualTo: "

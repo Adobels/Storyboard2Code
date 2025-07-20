@@ -55,7 +55,9 @@ func printViewControllerRootView(_ anyViewController: AnyViewController) {
     _ = {
         Context.shared.viewControllerIBOutlets = arrayViewIdToProperty(anyViewController: Context.shared.viewController)
     }()
-    Context.shared.arrayConstrains = convertConstraintsToCode(rootView: rootView)
+    _ = {
+        Context.shared.arrayConstrains = convertConstraintsToCode(rootView: rootView)
+    }()
     _ = {
         var destinations: Set<String> = []
         vc.allConnections.filter {

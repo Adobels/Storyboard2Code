@@ -26,15 +26,3 @@ func convertLayoutAttributeToAnchor(_ layoutAttribute: String) -> String {
     default: ".other"
     }
 }
-
-func convertLayoutAttribute(_ layoutAttribute: String) -> String {
-    return switch layoutAttribute {
-    case "topMargin": "top"
-    case "leadingMargin": "leading"
-    case "trailingMargin": "trailing"
-    case "leftMargin": "left"
-    case "rightMargin": "right"
-    case "bottomMargin": "bottom"
-    default: layoutAttribute
-    }
-}
