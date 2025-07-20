@@ -47,14 +47,17 @@ func convertResolvedConstraintToCode(
     return (viewId: viewId, constraintConverted)
 }
 
-func storyboardLayoutGuideKeyToCode(_ layoutGuideKey: String?) -> String? {
-    guard let layoutGuideKey else { return nil }
-    guard !layoutGuideKey.isEmpty else { return nil }
-    return switch layoutGuideKey {
+func storyboardLayoutGuideKeyToCode(required layoutGuideKey: String) -> String {
+    switch layoutGuideKey {
     case "safeArea": "safeAreaLayoutGuide"
     case "keyboard": "keyboardLayoutGuide"
     default: fatalError()
     }
+}
+func storyboardLayoutGuideKeyToCode(_ layoutGuideKey: String?) -> String? {
+    guard let layoutGuideKey else { return nil }
+    guard !layoutGuideKey.isEmpty else { return nil }
+    return storyboardLayoutGuideKeyToCode(required: layoutGuideKey)
 }
 
 struct ContextForIBConstraints {

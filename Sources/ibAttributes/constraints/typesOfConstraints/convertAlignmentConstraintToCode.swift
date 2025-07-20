@@ -16,7 +16,7 @@ func convertAlignmentConstraintToCode(
     priority: Float?,
     identifier: String?
 ) -> (viewId: String, String)? {
-    let viewId = sanitizedOutletName(from: firstItem)!
+    let viewId = firstItem!
     let constraintConverted = try! convertAlignmentConstraintToCodeCore(
         firstItem: firstItem,
         firstAttribute: firstAttribute,
@@ -44,14 +44,14 @@ func convertAlignmentConstraintToCodeCore(
 ) throws -> String {
     var components: [String] = []
     if let firstItem, !firstItem.isEmpty {
-        components.append(sanitizedOutletName(from: firstItem)!)
+        components.append(firstItem)
     } else {
         components.append("$0")
     }
     components.append(convertLayoutAttributeToAnchor("\(firstAttribute)"))
     components.append(".constraint(")
     components.append(convertRelationToCode(relation))
-    components.append("\(sanitizedOutletName(from: secondItem)!)")
+    components.append(secondItem)
     components.append(convertLayoutAttributeToAnchor("\(secondAttribute!)"))
     if let constant {
         components.append(", " + convertConstantToCode(constant))

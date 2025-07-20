@@ -97,7 +97,7 @@ func printViewControllerRootView(_ anyViewController: AnyViewController) {
             let s2cConstraintsLocal: [(viewId: String, constraint: String)] = constraints.map { item in
                 var s2cConstraintNew = S2CConstraint(
                     firstItem: item.firstItem,
-                    firstAttribute: item.firstAttribute!,
+                    firstAttribute: item.firstAttribute,
                     relation: item.relation,
                     secondItem: item.secondItem,
                     secondAttribute: item.secondAttribute,

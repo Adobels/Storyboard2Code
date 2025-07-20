@@ -9,11 +9,16 @@
 import StoryboardDecoder
 import math_h
 
+
+func stringOrNil(from object: Any?) -> String? {
+    object.map { "\($0)" }
+}
+
 struct S2CConstraint {
 
     var firstItem: String?
     var firstAttribute: Constraint.LayoutAttribute
-    var relation: Constraint.Relation
+    var relation: Constraint.Relation?
     var secondItem: String?
     var secondAttribute: Constraint.LayoutAttribute?
     let multiplier: String?
@@ -29,14 +34,6 @@ struct S2CConstraint {
             return code
         } else {
             fatalError()
-        }
-    }
-
-    func stringOrNil(from object: Any?) -> String? {
-        if let object {
-            "\(object)"
-        } else {
-            nil
         }
     }
 
@@ -117,7 +114,9 @@ struct S2CConstraint {
         switch relation {
         case .lessThanOrEqual: relation = .greaterThanOrEqual
         case .greaterThanOrEqual: relation = .lessThanOrEqual
-        case .equal, .other: break
+        case .equal: break
+        case .other: break
+        case .none: relation = .equal
         }
     }
 

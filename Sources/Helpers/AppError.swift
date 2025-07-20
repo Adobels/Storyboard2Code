@@ -6,5 +6,6 @@
 //
 
 enum AppError: Error {
+    case isNill
     case noName
 }

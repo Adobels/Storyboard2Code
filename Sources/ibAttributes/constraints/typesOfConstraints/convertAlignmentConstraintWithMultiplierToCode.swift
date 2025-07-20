@@ -48,7 +48,7 @@ func convertAlignmentConstraintWithMultiplierToCodeCore(
     var components: [String] = []
     components.append("NSLayoutConstraint(item: ")
     if let firstItem, !firstItem.isEmpty {
-        components.append(sanitizedOutletName(from: firstItem)!)
+        components.append(firstItem)
     } else {
         components.append("$0")
     }

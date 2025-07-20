@@ -22,14 +22,14 @@ func convertDimesionRelationConstraintsToCode(
     do {
         var components: [String] = []
         if let firstItem, !firstItem.isEmpty {
-            components.append(sanitizedOutletName(from: firstItem)!)
+            components.append(firstItem)
         } else {
             components.append("$0")
         }
         components.append(convertLayoutAttributeToAnchor(firstAttribute))
         components.append(".constraint(")
         components.append(convertRelationToCode(relation))
-        components.append(sanitizedOutletName(from: secondItem)!)
+        components.append(secondItem)
         components.append(convertLayoutAttributeToAnchor(secondItemAttribute))
         if let multiplier { components.append(": \(convertMultiplierToCode(multiplier))") }
         if let constant { components.append(": \(floatToString(constant))") }
