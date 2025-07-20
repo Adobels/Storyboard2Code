@@ -31,8 +31,8 @@ func convertDimesionRelationConstraintsToCode(
         components.append(convertRelationToCode(relation))
         components.append(secondItem)
         components.append(convertLayoutAttributeToAnchor(secondItemAttribute))
-        if let multiplier { components.append(": \(convertMultiplierToCode(multiplier))") }
-        if let constant { components.append(": \(floatToString(constant))") }
+        if let multiplier { components.append(", \(convertMultiplierToCode(multiplier)!)") }
+        if let constant { components.append(", \(floatToString(constant))") }
         components.append(")")
         if let ibPriority = convertPriorityToCode(priority) { components.append(ibPriority) }
         if let ibIdentifier = convertIdentifierToCode(identifier) { components.append(ibIdentifier) }

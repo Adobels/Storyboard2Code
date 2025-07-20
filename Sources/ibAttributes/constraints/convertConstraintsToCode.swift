@@ -7,7 +7,7 @@
 
 import StoryboardDecoder
 
-func convertConstraintsToCode(rootView: View) -> [(firstItem: String, constraint: String)] {
+func convertConstraintsToCode(rootView: View) -> [ConstraintInCode] {
     var hierarchyOfViews = [ViewProtocol]()
     _ = rootView.browse { item in
         guard let view = item as? ViewProtocol else { return true }
@@ -104,23 +104,9 @@ func convertConstraintsToCode(rootView: View) -> [(firstItem: String, constraint
         constraints = result
     }() as Void
     assert(constraints.count == rootView.children(of: Constraint.self).count)
-
-    func appendGuidedLayoutIfNeededToFirstItem(hierarchy: [HierarchyElement], constraint: ConverterConstraint) throws -> ConverterConstraint {
-        guard let firstItemDetails = hierarchy.first(where: { $0.eId == constraint.firstItem }) else { throw AppError.isNill }
-        guard let secondItemDetails = hierarchy.first(where: { $0.eId == constraint.secondItem }) else { throw AppError.isNill }
-        var constraint = constraint
-        if let lgKey = firstItemDetails.lgKey {
-            constraint.firstItem = firstItemDetails.vId
-            constraint.firstLayoutGuide = storyboardLayoutGuideKeyToCode(required: lgKey.rawValue)
-        }
-        if let lgKey = secondItemDetails.lgKey {
-            constraint.secondItem = secondItemDetails.vId
-            constraint.secondLayoutGuide = storyboardLayoutGuideKeyToCode(required: lgKey.rawValue)
-        }
-        return constraint
-    }
     let constraintsInCode = constraints.map { constraint in
         (
+            constraint.id,
             constraint.ownerItem,
             convertAnyConstraintToCode(
                 firstItem: {
@@ -158,5 +144,20 @@ func convertConstraintsToCode(rootView: View) -> [(firstItem: String, constraint
             )
         )
     }
-    return constraintsInCode
+    return constraintsInCode.map { .init(constraintId: $0.0, viewId: $0.1, code: $0.2) }
+}
+
+func appendGuidedLayoutIfNeededToFirstItem(hierarchy: [HierarchyElement], constraint: ConverterConstraint) throws -> ConverterConstraint {
+    guard let firstItemDetails = hierarchy.first(where: { $0.eId == constraint.firstItem }) else { throw AppError.isNill }
+    guard let secondItemDetails = hierarchy.first(where: { $0.eId == constraint.secondItem }) else { throw AppError.isNill }
+    var constraint = constraint
+    if let lgKey = firstItemDetails.lgKey {
+        constraint.firstItem = firstItemDetails.vId
+        constraint.firstLayoutGuide = storyboardLayoutGuideKeyToCode(required: lgKey.rawValue)
+    }
+    if let lgKey = secondItemDetails.lgKey {
+        constraint.secondItem = secondItemDetails.vId
+        constraint.secondLayoutGuide = storyboardLayoutGuideKeyToCode(required: lgKey.rawValue)
+    }
+    return constraint
 }
