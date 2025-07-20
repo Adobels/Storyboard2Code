@@ -48,8 +48,10 @@ func reverseFirstAndSecondItemIfNeeded(_ constraint: ConverterConstraint) -> Con
     guard let secondItem = constraint.secondItem else { return constraint }
     guard let secondItemAttribute = constraint.secondAttribute else { return constraint }
     let newFirstItem = secondItem
+    let newFirstLayoutGuide = constraint.secondLayoutGuide
     let newFirstItemAttribute = secondItemAttribute
     let newSecondItem = constraint.firstItem
+    let newSecondLayoutGuide = constraint.firstLayoutGuide
     let newSecondAttribute = constraint.firstAttribute
     let newRelation: String? = {
         guard let relation = constraint.relation else { return nil }
@@ -83,15 +85,15 @@ func reverseFirstAndSecondItemIfNeeded(_ constraint: ConverterConstraint) -> Con
     return .init(
         ownerItem: constraint.ownerItem,
         firstItem: newFirstItem,
-        firstLayoutGuide: constraint.firstLayoutGuide,
+        firstLayoutGuide: newFirstLayoutGuide,
         firstAttribute: newFirstItemAttribute,
         relation: newRelation,
         secondItem: newSecondItem,
-        secondLayoutGuide: constraint.secondLayoutGuide,
+        secondLayoutGuide: newSecondLayoutGuide,
         secondAttribute: newSecondAttribute,
         multiplier: newMultiplier,
         priority: constraint.priority,
-        constant: constraint.constant,
+        constant: newConstant,
         identifier: constraint.identifier,
         id: constraint.id,
     )
