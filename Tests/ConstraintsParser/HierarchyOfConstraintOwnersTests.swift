@@ -43,7 +43,7 @@ struct HierarchyOfConstraintOwnersTests {
             ("omo_k_py", #"$0.topAnchor.constraint(equalTo: jgl_v_lt.topAnchor)"#),
             ("omo_k_py", #"$0.centerXAnchor.constraint(equalTo: jgl_v_lt.centerXAnchor)"#),
             ("jgl_v_lt", #"$0.topAnchor.constraint(greaterThanOrEqualTo: mqc_pi_emm.bottomAnchor, constant: 20)"#),
-            ("jgl_v_lt", #"$0.leadingAnchor.constraint(equalTo: per_y_qqk.leadingAnchor, constant: 44)"#),
+            ("jgl_v_lt", #"$0.leadingAnchor.constraint(equalTo: per_y_qqk.safeAreaLayoutGuide.leadingAnchor, constant: 44)"#),
             ("jgl_v_lt", #"$0.centerYAnchor.constraint(equalTo: per_y_qqk.centerYAnchor, constant: -50).ibPriority(.defaultLow)"#),
             ("jgl_v_lt", #"$0.trailingAnchor.constraint(equalTo: per_y_qqk.safeAreaLayoutGuide.trailingAnchor, constant: -44)"#),
             ("mqc_pi_emm", #"$0.topAnchor.constraint(equalTo: per_y_qqk.safeAreaLayoutGuide.topAnchor, constant: 34)"#),
