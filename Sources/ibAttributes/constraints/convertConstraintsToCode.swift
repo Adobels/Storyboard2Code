@@ -104,7 +104,13 @@ func convertConstraintsToCode(rootView: View) -> [ConstraintInCode] {
         constraints = result
     }() as Void
     assert(constraints.count == rootView.children(of: Constraint.self).count)
-    let constraintsInCode = constraints.map { constraint in
+    func getPropertyNameOfIBOutletIfExists(viewId: String) -> String? {
+        let firstIBOutlet = Context.shared.viewControllerIBOutlets.first { iboutlet in
+            iboutlet.viewId == viewId
+        }
+        return if let firstIBOutlet { firstIBOutlet.property } else { nil }
+    }
+    let constraintsInCode: [(String, String, String)] = constraints.map { constraint in
         (
             constraint.id,
             constraint.ownerItem,
@@ -114,7 +120,7 @@ func convertConstraintsToCode(rootView: View) -> [ConstraintInCode] {
                     if constraint.firstItem == constraint.ownerItem {
                         result.append("$0")
                     } else {
-                        result.append(constraint.firstItem)
+                        result.append(getPropertyNameOfIBOutletIfExists(viewId: constraint.firstItem) ?? constraint.firstItem)
                     }
                     if let value = constraint.firstLayoutGuide {
                         result.append(value)
@@ -126,7 +132,7 @@ func convertConstraintsToCode(rootView: View) -> [ConstraintInCode] {
                 secondItem: {
                     if let secondItem = constraint.secondItem {
                         var result = [String]()
-                        result.append(secondItem)
+                        result.append(getPropertyNameOfIBOutletIfExists(viewId: secondItem) ?? secondItem)
                         if let secondLayoutGuide = constraint.secondLayoutGuide {
                             result.append(secondLayoutGuide)
                         }

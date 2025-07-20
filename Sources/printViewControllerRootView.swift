@@ -55,67 +55,7 @@ func printViewControllerRootView(_ anyViewController: AnyViewController) {
     _ = {
         Context.shared.viewControllerIBOutlets = arrayViewIdToProperty(anyViewController: Context.shared.viewController)
     }()
-    _ = {
-        var anyViews: [ViewProtocol] = rootView.children(of: AnyView.self, recursive: true).map { $0.view }
-        anyViews.insert(rootView, at: 0)
-        Context.shared.arrayRootViewFlattened = anyViews.enumerated().map { item in
-            ContextForIBConstraints.ViewPropertiesForParsing(
-                id: (item.element as! IBIdentifiable).id,
-                customClass: item.element.customClass,
-                elementClass: item.element.elementClass,
-                verticalPositionIndex: item.offset
-            )
-        }
-        var arrayLayoutGuideIdToParentViewId: [ContextForIBConstraints.LayoutGuideIdToParentViewId] = []
-        rootView.browse(skipSelf: false) { item in
-            if let view = item as? View {
-                [view.safeArea, view.keyboard].compactMap { $0 }.forEach {
-                    arrayLayoutGuideIdToParentViewId.append(
-                        .init(layoutGuideId: $0.id, layoutGuideKey: $0.key, parentViewId: view.id)
-                    )
-                }
-            }
-            if let view = item as? (any ScrollViewProtocol) {
-                [view.safeArea, view.keyboard].compactMap { $0 }.forEach {
-                    arrayLayoutGuideIdToParentViewId.append(
-                        .init(layoutGuideId: $0.id, layoutGuideKey: $0.key, parentViewId: view.id)
-                    )
-                }
-                [view.contentLayoutGuide, view.frameLayoutGuide].compactMap { $0 }.forEach {
-                    arrayLayoutGuideIdToParentViewId.append(
-                        .init(layoutGuideId: $0.id, layoutGuideKey: $0.key, parentViewId: view.id)
-                    )
-                }
-            }
-            return true
-        }
-        Context.shared.arrayLayoutGuideIdToParentViewId = arrayLayoutGuideIdToParentViewId
-        var s2cConstraints: [(viewId: String, constraint: String)] = []
-        rootView.browse { element in
-            guard let view = element as? ViewProtocol else { return true }
-            guard let constraints = view.constraints else { return true }
-            let s2cConstraintsLocal: [(viewId: String, constraint: String)] = constraints.map { item in
-                var s2cConstraintNew = S2CConstraint(
-                    firstItem: item.firstItem,
-                    firstAttribute: item.firstAttribute,
-                    relation: item.relation,
-                    secondItem: item.secondItem,
-                    secondAttribute: item.secondAttribute,
-                    multiplier: item.multiplier,
-                    priority: item.priority,
-                    constant: item.constant,
-                    identifier: item.identifier,
-                    id: item.id
-                )
-                return s2cConstraintNew.convertToCode(with: .init(constraintParentViewId: (view as! IBIdentifiable).id, arrayLayoutGuideIdToParentViewId: Context.shared.arrayLayoutGuideIdToParentViewId, arrayRootViewFlattened: Context.shared.arrayRootViewFlattened))
-            }
-            s2cConstraints.append(contentsOf: s2cConstraintsLocal)
-            // TODO: Delete it
-            Context.shared.arrayConstrains = s2cConstraints
-            return true
-        }
-        Context.shared.arrayConstrains = s2cConstraints
-    }()
+    Context.shared.arrayConstrains = convertConstraintsToCode(rootView: rootView)
     _ = {
         var destinations: Set<String> = []
         vc.allConnections.filter {

@@ -26,7 +26,5 @@ class Context: @unchecked Sendable {
     var ibViews: Set<String> = []
     var output: [String] = []
 
-    var arrayRootViewFlattened: [ContextForIBConstraints.ViewPropertiesForParsing] = []
-    var arrayLayoutGuideIdToParentViewId: [ContextForIBConstraints.LayoutGuideIdToParentViewId] = []
-    var arrayConstrains: [(viewId: String, constraint: String)] = []
+    var arrayConstrains: [ConstraintInCode] = []
 }
