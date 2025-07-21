@@ -30,3 +30,14 @@ func generateHierarchyOfConstraintItemOwnersOf(rootView: ViewProtocol) -> [Hiera
     }
     return result
 }
+
+struct HierarchyElement: Equatable {
+    /// elementID. elementID are referenced by a constraint firstItem or secondItem
+    let eId: ConstraintOwnerId
+    let vId: ViewId
+    let lgKey: LayoutGuideKey?
+}
+
+typealias ConstraintOwnerId = String
+typealias ViewId = String
+

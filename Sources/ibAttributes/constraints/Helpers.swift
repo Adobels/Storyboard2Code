@@ -19,13 +19,3 @@ enum LayoutGuideKey: String {
      <keyboardLayoutGuide key="keyboard" id="4Kn-o1-G42"/>
      */
 }
-
-struct HierarchyElement: Equatable {
-    /// elementID. elementID are referenced by a constraint firstItem or secondItem
-    let eId: ConstraintOwnerId
-    let vId: ViewId
-    let lgKey: LayoutGuideKey?
-}
-
-typealias ConstraintOwnerId = String
-typealias ViewId = String
