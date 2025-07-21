@@ -10,7 +10,10 @@ import StoryboardDecoder
 func parseImageView(of imageView: ImageView) -> [String] {
     var attr = [String]()
     attr.append(contentsOf: parseViewProtocol(of: imageView))
-    if let value = imageView.contentMode {
+    if let index = attr.firstIndex(of: "$0.isUserInteractionEnabled = false") {
+        attr.remove(at: index)
+    }
+    if let value = imageView.contentMode, value != "scaleToFill" {
         attr.append("$0.contentMode = .\(value)")
     }
     if let image = imageView.image {

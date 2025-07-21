@@ -9,10 +9,10 @@ import StoryboardDecoder
 func parseControlProtocol(of control: ViewProtocol) -> [String] {
     guard let control = control as? ControlProtocol else { fatalError() }
     var result = [String]()
-    if let value = control.contentHorizontalAlignment {
+    if let value = control.contentHorizontalAlignment, value != "center" {
         result.append("$0.contentHorizontalAlignment = .\(value)")
     }
-    if let value = control.contentVerticalAlignment {
+    if let value = control.contentVerticalAlignment, value != "center" {
         result.append("$0.contentVerticalAlignment = .\(value)")
     }
     if let value = control.showsMenuAsPrimaryAction {

@@ -21,8 +21,8 @@ func parseUITextView(of textView: TextView) -> [String] {
     if let fontDescription = textView.fontDescription {
         arrStrings.append("$0.font = \(fontDescriptionToCode(fontDescription))")
     }
-    if let textAlignment = textView.textAlignment {
-        arrStrings.append("$0.textAlignment = .\(textAlignment)")
+    if let value = textView.textAlignment, value != "natural" {
+        arrStrings.append("$0.textAlignment = .\(value)")
     }
     arrStrings.append(contentsOf: parseTextInputTraits(textView.textInputTraits))
     return arrStrings

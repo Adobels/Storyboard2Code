@@ -9,21 +9,25 @@ import StoryboardDecoder
 
 func parseIbAttributes(of view: Label) -> [String] {
     var attributes: [String] = []
-    // Client project uses user runtime attributes to set the title
+// Client project uses user runtime attributes to set the title
 //    if let text = view.text {
 //        attributes.append("$0.text = \"\(text)\"")
 //    }
     attributes.append(contentsOf: parseViewProtocol(of: view))
+    if let index = attributes.firstIndex(where: { $0 == "$0.isUserInteractionEnabled == false" }) {
+        _ = attributes.remove(at: index)
+    }
     if let attributedText = view.attributedText {
         attributes.append("$0.attributedText = \"\(attributedText)\"")
     }
+    // Default value is System Regular 17 but FontDescriptor has no init method which allows easly to create an instance to compare with decoded value
     if let fontDescription = view.fontDescription {
         attributes.append("$0.font = \(fontDescriptionToCode(fontDescription))")
     }
     if let textColor = view.textColor {
         attributes.append("$0.textColor = \(colorToCode(textColor))")
     }
-    if let textAlignment = view.textAlignment {
+    if let textAlignment = view.textAlignment, textAlignment != "natural" {
         attributes.append("$0.textAlignment = .\(textAlignment)")
     }
     // var lineBreakStrategy: NSParagraphStyle.LineBreakStrategy
@@ -32,21 +36,17 @@ func parseIbAttributes(of view: Label) -> [String] {
     }
     // var enablesMarqueeWhenAncestorFocused: Bool
     // var showsExpansionTextWhenTruncated: Bool
-    if let value = lineBreakModeToCode(view.lineBreakMode) {
-        if value != "lineBreakMode" {
-            attributes.append("$0.lineBreakMode = .\(value)")
-        }
+    if let value = lineBreakModeToCode(view.lineBreakMode), value != "tailTruncation" {
+        attributes.append("$0.lineBreakMode = .\(value)")
     }
-    if let adjustsFontSizeToFit = view.adjustsFontSizeToFit {
+    if let adjustsFontSizeToFit = view.adjustsFontSizeToFit, adjustsFontSizeToFit != false {
         attributes.append("$0.adjustsFontSizeToFitWidth = \(adjustsFontSizeToFit)")
     }
     if let value = view.adjustsLetterSpacingToFitWidth, value {
         attributes.append("$0.allowsDefaultTighteningForTruncation = \(value)")
     }
-    if let baselineAdjustment = view.baselineAdjustment {
-        if baselineAdjustment != "byTruncatingTail" {
-            attributes.append("$0.baselineAdjustment = .\(baselineAdjustment)")
-        }
+    if let baselineAdjustment = view.baselineAdjustment, baselineAdjustment != "alignBaselines" {
+        attributes.append("$0.baselineAdjustment = .\(baselineAdjustment)")
     }
     if let minimumScaleFactor = view.minimumScaleFactor {
         attributes.append("$0.minimumScaleFactor = \(minimumScaleFactor)")

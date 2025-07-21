@@ -23,7 +23,7 @@ func parseTextField(of textField: TextField) -> [String] {
     if let value = textField.adjustsFontForContentSizeCategory {
         result.append("$0.adjustsFontForContentSizeCategory")
     }
-    if let value = textField.textAlignment {
+    if let value = textField.textAlignment, value != "natural" {
         result.append("$0.textAlignment = .\(value)")
     }
     if let value = textField.placeholder {
