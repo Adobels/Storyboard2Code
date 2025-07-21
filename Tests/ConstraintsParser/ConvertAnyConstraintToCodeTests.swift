@@ -41,7 +41,7 @@ struct ConvertAnyConstraintToCodeTests {
             identifier: nil,
             id: "aPD-uo-gqU"
         )
-        #expect(result == "$0.layoutMarginsGuide.bottomAnchor.constraint(equalTo: bij_tn_pgt.bottomAnchor, constant: 10)")
+        #expect(result == "$0.layoutMarginsGuide.bottomAnchor.constraint(equalTo: BIJ-TN-PgT.bottomAnchor, constant: 10)")
     }
 
     @Test func lkef() throws {
@@ -58,7 +58,7 @@ struct ConvertAnyConstraintToCodeTests {
             identifier: nil,
             id: "aPD-uo-gqU"
         )
-        #expect(result == "$0.layoutMarginsGuide.bottomAnchor.constraint(equalTo: bij_tn_pgt.bottomAnchor, constant: 10)")
+        #expect(result == "$0.layoutMarginsGuide.bottomAnchor.constraint(equalTo: BIJ-TN-PgT.bottomAnchor, constant: 10)")
     }
 
     @Test func ldede() throws {
@@ -75,6 +75,6 @@ struct ConvertAnyConstraintToCodeTests {
             identifier: nil,
             id: "xfO-Xm-dz3"
         )
-        #expect(result == "NSLayoutConstraint(item: mv_fd_mq, attribute: .centerY, relatedBy: .equal, toItem: vJe-wZ-L5E, attribute: .centerY, multiplier: 1.1, constant: 8.0)")
+        #expect(result == "NSLayoutConstraint(item: M0v-Fd-m0Q, attribute: .centerY, relatedBy: .equal, toItem: vJe-wZ-L5E, attribute: .centerY, multiplier: 1.1, constant: 8.0)")
     }
 }

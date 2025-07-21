@@ -86,7 +86,7 @@ struct DimensionConstraintsTests {
             priority: 750,
             identifier: nil
         )
-        let expected = #"ye_pe_agx.topAnchor.constraint(greaterThanOrEqualTo: wx_pb_dxk.bottomAnchor, constant: 54).ibPriority(.defaultHigh)"#
+        let expected = #"YE5-Pe-agX.topAnchor.constraint(greaterThanOrEqualTo: WX4-pb-dXk.bottomAnchor, constant: 54).ibPriority(.defaultHigh)"#
         #expect(constraint == expected)
         /*
          <constraint firstItem="YE5-Pe-agX" firstAttribute="top" relation="greaterThanOrEqual" secondItem="WX4-pb-dXk" secondAttribute="bottom" priority="750" constant="54" id="G2F-Vi-Qre"/>
@@ -105,7 +105,7 @@ struct DimensionConstraintsTests {
             priority: nil,
             identifier: nil
         )
-        let expected = "zie_ud_tu.topAnchor.constraint(equalTo: pki_h_cvb.topAnchor)"
+        let expected = "zIe-ud-T2u.topAnchor.constraint(equalTo: pKi-7h-cVb.topAnchor)"
         #expect(constraint == expected)
         /*
          <constraint firstItem="zIe-ud-T2u" firstAttribute="top" secondItem="pKi-7h-cVb" secondAttribute="top" id="2ry-gF-VPR"/>
@@ -125,7 +125,7 @@ struct DimensionConstraintsTests {
             priority: nil,
             identifier: nil
         )
-        let expected = "bch_cq_un.leadingAnchor.constraint(equalTo: pki_h_cvb.leadingAnchor)"
+        let expected = "BCH-cq-un7.leadingAnchor.constraint(equalTo: pKi-7h-cVb.leadingAnchor)"
         #expect(constraint == expected)
     }
 
@@ -142,7 +142,7 @@ struct DimensionConstraintsTests {
             priority: nil,
             identifier: nil
         )
-        let expected = "$0.bottomAnchor.constraint(equalTo: qt_dk_htf.bottomAnchor)"
+        let expected = "$0.bottomAnchor.constraint(equalTo: 9qt-dK-HTf.bottomAnchor)"
         #expect(constraint == expected)
     }
 

@@ -67,25 +67,17 @@ struct StoryboardOperationCommentTests {
         guard let rootView = viewController.viewController.rootView else { throw AppError.isNill }
         let hierarchy = generateHierarchyOfConstraintItemOwnersOf(rootView: rootView)
         let expected: [HierarchyElement] = [
-            .init(eId: "baK-Su-87H", vId: "baK-Su-87H", lgKey: nil),
-            .init(eId: "e8i-wu-Xcu", vId: "baK-Su-87H", lgKey: .safeArea),
-            .init(eId: "eo3-u4-K6S", vId: "eo3-u4-K6S", lgKey: nil),
-            .init(eId: "rLT-p4-vqM", vId: "rLT-p4-vqM", lgKey: nil),
-            .init(eId: "Th6-o1-fRg", vId: "Th6-o1-fRg", lgKey: nil),
-            .init(eId: "W4l-pd-zxI", vId: "W4l-pd-zxI", lgKey: nil),
-            .init(eId: "gpW-lH-thK", vId: "gpW-lH-thK", lgKey: nil),
-            .init(eId: "XN7-gt-jHw", vId: "XN7-gt-jHw", lgKey: nil),
-            .init(eId: "iS7-gJ-v3f", vId: "iS7-gJ-v3f", lgKey: nil),
-            .init(eId: "YH4-TE-dSf", vId: "YH4-TE-dSf", lgKey: nil),
-            .init(eId: "0U7-o5-kKu", vId: "0U7-o5-kKu", lgKey: nil),
-            .init(eId: "EYg-Tt-zDJ", vId: "EYg-Tt-zDJ", lgKey: nil),
-            .init(eId: "ek5-ql-irC", vId: "ek5-ql-irC", lgKey: nil),
-            .init(eId: "PxC-7S-Zhx", vId: "PxC-7S-Zhx", lgKey: nil),
-            .init(eId: "43F-SP-LT6", vId: "43F-SP-LT6", lgKey: nil),
-            .init(eId: "aJi-IT-j9R", vId: "aJi-IT-j9R", lgKey: nil),
-            .init(eId: "vkN-PV-1Ub", vId: "vkN-PV-1Ub", lgKey: nil),
-            .init(eId: "5uA-AJ-mG0", vId: "5uA-AJ-mG0", lgKey: nil),
-            .init(eId: "1Wf-Jg-gOa", vId: "1Wf-Jg-gOa", lgKey: nil),
+            .init(eId: "9b3-dl-D0C", vId: "9b3-dl-D0C", lgKey: nil),
+            .init(eId: "ObT-7D-45W", vId: "9b3-dl-D0C", lgKey: .safeArea),
+            .init(eId: "mrj-Ra-OQS", vId: "9b3-dl-D0C", lgKey: .keyboard),
+            .init(eId: "8uM-Vj-wPL", vId: "8uM-Vj-wPL", lgKey: nil),
+            .init(eId: "5gV-4i-pQj", vId: "5gV-4i-pQj", lgKey: nil),
+            .init(eId: "uWu-eE-Dpw", vId: "uWu-eE-Dpw", lgKey: nil),
+            .init(eId: "UkI-Vl-3P1", vId: "UkI-Vl-3P1", lgKey: nil),
+            .init(eId: "NNz-Oq-7TY", vId: "NNz-Oq-7TY", lgKey: nil),
+            .init(eId: "EUj-Lg-FS5", vId: "EUj-Lg-FS5", lgKey: nil),
+            .init(eId: "N6e-qt-99J", vId: "N6e-qt-99J", lgKey: nil),
+            .init(eId: "p90-Ed-fOn", vId: "p90-Ed-fOn", lgKey: nil)
         ]
         #expect(hierarchy == expected)
     }

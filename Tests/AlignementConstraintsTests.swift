@@ -27,7 +27,7 @@ struct AlignementConstraintsTests {
             priority: nil,
             identifier: nil
         )
-        let expected = "$0.leadingAnchor.constraint(equalTo: wx_pb_dxk.trailingAnchor)"
+        let expected = "$0.leadingAnchor.constraint(equalTo: WX4-pb-dXk.trailingAnchor)"
         #expect(constraint == expected)
     }
 
@@ -44,7 +44,7 @@ struct AlignementConstraintsTests {
             priority: 750,
             identifier: nil
         )
-        let expected = #"ye_pe_agx.topAnchor.constraint(greaterThanOrEqualTo: wx_pb_dxk.bottomAnchor, constant: 54).ibPriority(.defaultHigh)"#
+        let expected = #"YE5-Pe-agX.topAnchor.constraint(greaterThanOrEqualTo: WX4-pb-dXk.bottomAnchor, constant: 54).ibPriority(.defaultHigh)"#
         #expect(constraint == expected)
     }
 
@@ -61,7 +61,7 @@ struct AlignementConstraintsTests {
             priority: nil,
             identifier: nil
         )
-        let expected = "zie_ud_tu.topAnchor.constraint(equalTo: pki_h_cvb.topAnchor)"
+        let expected = "zIe-ud-T2u.topAnchor.constraint(equalTo: pKi-7h-cVb.topAnchor)"
         #expect(constraint == expected)
     }
 
@@ -78,7 +78,7 @@ struct AlignementConstraintsTests {
             priority: nil,
             identifier: nil
         )
-        let expected = "bch_cq_un.leadingAnchor.constraint(equalTo: pki_h_cvb.leadingAnchor)"
+        let expected = "BCH-cq-un7.leadingAnchor.constraint(equalTo: pKi-7h-cVb.leadingAnchor)"
         #expect(constraint == expected)
     }
 
@@ -95,7 +95,7 @@ struct AlignementConstraintsTests {
             priority: nil,
             identifier: nil
         )
-        let expected = "$0.bottomAnchor.constraint(equalTo: qt_dk_htf.bottomAnchor)"
+        let expected = "$0.bottomAnchor.constraint(equalTo: 9qt-dK-HTf.bottomAnchor)"
         #expect(constraint == expected)
     }
 }
