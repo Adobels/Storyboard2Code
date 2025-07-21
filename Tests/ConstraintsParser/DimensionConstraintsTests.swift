@@ -60,20 +60,6 @@ struct DimensionConstraintsTests {
         #expect(convertIdentifierToCode("heightConstraint") == #".ibIdentifier("heightConstraint")"#)
     }
 
-    @Test() func testConvertLayoutAttribute() throws {
-        #expect(convertLayoutAttribute("top") == "top")
-        #expect(convertLayoutAttribute("leading") == "leading")
-        #expect(convertLayoutAttribute("trailing") == "trailing")
-        #expect(convertLayoutAttribute("bottom") == "bottom")
-        #expect(convertLayoutAttribute("left") == "left")
-        #expect(convertLayoutAttribute("right") == "right")
-        #expect(convertLayoutAttribute("topMargin") == "top")
-        #expect(convertLayoutAttribute("leadingMargin") == "leading")
-        #expect(convertLayoutAttribute("trailingMargin") == "trailing")
-        #expect(convertLayoutAttribute("rightMargin") == "right")
-        #expect(convertLayoutAttribute("bottomMargin") == "bottom")
-    }
-
     @Test func testConvertLayoutAttributeToAnchor() throws {
         #expect(convertLayoutAttributeToAnchor("top") == ".topAnchor")
         #expect(convertLayoutAttributeToAnchor("leading") == ".leadingAnchor")

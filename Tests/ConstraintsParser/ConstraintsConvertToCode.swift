@@ -26,9 +26,9 @@ import Testing
     #expect(arrayConstraints.count == 4)
     arrayConstraints.forEach { item in
         let result = expectedArrayConstrains.contains {
-            itemExpected in item.constraint == itemExpected.1
+            itemExpected in item.constraintId == itemExpected.1
         }
-        #expect(result, Comment(rawValue: item.constraint))
+        #expect(result, Comment(rawValue: item.code))
     }
 }
 func isEqual(_ lhs: (viewId: String, String), _ rhs: (viewId: String, String)) -> Bool {
