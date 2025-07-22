@@ -4,8 +4,45 @@
 //
 //  Created by Blazej Sleboda on 09/06/2025.
 //
+
 import Foundation
 import StoryboardDecoder
+
+@MainActor
+final class CtxForActions {
+
+    static let shared: CtxForActions = .init()
+    let destinations: [Destination] = []
+}
+
+extension CtxForActions {
+
+    struct Destination {
+        let destinationId: String
+        let destinationName: String?
+    }
+}
+
+func convertActionToCode(_ action: Action, destinations: [CtxForActions.Destination]) -> String {
+    var resolvedDestination = action.destination
+    let destination = destinations.first(where: { destination in
+        destination.destinationId == action.destination
+    })
+    if let destination, let destinationName = destination.destinationName {
+        resolvedDestination = destinationName
+    }
+    var resultComponents = [String]()
+    resultComponents.append("$0.addTarget(")
+    resultComponents.append(resolvedDestination)
+    resultComponents.append(", action: #selector(")
+    resultComponents.append(transformMethodName(action.selector))
+    if let eventType = action.eventType {
+        resultComponents.append(", for: .")
+        resultComponents.append(eventType)
+    }
+    resultComponents.append(")")
+    return resultComponents.joined()
+}
 
 func getIBActions(of element: ViewProtocol) -> [String] {
     guard let connections = element.connections else { return [] }
