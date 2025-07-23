@@ -7,15 +7,13 @@
 
 import StoryboardDecoder
 
-func printIbAttributes(_ attributes: [String]) {
-    guard !attributes.isEmpty else { return }
+func printIbAttributes(of element: AnyView) {
     Context.shared.output.append(".ibAttributes {")
-    Context.shared.output.append(contentsOf: attributes)
+    Context.shared.output.append(contentsOf: printIbAttributes(element))
     Context.shared.output.append("}")
 }
 
-@MainActor
-func printIbAttributes(of element: AnyView) {
+private func printIbAttributes(_ element: AnyView) -> [String] {
     var attributes = [String]()
     let constraintsFound = Context.shared.arrayConstrains.filter { $0.viewId == sanitizedOutletName(from: (element.view as! IBIdentifiable).id)! }
     constraintsFound.forEach { attributes.append($0.code) }
@@ -79,5 +77,5 @@ func printIbAttributes(of element: AnyView) {
         attributes.append(contentsOf: parseActivityIndicatorView(of: activityIndicatorView))
     }
     attributes.append(contentsOf: parseUserDefinedRuntimeAttributes(of: element.view))
-    printIbAttributes(attributes)
+    return attributes
 }
