@@ -14,9 +14,9 @@ func convertOutletsToCode(of element: ViewProtocol) -> [String] {
         outlet.viewId == viewId
     }.forEach { outlet in
         if outlet.isOutletToDestination {
-            output.append("$0.\(outlet.property) = \(sanitizedOutletName(from: outlet.destination)!)")
+            output.append("$0.\(outlet.property) = \(outlet.destination)")
         } else {
-            output.append("$0.ibOutlet(&\(sanitizedOutletName(from: outlet.destination)!).\(outlet.property))")
+            output.append("$0.ibOutlet(&\(outlet.destination).\(outlet.property))")
         }
     }
     return output
@@ -25,8 +25,8 @@ func convertOutletsToCode(of element: ViewProtocol) -> [String] {
 func arrayViewIdToProperty(anyViewController: AnyViewController) -> [(viewId: String, property: String)]  {
     //guard let outlets = (anyViewController.nested.connections?.compactMap { $0 as? Outlet }) else { return [] }
     var outlets = (anyViewController.nested.connections?.compactMap { $0.connection as? Outlet })?
-        .reduce(into: [(String, String)]()) { acc, outlet in acc.append((sanitizedOutletName(from: outlet.destination)!, outlet.property) )
+        .reduce(into: [(String, String)]()) { acc, outlet in acc.append((outlet.destination, outlet.property))
     } ?? []
-    outlets.append((sanitizedOutletName(from: (anyViewController.nested.rootView as! IBIdentifiable).id)!, "view"))
+    outlets.append((anyViewController.nested.rootView!.id, "view"))
     return outlets
 }

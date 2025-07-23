@@ -61,7 +61,7 @@ func printViewControllerRootView(_ anyViewController: AnyViewController) {
         var destinations: Set<String> = []
         vc.allConnections.filter {
             $0.connection is Outlet || $0.connection is Action
-        }.forEach { destinations.insert(sanitizedOutletName(from: $0.connection.destination)!) }
+        }.forEach { destinations.insert($0.connection.destination) }
         let viewsWithConstaints = vc.flattened.filter {
             let constraints = $0.children(of: Constraint.self)
             return !constraints.isEmpty
@@ -72,14 +72,14 @@ func printViewControllerRootView(_ anyViewController: AnyViewController) {
             _ = { view, constaints in
                 constaints.forEach { constaint in
                     if let firstItem = constaint.firstItem {
-                        viewIds.insert(sanitizedOutletName(from: firstItem)!)
+                        viewIds.insert(firstItem)
                     } else {
-                        viewIds.insert(sanitizedOutletName(from: (view as! IBIdentifiable).id)!)
+                        viewIds.insert((view as! IBIdentifiable).id)
                     }
                     if let secondItem = constaint.secondItem {
-                        viewIds.insert(sanitizedOutletName(from: secondItem)!)
+                        viewIds.insert(secondItem)
                     } else {
-                        viewIds.insert(sanitizedOutletName(from: (view as! IBIdentifiable).id)!)
+                        viewIds.insert((view as! IBIdentifiable).id)
                     }
                 }
             }(view, constaints)
@@ -91,7 +91,7 @@ func printViewControllerRootView(_ anyViewController: AnyViewController) {
     Context.shared.output.append(".ibSubviews {")
     elements.forEach { element in
         let elementClass = element.view.customClass ?? element.view.elementClass
-        let elementId = sanitizedOutletName(from: (element.view as! IBIdentifiable).id)!
+        let elementId = element.view.id
         Context.shared.output.append(contentsOf: printViewClassAndInit(element))
         Context.shared.variableViewIbOutlet.append((viewId: elementId, viewClass: elementClass))
         if let viewIbOutlet = getIbOutletToVariable(of: element.view) {

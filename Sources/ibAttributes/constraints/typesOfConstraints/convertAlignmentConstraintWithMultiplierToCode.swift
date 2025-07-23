@@ -18,7 +18,7 @@ func convertAlignmentConstraintWithMultiplierToCode(
     priority: Float?,
     identifier: String?
 ) -> (viewId: String, String)? {
-    let viewId = sanitizedOutletName(from: firstItem)!
+    let viewId = firstItem!
     let constraintConverted = try! convertAlignmentConstraintWithMultiplierToCodeCore(
         firstItem: firstItem,
         firstAttribute: firstAttribute,

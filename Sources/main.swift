@@ -12,7 +12,16 @@ let url = Bundle.module.url(forResource: "ToParse", withExtension: "xml")!
 let sb = try! StoryboardFile(url: url)
 let initialScene = sb.document.scenes!.first!
 Context.shared.actions = extractActions(of: initialScene)
-let result = convertStoryboard2Code(initialScene.viewController!)
+convertStoryboard2Code(initialScene.viewController!)
+let ids = generateListOfIBIdentifiable()
+ids.forEach { id in
+    Context.shared.output = Context.shared.output.map {
+        var components = $0.components(separatedBy: "////")
+        components[0] = components[0].replacingOccurrences(of: id, with: sanitizedOutletName(from: id)!)
+        return components.joined(separator: "////")
+    }
+}
+print(Context.shared.output.joined(separator: "\n"))
 if !Context.shared.actions.isEmpty {
     print("Unused Actions Detected")
     Context.shared.actions.forEach {
@@ -36,6 +45,16 @@ public func convertStoryboard2Code(_ anyViewController: AnyViewController) -> [S
             Context.shared.output.append("view controller has additional views to parse")
         }
     }
-    print(Context.shared.output.joined(separator: "\n"))
     return Context.shared.output
+}
+
+@MainActor
+func generateListOfIBIdentifiable() -> [String] {
+    var strings = [String]()
+    sb.document.browse { element in
+        guard let ibIdentifiable = element as? IBIdentifiable else { return true }
+        strings.append(ibIdentifiable.id)
+        return true
+    }
+    return strings
 }

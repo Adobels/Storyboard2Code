@@ -14,7 +14,7 @@ func printIbAttributes(of element: AnyView) {
 }
 
 private func printIbAttributes(_ element: AnyView) -> [String] {
-    let viewId = sanitizedOutletName(from: element.view.id)!
+    let viewId = element.view.id
     var attributes = [String]()
     // Constraints
     _ = {

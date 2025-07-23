@@ -13,7 +13,7 @@ func printView(elements: [AnyView]) {
     Context.shared.output.append(".ibSubviews {")
     elements.forEach { element in
         let elementClass = element.view.customClass ?? element.view.elementClass
-        let elementId = sanitizedOutletName(from: (element.view as! IBIdentifiable).id)!
+        let elementId = element.view.id
         Context.shared.output.append(contentsOf: printViewClassAndInit(element))
         Context.shared.variableViewIbOutlet.append((viewId: elementId, viewClass: elementClass))
         _ = {

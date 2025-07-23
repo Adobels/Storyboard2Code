@@ -9,13 +9,13 @@ import StoryboardDecoder
 
 func printViewClassAndInit(_ element: AnyView) -> [String] {
     let elementClass = element.view.customClass ?? element.view.elementClass
-    let elementId = sanitizedOutletName(from: (element.view as! IBIdentifiable).id)!
+    let elementId = element.view.id
     var output: [String] = []
     output = ["\(elementClass)()"]
     if let stackView = element.view as? StackView, let axis = stackView.axis {
         output = ["\(elementClass)(axis: .\(axis))"]
     }
-    output.append("// ")
+    output.append("//// ")
     output.append(elementId)
     let index = Context.shared.rootView.children(of: AnyView.self, recursive: true).firstIndex(where: {
         ($0.view as! IBIdentifiable).id == (element.view as! IBIdentifiable).id

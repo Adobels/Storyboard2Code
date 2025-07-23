@@ -94,10 +94,10 @@ func convertConstraintsToCode(rootView: View) -> [ConstraintInCode] {
         var result: [ConverterConstraint] = []
         constraints.forEach { constraint in
             var constraint = constraint
-            constraint.ownerItem = sanitizedOutletName(from: constraint.ownerItem)!
-            constraint.firstItem = sanitizedOutletName(from: constraint.firstItem)!
+            constraint.ownerItem = constraint.ownerItem
+            constraint.firstItem = constraint.firstItem
             if let secondItem = constraint.secondItem {
-                constraint.secondItem = sanitizedOutletName(from: secondItem)!
+                constraint.secondItem = secondItem
             }
             result.append(constraint)
         }
