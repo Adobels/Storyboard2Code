@@ -1,12 +1,11 @@
 //
-//  File.swift
+//  extractActions.swift
 //  story2code
 //
 //  Created by Blazej Sleboda on 22/07/2025.
 //
 
 import StoryboardDecoder
-import Foundation
 
 struct ExtractedAction: Equatable {
     let actionId: String
