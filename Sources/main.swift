@@ -44,9 +44,13 @@ if !Context.shared.constraints.isEmpty {
 @MainActor
 @discardableResult
 public func convertStoryboard2Code(_ anyViewController: AnyViewController) -> [String] {
-    printViewControllerRootView(anyViewController)
     if let viewController = anyViewController.viewController as? ViewController {
+        printViewControllerRootView(anyViewController)
         Context.shared.output.append(contentsOf: parseViewController(viewController))
+    }
+    if let vc = anyViewController.viewController as? TableViewController {
+        printTableViewControllerRootView(anyViewController)
+        Context.shared.output.append(contentsOf: parseTableViewController(vc))
     }
     return Context.shared.output
 }

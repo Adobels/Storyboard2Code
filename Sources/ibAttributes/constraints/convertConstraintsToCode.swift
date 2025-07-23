@@ -7,7 +7,7 @@
 
 import StoryboardDecoder
 
-func convertConstraintsToCode(rootView: View) -> [ConstraintInCode] {
+func convertConstraintsToCode(rootView: ViewProtocol) -> [ConstraintInCode] {
     var hierarchyOfViews = [ViewProtocol]()
     _ = rootView.browse { item in
         guard let view = item as? ViewProtocol else { return true }

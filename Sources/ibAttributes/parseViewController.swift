@@ -33,3 +33,30 @@ func parseViewController(_ viewController: ViewController) -> [String] {
     }
     return result
 }
+
+func parseTableViewController(_ viewController: TableViewController) -> [String] {
+    var result = [String]()
+    result.append("let vc = \(viewController.customClass ?? viewController.elementClass)()")
+//    if let value = viewController.modalPresentationStyle {
+//        result.append("vc.modalPresentationStyle = \(value)")
+//    }
+    if let value = viewController.storyboardIdentifier {
+        result.append("vc.storyboardIdentifier = \(value)")
+    }
+    // No need of sceneMemberID in code
+    if let value = viewController.tabBarItem {
+        result.append("vc.tabBarItem = \(value)")
+    }
+    if let value = viewController.automaticallyAdjustsScrollViewInsets {
+        result.append("vc.automaticallyAdjustsScrollViewInsets = \(value)")
+    }
+    if let value = viewController.hidesBottomBarWhenPushed {
+        result.append("vc.hidesBottomBarWhenPushed = \(value)")
+    }
+    // No need of autoresizesArchivedViewToFullSize in code
+    // No need of wantsFullScreenLayout
+    if let value = viewController.extendedLayoutIncludesOpaqueBars {
+        result.append("vc.extendedLayoutIncludesOpaqueBars = \(value)")
+    }
+    return result
+}

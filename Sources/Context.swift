@@ -17,7 +17,7 @@ class Context: @unchecked Sendable {
     var rootViewControllerId: String!
     var rootViewProtocol: ViewProtocol!
     var rootViewAny: AnyView!
-    var rootView: View!
+    var rootView: ViewProtocol!
     var variableViewIbOutlet: [(viewId: String, viewClass: String)] = []
     var variableViewIbOutlet2: Set<String> = []
     var viewControllerIBOutlets: [(viewId: String, property: String)] = []
