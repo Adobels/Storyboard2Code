@@ -18,9 +18,9 @@ private func printIbAttributes(_ element: AnyView) -> [String] {
     var attributes = [String]()
     // Constraints
     _ = {
-        let constraintsFound = Context.shared.arrayConstrains.filter { $0.viewId == viewId }.forEach { constraint in
+        let constraintsFound = Context.shared.constraints.filter { $0.viewId == viewId }.forEach { constraint in
             attributes.append(constraint.code)
-            Context.shared.arrayConstrains.removeAll(where: { $0 == constraint })
+            Context.shared.constraints.removeAll(where: { $0 == constraint })
         }
     }() as Void
     attributes.append(contentsOf: convertOutletsToCode(of: element.view))

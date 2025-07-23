@@ -15,7 +15,7 @@ func printViewClassAndInit(_ element: AnyView) -> [String] {
     if let stackView = element.view as? StackView, let axis = stackView.axis {
         output = ["\(elementClass)(axis: .\(axis))"]
     }
-    output.append(K.logLiteral)
+    output.append(G.logLiteral)
     output.append(elementId)
     let index = Context.shared.rootView.children(of: AnyView.self, recursive: true).firstIndex(where: {
         ($0.view as! IBIdentifiable).id == (element.view as! IBIdentifiable).id

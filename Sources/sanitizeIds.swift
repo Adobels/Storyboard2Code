@@ -10,9 +10,9 @@ func sanitizeIds() {
     let ids = generateListOfIBIdentifiable()
     ids.forEach { id in
         Context.shared.output = Context.shared.output.map {
-            var components = $0.components(separatedBy: K.logLiteral)
+            var components = $0.components(separatedBy: G.logLiteral)
             components[0] = components[0].replacingOccurrences(of: id, with: sanitizedOutletName(from: id)!)
-            return components.joined(separator: K.logLiteral)
+            return components.joined(separator: G.logLiteral)
         }
     }
 }

@@ -22,9 +22,8 @@ class Context: @unchecked Sendable {
     var variableViewIbOutlet2: Set<String> = []
     var viewControllerIBOutlets: [(viewId: String, property: String)] = []
     var ibOutlet: [S2COutlet] = []
+    var constraints: [ConstraintInCode] = []
     var actions: [ExtractedAction] = []
     var ibViews: Set<String> = []
     var output: [String] = []
-
-    var arrayConstrains: [ConstraintInCode] = []
 }

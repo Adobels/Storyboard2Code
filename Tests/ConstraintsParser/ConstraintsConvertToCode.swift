@@ -22,7 +22,7 @@ import Testing
         (viewId: "qf_uh_shm", "$0.trailingAnchor.constraint(equalTo: per_y_qqk.trailingAnchor)"),
         (viewId: "qf_uh_shm", "$0.bottomAnchor.constraint(equalTo: per_y_qqk.bottomAnchor)"),
     ]
-    let arrayConstraints = Context.shared.arrayConstrains.filter { $0.viewId == "qf_uh_shm" }
+    let arrayConstraints = Context.shared.constraints.filter { $0.viewId == "qf_uh_shm" }
     #expect(arrayConstraints.count == 4)
     arrayConstraints.forEach { item in
         let result = expectedArrayConstrains.contains {
