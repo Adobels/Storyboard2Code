@@ -22,7 +22,12 @@ initialScene.gestureRecognizers?.forEach { gesture in
 initialScene.customViews?.forEach {
     print("Has custom Views \($0.view.id)")
 }
-
+initialScene.customObjects?.forEach {
+    print("Has custom Objects \($0.id)")
+}
+if sb.document.scenes!.count > 1 {
+    print("Has more than one scene")
+}
 if !Context.shared.actions.isEmpty {
     print("Unused Actions Detected")
     Context.shared.actions.forEach {
@@ -42,9 +47,6 @@ public func convertStoryboard2Code(_ anyViewController: AnyViewController) -> [S
     printViewControllerRootView(anyViewController)
     if let viewController = anyViewController.viewController as? ViewController {
         Context.shared.output.append(contentsOf: parseViewController(viewController))
-        if initialScene.customObjects?.isEmpty == .some(false) {
-            Context.shared.output.append("view controller has additional views to parse")
-        }
     }
     return Context.shared.output
 }
