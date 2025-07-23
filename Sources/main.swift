@@ -15,6 +15,14 @@ Context.shared.actions = extractActions(of: initialScene)
 convertStoryboard2Code(initialScene.viewController!)
 sanitizeIds()
 print(Context.shared.output.joined(separator: "\n"))
+initialScene.gestureRecognizers?.forEach { gesture in
+    print("Has gesture: ")
+    print(gesture.gestureRecognizer.id)
+}
+initialScene.customViews?.forEach {
+    print("Has custom Views \($0.view.id)")
+}
+
 if !Context.shared.actions.isEmpty {
     print("Unused Actions Detected")
     Context.shared.actions.forEach {
