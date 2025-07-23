@@ -8,12 +8,12 @@
 import StoryboardDecoder
 
 @MainActor
-func printView(elements: [AnyView]) {
+func printView(elements: [ViewProtocol]) {
     guard !elements.isEmpty else { return }
     Context.shared.output.append(".ibSubviews {")
     elements.forEach { element in
-        let elementClass = element.view.customClass ?? element.view.elementClass
-        let elementId = element.view.id
+        let elementClass = element.customClass ?? element.elementClass
+        let elementId = element.id
         Context.shared.output.append(contentsOf: printViewClassAndInit(element))
         Context.shared.variableViewIbOutlet.append((viewId: elementId, viewClass: elementClass))
         _ = {
@@ -24,13 +24,13 @@ func printView(elements: [AnyView]) {
                     viewIsOutletedInViewController = true
                 }
             }
-            if !viewIsOutletedInViewController, let viewIbOutlet = getIbOutletToVariable(of: element.view) {
+            if !viewIsOutletedInViewController, let viewIbOutlet = getIbOutletToVariable(of: element) {
                 Context.shared.output.append(viewIbOutlet)
             }
         }()
-        let subviews = element.view.subviews
+        let subviews = element.subviews
         if let subviews, subviews.count > 0 {
-            printView(elements: subviews)
+            printView(elements: subviews.map { $0.view })
         }
         printIbAttributes(of: element)
     }

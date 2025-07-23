@@ -24,7 +24,7 @@ func printViewControllerRootView(_ anyViewController: AnyViewController) {
     guard let vc = anyViewController.viewController as? ViewController else { fatalError() }
     Context.shared.viewController = anyViewController
     let rootView: View = vc.rootView as! View
-    let elements = rootView.subviews!
+    let elements: [ViewProtocol] = rootView.subviews!.map { $0.view }
     Context.shared.rootView = rootView
     Context.shared.rootViewProtocol = vc.rootView!
     //Context.shared.ibOutlet = vc.allConnections.compactMap { $0.connection as? Outlet }
@@ -90,14 +90,14 @@ func printViewControllerRootView(_ anyViewController: AnyViewController) {
     guard !elements.isEmpty else { return }
     Context.shared.output.append(".ibSubviews {")
     elements.forEach { element in
-        let elementClass = element.view.customClass ?? element.view.elementClass
-        let elementId = element.view.id
+        let elementClass = element.customClass ?? element.elementClass
+        let elementId = element.id
         Context.shared.output.append(contentsOf: printViewClassAndInit(element))
         Context.shared.variableViewIbOutlet.append((viewId: elementId, viewClass: elementClass))
-        if let viewIbOutlet = getIbOutletToVariable(of: element.view) {
+        if let viewIbOutlet = getIbOutletToVariable(of: element) {
             Context.shared.output.append(viewIbOutlet)
         }
-        let subviews = element.view.subviews
+        let subviews = element.subviews?.map { $0.view }
         if let subviews, subviews.count > 0 {
             printView(elements: subviews)
         }

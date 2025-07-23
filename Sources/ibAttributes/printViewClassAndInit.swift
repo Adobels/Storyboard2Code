@@ -7,12 +7,12 @@
 
 import StoryboardDecoder
 
-func printViewClassAndInit(_ element: AnyView) -> [String] {
-    let elementClass = element.view.customClass ?? element.view.elementClass
-    let elementId = element.view.id
+func printViewClassAndInit(_ element: ViewProtocol) -> [String] {
+    let elementClass = element.customClass ?? element.elementClass
+    let elementId = element.id
     var results: [String] = []
     results.append("\(elementClass)()")
-    if let stackView = element.view as? StackView {
+    if let stackView = element as? StackView {
         let axis = stackView.axis ?? "horizontal"
         results = ["\(elementClass)(axis: .\(axis))"]
     }
@@ -20,9 +20,9 @@ func printViewClassAndInit(_ element: AnyView) -> [String] {
     results.append(elementId)
     let index = Context.shared.rootView.children(of: AnyView.self, recursive: true).firstIndex(where: {
         $0.view.id == elementId
-    })!
+    })
     results.append("viewName: \(index)")
-    results.append("userLabel: \(element.view.userLabel)")
-    results.append("key: \(element.view.key)")
+    results.append("userLabel: \(element.userLabel)")
+    results.append("key: \(element.key)")
     return [results.joined(separator: " ")]
 }
