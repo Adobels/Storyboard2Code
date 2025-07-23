@@ -100,7 +100,7 @@ func convertActionToCode(_ action: Action, destinations: [Destination]) -> Strin
     return resultComponents.joined()
 }
 
-public func transformMethodName(_ input: String) -> String {
+func transformMethodName(_ input: String) -> String {
     var input = input
     let inputWithoutEvent = input.replacingOccurrences(of: "forEvents:", with: "")
     let hasEvent = inputWithoutEvent.count != input.count

@@ -4,8 +4,9 @@
 //
 //  Created by Blazej Sleboda on 10/06/2025.
 //
-import story2code
+
 import Testing
+@testable import story2code
 
 @Test func translateActionSelectorToCode() throws {
     #expect(transformMethodName("didTapWithButton:") == "didTap(button:)")
