@@ -22,7 +22,7 @@ class Context: @unchecked Sendable {
     var variableViewIbOutlet2: Set<String> = []
     var viewControllerIBOutlets: [(viewId: String, property: String)] = []
     var ibOutlet: [S2COutlet] = []
-    var ibAction: [Action] = []
+    var actions: [ExtractedAction] = []
     var ibViews: Set<String> = []
     var output: [String] = []
 

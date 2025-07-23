@@ -11,7 +11,14 @@ import StoryboardDecoder
 let url = Bundle.module.url(forResource: "ToParse", withExtension: "xml")!
 let sb = try! StoryboardFile(url: url)
 let initialScene = sb.document.scenes!.first!
+Context.shared.actions = extractActions(of: initialScene)
 let result = convertStoryboard2Code(initialScene.viewController!)
+if !Context.shared.actions.isEmpty {
+    print("Unused Actions Detected")
+    Context.shared.actions.forEach {
+        print("\($0.actionId), \($0.ownerId), \($0.code)")
+    }
+}
 
 @MainActor
 @discardableResult

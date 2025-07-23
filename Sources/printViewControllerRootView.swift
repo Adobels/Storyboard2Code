@@ -50,7 +50,6 @@ func printViewControllerRootView(_ anyViewController: AnyViewController) {
         }
         Context.shared.ibOutlet = outlets
     }()
-    Context.shared.ibAction = vc.allConnections.compactMap { $0.connection as? Action }
     Context.shared.rootViewControllerId = vc.id
     _ = {
         Context.shared.viewControllerIBOutlets = arrayViewIdToProperty(anyViewController: Context.shared.viewController)

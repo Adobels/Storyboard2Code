@@ -7,10 +7,16 @@
 
 import StoryboardDecoder
 import Foundation
+
 struct ExtractedAction: Equatable {
     let actionId: String
     let ownerId: String
     let code: String
+}
+
+struct Destination {
+    let destinationId: String
+    let destinationName: String?
 }
 
 func extractActions(of scene: Scene) -> [ExtractedAction] {
@@ -45,8 +51,7 @@ func extractActions(of scene: Scene) -> [ExtractedAction] {
     return extractedActions
 }
 
-
-func extractDestinationsForActions(of scene: Scene) -> [CtxForActions.Destination] {
+func extractDestinationsForActions(of scene: Scene) -> [Destination] {
     let outlets = scene.children(of: Outlet.self)
     func getOutletPropertyNameFor(destination: String) -> String? {
         let outlet = outlets.first(where: { $0.destination == destination })
@@ -56,7 +61,7 @@ func extractDestinationsForActions(of scene: Scene) -> [CtxForActions.Destinatio
             nil
         }
     }
-    var destinations = [CtxForActions.Destination]()
+    var destinations = [Destination]()
     _ = scene.browse { element in
         if let element = element as? AnyViewController {
             destinations.append(.init(destinationId: element.nested.id, destinationName: "self"))
@@ -73,4 +78,40 @@ func extractDestinationsForActions(of scene: Scene) -> [CtxForActions.Destinatio
         return true
     }
     return destinations
+}
+
+func convertActionToCode(_ action: Action, destinations: [Destination]) -> String {
+    var resolvedDestination = action.destination
+    let destination = destinations.first(where: { destination in
+        destination.destinationId == action.destination
+    })
+    if let destination, let destinationName = destination.destinationName {
+        resolvedDestination = destinationName
+    }
+    var resultComponents = [String]()
+    resultComponents.append("$0.addTarget(")
+    resultComponents.append(resolvedDestination)
+    resultComponents.append(", action: #selector(")
+    resultComponents.append(transformMethodName(action.selector))
+    if let eventType = action.eventType {
+        resultComponents.append(", for: .")
+        resultComponents.append(eventType)
+    }
+    resultComponents.append(")")
+    return resultComponents.joined()
+}
+
+public func transformMethodName(_ input: String) -> String {
+    var input = input
+    let inputWithoutEvent = input.replacingOccurrences(of: "forEvents:", with: "")
+    let hasEvent = inputWithoutEvent.count != input.count
+    let with = "With"
+    let result: String
+    if inputWithoutEvent.contains(with) {
+        var components = inputWithoutEvent.components(separatedBy: with)
+        result = "\(components.first!)(\(components.last!.lowercased())"
+    } else {
+        result = inputWithoutEvent.replacingOccurrences(of: ":", with: "(_:")
+    }
+    return result + (hasEvent ? "forEvents:" : "") + (result.contains("(") ? ")" : "")
 }

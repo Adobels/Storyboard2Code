@@ -19,7 +19,13 @@ func printIbAttributes(of element: AnyView) {
     var attributes = [String]()
     let constraintsFound = Context.shared.arrayConstrains.filter { $0.viewId == sanitizedOutletName(from: (element.view as! IBIdentifiable).id)! }
     constraintsFound.forEach { attributes.append($0.code) }
-    attributes.append(contentsOf: getIBActions(of: element.view))
+    // Actions
+    {
+        Context.shared.actions.filter { $0.ownerId == element.view.id }.forEach { viewAction in
+            attributes.append(viewAction.code)
+            Context.shared.actions.removeAll(where: { $0 == viewAction })
+        }
+    }() as Void
     attributes.append(contentsOf: convertOutletsToCode(of: element.view))
     if let view = element.view as? View {
         attributes.append(contentsOf: parseView(of: view))
