@@ -14,14 +14,13 @@ func printIbAttributes(of element: AnyView) {
 }
 
 private func printIbAttributes(_ element: AnyView) -> [String] {
+    let viewId = sanitizedOutletName(from: element.view.id)!
     var attributes = [String]()
-    let constraintsFound = Context.shared.arrayConstrains.filter { $0.viewId == sanitizedOutletName(from: element.view.id)! }
-    constraintsFound.forEach { attributes.append($0.code) }
-    // Actions
-    {
-        Context.shared.actions.filter { $0.ownerId == element.view.id }.forEach { viewAction in
-            attributes.append(viewAction.code)
-            Context.shared.actions.removeAll(where: { $0 == viewAction })
+    // Constraints
+    _ = {
+        let constraintsFound = Context.shared.arrayConstrains.filter { $0.viewId == viewId }.forEach { constraint in
+            attributes.append(constraint.code)
+            Context.shared.arrayConstrains.removeAll(where: { $0 == constraint })
         }
     }() as Void
     attributes.append(contentsOf: convertOutletsToCode(of: element.view))
@@ -77,5 +76,12 @@ private func printIbAttributes(_ element: AnyView) -> [String] {
         attributes.append(contentsOf: parseActivityIndicatorView(of: activityIndicatorView))
     }
     attributes.append(contentsOf: parseUserDefinedRuntimeAttributes(of: element.view))
+    // Actions
+    _ = {
+        Context.shared.actions.filter { $0.ownerId == element.view.id }.forEach { viewAction in
+            attributes.append(viewAction.code)
+            Context.shared.actions.removeAll(where: { $0 == viewAction })
+        }
+    }() as Void
     return attributes
 }

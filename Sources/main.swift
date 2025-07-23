@@ -19,6 +19,12 @@ if !Context.shared.actions.isEmpty {
         print("\($0.actionId), \($0.ownerId), \($0.code)")
     }
 }
+if !Context.shared.arrayConstrains.isEmpty {
+    print("Unused Constraints Detected")
+    Context.shared.arrayConstrains.forEach {
+        print("\($0.constraintId), \($0.viewId), \($0.code)")
+    }
+}
 
 @MainActor
 @discardableResult
