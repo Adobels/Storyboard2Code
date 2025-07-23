@@ -13,14 +13,7 @@ let sb = try! StoryboardFile(url: url)
 let initialScene = sb.document.scenes!.first!
 Context.shared.actions = extractActions(of: initialScene)
 convertStoryboard2Code(initialScene.viewController!)
-let ids = generateListOfIBIdentifiable()
-ids.forEach { id in
-    Context.shared.output = Context.shared.output.map {
-        var components = $0.components(separatedBy: "////")
-        components[0] = components[0].replacingOccurrences(of: id, with: sanitizedOutletName(from: id)!)
-        return components.joined(separator: "////")
-    }
-}
+sanitizeIds()
 print(Context.shared.output.joined(separator: "\n"))
 if !Context.shared.actions.isEmpty {
     print("Unused Actions Detected")
