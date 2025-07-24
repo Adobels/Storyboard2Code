@@ -34,8 +34,8 @@ func parseIbAttributes(of view: Label) -> [String] {
     }
     // var enablesMarqueeWhenAncestorFocused: Bool
     // var showsExpansionTextWhenTruncated: Bool
-    if let value = lineBreakModeToCode(view.lineBreakMode), value != "tailTruncation" {
-        attributes.append("$0.lineBreakMode = .\(value)")
+    if let value = view.lineBreakMode, value != "tailTruncation", let convertedValue = lineBreakModeToCode(value) {
+        attributes.append("$0.lineBreakMode = .\(convertedValue)")
     }
     if let adjustsFontSizeToFit = view.adjustsFontSizeToFit, adjustsFontSizeToFit != false {
         attributes.append("$0.adjustsFontSizeToFitWidth = \(adjustsFontSizeToFit)")
