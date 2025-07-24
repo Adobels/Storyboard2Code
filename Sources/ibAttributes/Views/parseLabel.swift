@@ -14,9 +14,7 @@ func parseIbAttributes(of view: Label) -> [String] {
 //        attributes.append("$0.text = \"\(text)\"")
 //    }
     attributes.append(contentsOf: parseViewProtocol(of: view))
-    if let index = attributes.firstIndex(where: { $0 == "$0.isUserInteractionEnabled == false" }) {
-        _ = attributes.remove(at: index)
-    }
+    attributes.removeAll(where: { $0 == "$0.isUserInteractionEnabled = false" })
     if let attributedText = view.attributedText {
         attributes.append("$0.attributedText = \"\(attributedText)\"")
     }
