@@ -24,6 +24,7 @@ class Context: @unchecked Sendable {
     var ibOutlet: [S2COutlet] = []
     var constraints: [ConstraintInCode] = []
     var actions: [ExtractedAction] = []
+    var constraintsOutlets: [Outlet] = []
     var ibViews: Set<String> = []
     var output: [String] = []
 }

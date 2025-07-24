@@ -110,7 +110,7 @@ func convertConstraintsToCode(rootView: ViewProtocol) -> [ConstraintInCode] {
         }
         return if let firstIBOutlet { firstIBOutlet.property } else { nil }
     }
-    let constraintsInCode: [(String, String, String)] = constraints.map { constraint in
+    var constraintsInCode: [(String, String, String)] = constraints.map { constraint in
         (
             constraint.id,
             constraint.ownerItem,
@@ -149,6 +149,16 @@ func convertConstraintsToCode(rootView: ViewProtocol) -> [ConstraintInCode] {
                 id: constraint.id,
             )
         )
+    }
+    constraintsInCode = constraintsInCode.map { constraint in
+        let outlet = Context.shared.constraintsOutlets.first(where: { outlet in
+            outlet.destination == constraint.0
+        })
+        return if let outlet {
+            (constraint.0, constraint.1, constraint.2 + ".ibOutlet(&\(getPropertyNameOfIBOutletIfExists(viewId: outlet.destination) ?? outlet.destination))")
+        } else {
+            (constraint.0, constraint.1, constraint.2)
+        }
     }
     return constraintsInCode.map { .init(constraintId: $0.0, viewId: $0.1, code: $0.2) }
 }

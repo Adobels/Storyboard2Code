@@ -11,7 +11,23 @@ import StoryboardDecoder
 let url = Bundle.module.url(forResource: "ToParse", withExtension: "xml")!
 let sb = try! StoryboardFile(url: url)
 let initialScene = sb.document.scenes!.first!
+
 Context.shared.actions = extractActions(of: initialScene)
+_ = {
+    var allConstraints = initialScene.children(of: Constraint.self)
+    var outlets: [Outlet] = []
+    _ = initialScene.browse { element in
+        guard let connectionsOwner = element as? IBConnectionOwner else { return true }
+        let currentOutlets = connectionsOwner.connections?.compactMap { $0.connection as? Outlet } ?? []
+        outlets.append(contentsOf: currentOutlets)
+        return true
+    }
+    outlets = outlets.filter { outlet in
+        allConstraints.contains(where: { $0.id == outlet.destination })
+    }
+    Context.shared.constraintsOutlets = outlets
+}() as Void
+
 convertStoryboard2Code(initialScene.viewController!)
 sanitizeIds()
 print(Context.shared.output.joined(separator: "\n"))
