@@ -30,6 +30,17 @@ _ = {
 
 convertStoryboard2Code(initialScene.viewController!)
 sanitizeIds()
+convertColorToClientTheme()
+func convertColorToClientTheme() {
+    Context.shared.output = Context.shared.output.map {
+        var result = ""
+
+        result = $0.replacingOccurrences(of: ".init(cgColor: .init(genericGrayGamma2_2Gray: 0.0, alpha: 1.0))", with: "Colors.black")
+        result = result.replacingOccurrences(of: ".init(cgColor: .init(genericGrayGamma2_2Gray: 1.0, alpha: 1.0))", with: "Colors.white")
+        result = result.replacingOccurrences(of: ".init(cgColor: .init(genericGrayGamma2_2Gray: 0.0, alpha: 0.0))", with: ".clear")
+        return result
+    }
+}
 print(Context.shared.output.joined(separator: "\n"))
 initialScene.gestureRecognizers?.forEach { gesture in
     print("Has gesture: ")
