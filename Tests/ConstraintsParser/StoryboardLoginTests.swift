@@ -60,11 +60,11 @@ struct StoryboardLoginTests {
         guard let initialScene = sb.document.scenes?.first else { throw AppError.isNill }
         let results = extractActions(of: initialScene)
         let expectedResults: [ExtractedAction] = [
-            .init(actionId: "apr-73-iAm", ownerId: "ek5-ql-irC", code: "$0.addTarget(self, action: #selector(didTapIdentifierClearButton, for: .touchUpInside)"),
-            .init(actionId: "piM-N8-QFT", ownerId: "aJi-IT-j9R", code: "$0.addTarget(self, action: #selector(didTapPasswordButton, for: .touchUpInside)"),
-            .init(actionId: "ctX-CB-SMJ", ownerId: "vkN-PV-1Ub", code: "$0.addTarget(self, action: #selector(login(_:), for: .touchUpInside)"),
-            .init(actionId: "iSO-Sl-8ys", ownerId: "1Wf-Jg-gOa", code: "$0.addTarget(self, action: #selector(biometrics(_:), for: .touchUpInside)"),
-            .init(actionId: "P10-Sh-wge", ownerId: "kVf-kS-YQ3", code: "$0.addTarget(self, action: #selector(dismissKeyboard(gesture:))")
+            .init(actionId: "apr-73-iAm", ownerId: "ek5-ql-irC", code: "$0.addTarget(self, action: #selector(didTapIdentifierClearButton), for: .touchUpInside)"),
+            .init(actionId: "piM-N8-QFT", ownerId: "aJi-IT-j9R", code: "$0.addTarget(self, action: #selector(didTapPasswordButton), for: .touchUpInside)"),
+            .init(actionId: "ctX-CB-SMJ", ownerId: "vkN-PV-1Ub", code: "$0.addTarget(self, action: #selector(login(_:)), for: .touchUpInside)"),
+            .init(actionId: "iSO-Sl-8ys", ownerId: "1Wf-Jg-gOa", code: "$0.addTarget(self, action: #selector(biometrics(_:)), for: .touchUpInside)"),
+            .init(actionId: "P10-Sh-wge", ownerId: "kVf-kS-YQ3", code: "$0.addTarget(self, action: #selector(dismissKeyboard(gesture:)))")
         ]
         #expect(results.count == expectedResults.count)
         expectedResults.enumerated().forEach { exptectedResult in

@@ -92,6 +92,7 @@ func convertActionToCode(_ action: Action, destinations: [Destination]) -> Strin
     resultComponents.append(resolvedDestination)
     resultComponents.append(", action: #selector(")
     resultComponents.append(transformMethodName(action.selector))
+    resultComponents.append(")")
     if let eventType = action.eventType {
         resultComponents.append(", for: .")
         resultComponents.append(eventType)
