@@ -15,13 +15,14 @@ func parseIbAttributes(of view: Label) -> [String] {
 //    }
     attributes.append(contentsOf: parseViewProtocol(of: view))
     attributes.removeAll(where: { $0 == "$0.isUserInteractionEnabled = false" })
-    if let attributedText = view.attributedText {
-        attributes.append("$0.attributedText = \"\(attributedText)\"")
-    }
     // Default value is System Regular 17 but FontDescriptor has no init method which allows easly to create an instance to compare with decoded value
     if let fontDescription = view.fontDescription {
         attributes.append("$0.font = \(fontDescriptionToCode(fontDescription))")
     }
+// Client's project does not uses attributedText
+//    if let attributedText = view.attributedText {
+//        attributes.append("$0.attributedText = \"\(attributedText)\"")
+//    }
     if let textColor = view.textColor {
         attributes.append("$0.textColor = \(colorToCode(textColor))")
     }
