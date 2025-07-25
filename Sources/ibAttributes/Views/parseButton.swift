@@ -11,8 +11,11 @@ func parseButton(of view: Button) -> [String] {
     var result: [String] = []
     result.append(contentsOf: parseViewProtocol(of: view))
     result.append(contentsOf: parseControlProtocol(of: view))
-    if let value = lineBreakModeToCode(view.lineBreakMode) {
+    if let value = lineBreakModeToCode(view.lineBreakMode), value != "byTruncatingMiddle" {
         result.append("$0.titleLabel?.lineBreakMode = .\(value)")
+    }
+    if let value = view.fontDescription {
+        result.append("$0.titleLabel?.font = \(fontDescriptionToCode(value))")
     }
     if let value = view.showsTouchWhenHighlighted {
         result.append("$0.showsTouchWhenHighlighted = \(value)")
@@ -37,9 +40,6 @@ func parseButton(of view: Button) -> [String] {
             result.append("$0.setTitleShadowColor(\(value), for: .\(stateKey))")
         }
         if let value = state.color { fatalError() }
-    }
-    if let value = view.fontDescription {
-        result.append("$0.titleLabel?.font = \(fontDescriptionToCode(value))")
     }
     if let value = view.titleEdgeInsets, let value = parseInset(value)  {
         result.append("$0.titleEdgeInsets = \(value)")
