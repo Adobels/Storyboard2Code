@@ -16,7 +16,7 @@ func parseButton(of view: Button) -> [String] {
         result.append("$0.titleLabel?.lineBreakMode = .\(value)")
     }
     if let value = view.fontDescription {
-        if view.customClass == "LargeButton" { } else { // The Project LargeButton 
+        if view.customClass == "LargeButton" { } else { // The Project LargeButton
             result.append("$0.titleLabel?.font = \(fontDescriptionToCode(value))")
         }
     }

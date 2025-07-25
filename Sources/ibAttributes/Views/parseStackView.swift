@@ -10,15 +10,16 @@ import StoryboardDecoder
 func parseStackViewAttributes(_ stackView: StackView) -> [String] {
     var attributes: [String] = []
     attributes.append(contentsOf: parseViewProtocol(of: stackView))
-    if let alignment = stackView.alignment {
-        attributes.append("$0.alignment = .\(alignment)")
-    }
-    if let distribution = stackView.distribution {
-        attributes.append("$0.distribution = .\(distribution)")
-    }
-    if let spacing = stackView.spacing {
-        attributes.append("$0.spacing = \(spacing)")
-    }
+    // The client's project uses VerticalStack and HorizontalStack avec belowe properties as init method arguments
+//    if let alignment = stackView.alignment {
+//        attributes.append("$0.alignment = .\(alignment)")
+//    }
+//    if let distribution = stackView.distribution {
+//        attributes.append("$0.distribution = .\(distribution)")
+//    }
+//    if let spacing = stackView.spacing {
+//        attributes.append("$0.spacing = \(spacing)")
+//    }
     if let value = stackView.spacingType {
         attributes.append("$0.spacingType = \(value)")
     }

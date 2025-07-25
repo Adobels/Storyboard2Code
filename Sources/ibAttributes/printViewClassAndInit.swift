@@ -11,18 +11,32 @@ func printViewClassAndInit(_ element: ViewProtocol) -> [String] {
     let elementClass = element.customClass ?? element.elementClass
     let elementId = element.id
     var results: [String] = []
-    results.append("\(elementClass)()")
     if let stackView = element as? StackView {
-        let axis = stackView.axis ?? "horizontal"
-        results = ["\(elementClass)(axis: .\(axis))"]
+        if stackView.axis == "vertical" {
+            results.append("VerticalStack(")
+        } else {
+            results.append("HorizontalStack(")
+        }
+        var arguments: [String] = []
+        if let value = stackView.spacing {
+            arguments.append("spacing: " + String(value))
+        }
+        if let value = stackView.alignment {
+            arguments.append("alignment: " + value)
+        }
+        if let value = stackView.distribution {
+            arguments.append("distribution: " + value)
+        }
+        let joinedArguments = arguments.joined(separator: ",")
+        results.append(joinedArguments)
+        results.append(")")
+    } else {
+        results.append(elementClass + "()")
     }
     results.append(G.logLiteral)
-    results.append(elementId)
-    let index = Context.shared.rootView.children(of: AnyView.self, recursive: true).firstIndex(where: {
-        $0.view.id == elementId
-    })
-    results.append("viewName: \(index)")
-    results.append("userLabel: \(element.userLabel)")
-    results.append("key: \(element.key)")
-    return [results.joined(separator: " ")]
+    results.append("id: " + elementId)
+    results.append("sid: " + sanitizedOutletName(from: elementId)!)
+    if let value = element.userLabel { results.append("userLabel: " + value) }
+    if let value = element.key { results.append("key: " + value) }
+    return [results.joined(separator: ",")]
 }
