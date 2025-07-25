@@ -12,9 +12,6 @@ func parseUITextView(of textView: TextView) -> [String] {
     arrStrings.append(contentsOf: parseViewProtocol(of: textView))
     arrStrings.append(contentsOf: parseScrollViewProtocol(of: textView))
     // Text View: Not all members are parsed
-    if let text = textView.text {
-        arrStrings.append("$0.text = \"\(text)\"")
-    }
     if let textColor = textView.textColor {
         arrStrings.append("$0.textColor = \(colorToCode(textColor))")
     }
@@ -23,6 +20,9 @@ func parseUITextView(of textView: TextView) -> [String] {
     }
     if let value = textView.textAlignment, value != "natural" {
         arrStrings.append("$0.textAlignment = .\(value)")
+    }
+    if let text = textView.text {
+        arrStrings.append("$0.text = \"\(text)\"")
     }
     arrStrings.append(contentsOf: parseTextInputTraits(textView.textInputTraits))
     return arrStrings

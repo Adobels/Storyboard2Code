@@ -11,9 +11,6 @@ func parseTextField(of textField: TextField) -> [String] {
     var result = [String]()
     result.append(contentsOf: parseViewProtocol(of: textField))
     result.append(contentsOf: parseControlProtocol(of: textField))
-    if let text = textField.text {
-        result.append("$0.text = \"\(text)\"")
-    }
     if let value = textField.textColor {
         result.append("$0.textColor = \(colorToCode(value))")
     }
@@ -25,9 +22,6 @@ func parseTextField(of textField: TextField) -> [String] {
     }
     if let value = textField.textAlignment, value != "natural" {
         result.append("$0.textAlignment = .\(value)")
-    }
-    if let value = textField.placeholder {
-        result.append("$0.placeholder = \"\(value)\"")
     }
     // missing background image property
     // missing background disabled image property
@@ -53,6 +47,12 @@ func parseTextField(of textField: TextField) -> [String] {
     result.append(contentsOf: parseTextInputTraits(textField.textInputTraits))
     if let value = textField.allowsEditingTextAttributes {
         result.append("$0.allowsEditingTextAttributes = \(value)")
+    }
+    if let text = textField.text {
+        result.append("$0.text = \"\(text)\"")
+    }
+    if let value = textField.placeholder {
+        result.append("$0.placeholder = \"\(value)\"")
     }
     return result
 }
