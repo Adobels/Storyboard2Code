@@ -10,8 +10,9 @@ import StoryboardDecoder
 func parseButton(of view: Button) -> [String] {
     var result: [String] = []
     result.append(contentsOf: parseViewProtocol(of: view))
+    result.removeAll(where: { $0 == "$0.backgroundColor = Colors.black" })
     result.append(contentsOf: parseControlProtocol(of: view))
-    if let value = lineBreakModeToCode(view.lineBreakMode), value != "byTruncatingMiddle" {
+    if let rawValue = view.lineBreakMode, rawValue != "middleTruncation", let value = lineBreakModeToCode(rawValue) {
         result.append("$0.titleLabel?.lineBreakMode = .\(value)")
     }
     if let value = view.fontDescription {
