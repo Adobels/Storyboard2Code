@@ -38,5 +38,5 @@ func printViewClassAndInit(_ element: ViewProtocol) -> [String] {
     results.append("sid: " + sanitizedOutletName(from: elementId)!)
     if let value = element.userLabel { results.append("userLabel: " + value) }
     if let value = element.key { results.append("key: " + value) }
-    return [results.joined(separator: ",")]
+    return [results.joined(separator: " ")]
 }

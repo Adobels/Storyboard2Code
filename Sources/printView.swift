@@ -7,14 +7,32 @@
 
 import StoryboardDecoder
 
-@MainActor
-func printView(elements: [ViewProtocol]) {
-    guard !elements.isEmpty else { return }
-    Context.shared.output.append(".ibSubviews {")
+func printRootView(_ rootView: View, ctx: ParsingOutput) -> [String] {
+    var results = [String]()
+    ctx.output.append("view \(printViewDiagnostics(of: rootView)))")
+    if let subviews = rootView.subviews, !subviews.isEmpty {
+        ctx.output.append(".ibSubviews {")
+        printSubviews(elements: subviews.map { $0.view })
+        ctx.output.append("}")
+    }
+    var properties = parseView(of: rootView)
+    properties.removeAll(where: { $0 == #"$0.key = "view""# })
+    properties.append("$0.backgroundColor = RootViewComponentTheme().background")
+    if !properties.isEmpty {
+        ctx.output.append(".ibAttributes {")
+        ctx.output.append(contentsOf: properties)
+        ctx.output.append("}")
+    }
+    return results
+}
+
+
+func printSubviews(elements: [ViewProtocol]) {
     elements.forEach { element in
+        Context.shared.output.append(contentsOf: printViewClassAndInit(element))
+        Context.shared.output.append(".ibOutlet(&" + element.id + ")")
         let elementClass = element.customClass ?? element.elementClass
         let elementId = element.id
-        Context.shared.output.append(contentsOf: printViewClassAndInit(element))
         Context.shared.variableViewIbOutlet.append((viewId: elementId, viewClass: elementClass))
         _ = {
             var viewIsOutletedInViewController: Bool = false
@@ -24,15 +42,12 @@ func printView(elements: [ViewProtocol]) {
                     viewIsOutletedInViewController = true
                 }
             }
-            if !viewIsOutletedInViewController, let viewIbOutlet = getIbOutletToVariable(of: element) {
-                Context.shared.output.append(viewIbOutlet)
-            }
         }()
-        let subviews = element.subviews
-        if let subviews, subviews.count > 0 {
-            printView(elements: subviews.map { $0.view })
+        if let subviews = element.subviews?.map { $0.view }, !subviews.isEmpty {
+            Context.shared.output.append(".ibSubviews {")
+            printSubviews(elements: subviews)
+            Context.shared.output.append("}")
         }
         printIbAttributes(of: element)
     }
-    Context.shared.output.append("}")
 }

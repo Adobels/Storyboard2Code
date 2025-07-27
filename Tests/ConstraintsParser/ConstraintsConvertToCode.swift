@@ -10,7 +10,8 @@ import StoryboardDecoder
 import Testing
 @testable import story2code
 
-@MainActor @Test(.disabled("check the file")) func widthConstraint() throws {
+@MainActor
+ @Test(.disabled("check the file")) func widthConstraint() throws {
     let url = Bundle.module.url(forResource: "Biometrics", withExtension: "xml")!
     let sb = try! StoryboardFile(url: url)
     let initialScene = sb.document.scenes!.first!

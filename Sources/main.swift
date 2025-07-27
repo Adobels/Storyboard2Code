@@ -67,28 +67,3 @@ if !Context.shared.constraints.isEmpty {
         print("\($0.constraintId), \($0.viewId), \($0.code)")
     }
 }
-
-@MainActor
-@discardableResult
-public func convertStoryboard2Code(_ anyViewController: AnyViewController) -> [String] {
-    if let viewController = anyViewController.viewController as? ViewController {
-        printViewControllerRootView(anyViewController)
-        Context.shared.output.append(contentsOf: parseViewController(viewController))
-    }
-    if let vc = anyViewController.viewController as? TableViewController {
-        printTableViewControllerRootView(anyViewController)
-        Context.shared.output.append(contentsOf: parseTableViewController(vc))
-    }
-    return Context.shared.output
-}
-
-@MainActor
-func generateListOfIBIdentifiable() -> [String] {
-    var strings = [String]()
-    sb.document.browse { element in
-        guard let ibIdentifiable = element as? IBIdentifiable else { return true }
-        strings.append(ibIdentifiable.id)
-        return true
-    }
-    return strings
-}

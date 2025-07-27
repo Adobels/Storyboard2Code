@@ -5,9 +5,11 @@
 //  Created by Blazej Sleboda on 23/07/2025.
 //
 
+
 @MainActor
 func sanitizeIds() {
-    let ids = generateListOfIBIdentifiable()
+    guard let scene = sb.document.scenes?.first else { fatalError() }
+    let ids = generateListOfIBIdentifiable(of: scene)
     ids.forEach { id in
         Context.shared.output = Context.shared.output.map {
             var components = $0.components(separatedBy: G.logLiteral)

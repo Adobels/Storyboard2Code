@@ -10,7 +10,8 @@ import Foundation
 @testable import story2code
 import StoryboardDecoder
 
-@MainActor @Test(.disabled("check the file")) func testOutputBiometric() async throws {
+@MainActor
+ @Test(.disabled("check the file")) func testOutputBiometric() async throws {
     let url = Bundle.module.url(forResource: "Biometrics", withExtension: "xml")!
     let sb = try! StoryboardFile(url: url)
     let initialScene = sb.document.scenes!.first!
