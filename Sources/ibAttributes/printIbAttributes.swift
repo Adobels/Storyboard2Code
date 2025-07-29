@@ -8,8 +8,10 @@
 import StoryboardDecoder
 
 func printIbAttributes(of element: ViewProtocol) {
+    let content = printIbAttributes(element)
+    guard !content.isEmpty else { return }
     Context.shared.output.append(".ibAttributes {")
-    Context.shared.output.append(contentsOf: printIbAttributes(element))
+    Context.shared.output.append(contentsOf: content)
     Context.shared.output.append("}")
 }
 
