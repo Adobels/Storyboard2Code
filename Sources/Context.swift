@@ -21,6 +21,9 @@ class Context: @unchecked Sendable, ParsingOutput {
     var actions: [ExtractedAction] = []
     var constraintsOutlets: [Outlet] = []
     var output: [String] = []
+    //let setupOutletsController: SetupOutletsController = .init()
+    //var setupOutlets: [SetupOutlet] = []
+    var debugEnabled = false
 }
 
 protocol ParsingOutput: AnyObject {

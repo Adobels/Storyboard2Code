@@ -30,19 +30,37 @@ func printRootView(_ rootView: View, ctx: ParsingOutput) -> [String] {
 func printSubviews(elements: [ViewProtocol]) {
     elements.forEach { element in
         Context.shared.output.append(contentsOf: printViewClassAndInit(element))
-        Context.shared.output.append(".ibOutlet(&" + element.id + ")")
-        let elementClass = element.customClass ?? element.elementClass
-        let elementId = element.id
-        Context.shared.variableViewIbOutlet.append((viewId: elementId, viewClass: elementClass))
         _ = {
-            var viewIsOutletedInViewController: Bool = false
-            Context.shared.viewControllerIBOutlets.forEach { outlet in
-                if outlet.viewId == elementId {
-                    Context.shared.output.append(".ibOutlet(&\(outlet.property))")
-                    viewIsOutletedInViewController = true
-                }
+            if Context.shared.debugEnabled {
+                Context.shared.output.append(G.logLiteral + #function + ":" + String(#line) + " begin")
             }
-        }()
+            Context.shared.output.append(".ibOutlet(&" + element.id + ")")
+            if Context.shared.debugEnabled {
+                Context.shared.output.append(G.logLiteral + #function + ":" + String(#line) + " end")
+            }
+        }() as Void
+        _ = {
+            if Context.shared.debugEnabled {
+                Context.shared.output.append(G.logLiteral + #function + ":" + String(#line) + " begin")
+            }
+
+            let elementClass = element.customClass ?? element.elementClass
+            let elementId = element.id
+            Context.shared.variableViewIbOutlet.append((viewId: elementId, viewClass: elementClass))
+            _ = {
+                var viewIsOutletedInViewController: Bool = false
+                Context.shared.viewControllerIBOutlets.forEach { outlet in
+                    if outlet.viewId == elementId {
+                        Context.shared.output.append(".ibOutlet(&\(outlet.property))")
+                        viewIsOutletedInViewController = true
+                    }
+                }
+            }()
+
+            if Context.shared.debugEnabled {
+                Context.shared.output.append(G.logLiteral + #function + ":" + String(#line) + " end")
+            }
+        }() as Void
         if let subviews = element.subviews?.map { $0.view }, !subviews.isEmpty {
             Context.shared.output.append(".ibSubviews {")
             printSubviews(elements: subviews)

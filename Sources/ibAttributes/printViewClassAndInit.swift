@@ -7,36 +7,47 @@
 
 import StoryboardDecoder
 
-func printViewClassAndInit(_ element: ViewProtocol) -> [String] {
-    let elementClass = element.customClass ?? element.elementClass
-    let elementId = element.id
-    var results: [String] = []
-    if let stackView = element as? StackView {
+func printViewClassAndInit(_ view: ViewProtocol) -> [String] {
+    var strings: [String] = []
+    if Context.shared.debugEnabled {
+       strings.append(G.logLiteral + #function + " begin")
+    }
+    let elementId = view.id
+    _ = {
+        var resultsLog: [String] = []
+        resultsLog.append(G.logLiteral)
+        resultsLog.append("id: " + elementId)
+        resultsLog.append("sid: " + sanitizedOutletName(from: elementId)!)
+        if let value = view.userLabel { resultsLog.append("userLabel: " + value) }
+        if let value = view.key {resultsLog.append("key: " + value) }
+        strings.append(resultsLog.joined(separator: ", "))
+    }() as Void
+    if let stackView = view as? StackView {
+        var resultsStackView = [String]()
         if stackView.axis == "vertical" {
-            results.append("VerticalStack(")
+            resultsStackView.append("VerticalStack(")
         } else {
-            results.append("HorizontalStack(")
+            resultsStackView.append("HorizontalStack(")
         }
         var arguments: [String] = []
         if let value = stackView.spacing {
             arguments.append("spacing: " + String(value))
         }
         if let value = stackView.alignment {
-            arguments.append("alignment: " + value)
+            arguments.append("alignment: ." + value)
         }
         if let value = stackView.distribution {
-            arguments.append("distribution: " + value)
+            arguments.append("distribution: ." + value)
         }
-        let joinedArguments = arguments.joined(separator: ",")
-        results.append(joinedArguments)
-        results.append(")")
+        resultsStackView.append(arguments.joined(separator: ", "))
+        resultsStackView.append(")")
+        strings.append(resultsStackView.joined())
     } else {
-        results.append(elementClass + "()")
+        let viewClass = view.customClass ?? view.elementClass
+        strings.append(viewClass + "()")
     }
-    results.append(G.logLiteral)
-    results.append("id: " + elementId)
-    results.append("sid: " + sanitizedOutletName(from: elementId)!)
-    if let value = element.userLabel { results.append("userLabel: " + value) }
-    if let value = element.key { results.append("key: " + value) }
-    return [results.joined(separator: " ")]
+    if Context.shared.debugEnabled {
+       strings.append(G.logLiteral + #function + " end")
+    }
+    return strings
 }

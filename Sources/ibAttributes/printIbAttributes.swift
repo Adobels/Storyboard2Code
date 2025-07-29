@@ -23,7 +23,12 @@ private func printIbAttributes(_ element: ViewProtocol) -> [String] {
             Context.shared.constraints.removeAll(where: { $0 == constraint })
         }
     }() as Void
-    attributes.append(contentsOf: convertOutletsToCode(of: element))
+    // Outlets
+    if Context.shared.debugEnabled {
+        attributes.append("// log: convertOutletsToCode begin")
+        attributes.append(contentsOf: convertOutletsToCode(of: element))
+        attributes.append("// log: convertOutletsToCode end")
+    }
     if let view = element as? View {
         attributes.append(contentsOf: parseView(of: view))
     }

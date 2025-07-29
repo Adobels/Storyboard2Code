@@ -7,11 +7,18 @@
 
 import StoryboardDecoder
 
-func convertOutletsToCode(of element: ViewProtocol) -> [String] {
-    let viewId = (element as! IBIdentifiable).id
+func convertOutletsToCode(of view: ViewProtocol) -> [String] {
     var output = [String]()
+    if Context.shared.debugEnabled {
+        output.append(G.logLiteral + #function + " begin")
+    }
+    let outlets = view.connections?.compactMap { $0.connection as? Outlet }
+    outlets?.forEach { outlet in
+        output.append("$0.ibOutlet(&\(outlet.destination).\(outlet.property))")
+        output.append(outlet.destination + "." + outlet.property + " = $0" )
+    }
     Context.shared.ibOutlet.filter { outlet in
-        outlet.viewId == viewId
+        outlet.viewId == view.id
     }.forEach { outlet in
         if outlet.isOutletToDestination {
             output.append("$0.\(outlet.property) = \(outlet.destination)")
@@ -19,6 +26,7 @@ func convertOutletsToCode(of element: ViewProtocol) -> [String] {
             output.append("$0.ibOutlet(&\(outlet.destination).\(outlet.property))")
         }
     }
+    output.append(G.logLiteral + #function + " end")
     return output
 }
 

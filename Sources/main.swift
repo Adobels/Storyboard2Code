@@ -11,7 +11,7 @@ import StoryboardDecoder
 let url = Bundle.module.url(forResource: "ToParse", withExtension: "xml")!
 let sb = try! StoryboardFile(url: url)
 let initialScene = sb.document.scenes!.first!
-
+Context.shared.debugEnabled = false
 Context.shared.actions = extractActions(of: initialScene)
 _ = {
     var allConstraints = initialScene.children(of: Constraint.self)
@@ -30,11 +30,10 @@ _ = {
 
 convertStoryboard2Code(initialScene.viewController!)
 sanitizeIds()
-convertColorToClientTheme()
-func convertColorToClientTheme() {
+replaceColorToClientTheme()
+func replaceColorToClientTheme() {
     Context.shared.output = Context.shared.output.map {
         var result = ""
-
         result = $0.replacingOccurrences(of: ".init(cgColor: .init(genericGrayGamma2_2Gray: 0.0, alpha: 1.0))", with: "Colors.black")
         result = result.replacingOccurrences(of: ".init(cgColor: .init(genericGrayGamma2_2Gray: 1.0, alpha: 1.0))", with: "Colors.white")
         result = result.replacingOccurrences(of: ".init(cgColor: .init(genericGrayGamma2_2Gray: 0.0, alpha: 0.0))", with: ".clear")

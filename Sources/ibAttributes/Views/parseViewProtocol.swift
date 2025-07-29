@@ -69,7 +69,15 @@ func parseViewProtocol(of view: ViewProtocol) -> [String] {
         result.append("$0.setContentCompressionResistancePriority(\(resistancePriorityToCode(verticalCompressionResistancePriority)), for: .vertical)")
     }
     if let value = view.layoutMargins {
-        result.append("$0.layoutMargins = .init(top: \(value.top ?? 0), left: \(value.left ?? 0), bottom: \(value.bottom ?? 0), right: \(value.right ?? 0))")
+        let top = value.top ?? 0
+        let left = value.left ?? 0
+        let bottom = value.bottom ?? 0
+        let right = value.right ?? 0
+        if top == 0, left == 0, bottom == 0, right == 0 {
+            result.append("$0.layoutMargins = .zero")
+        } else {
+            result.append("$0.layoutMargins = .init(top: \(top), left: \(left), bottom: \(bottom), right: \(right))")
+        }
     }
     return result
 }
