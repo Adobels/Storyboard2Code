@@ -9,6 +9,33 @@ import StoryboardDecoder
 
 func parseViewProtocol(of view: ViewProtocol) -> [String] {
     var result: [String] = []
+    // Size Inspector properties
+    if let value = view.insetsLayoutMarginsFromSafeArea {
+        result.append("$0.insetsLayoutMarginsFromSafeArea = \(value)")
+    }
+    if let horizontalHuggingPriority = view.horizontalHuggingPriority, horizontalHuggingPriority != 250 {
+        result.append("$0.setContentHuggingPriority(\(resistancePriorityToCode(horizontalHuggingPriority)), for: .horizontal)")
+    }
+    if let verticalHuggingPriority = view.verticalHuggingPriority, verticalHuggingPriority != 250 {
+        result.append("$0.setContentHuggingPriority(\(resistancePriorityToCode(verticalHuggingPriority)), for: .vertical)")
+    }
+    if let horizontalCompressionResistancePriority = view.horizontalCompressionResistancePriority, horizontalCompressionResistancePriority != 750 {
+        result.append("$0.setContentCompressionResistancePriority(\(resistancePriorityToCode(horizontalCompressionResistancePriority)), for: .horizontal)")
+    }
+    if let verticalCompressionResistancePriority = view.verticalCompressionResistancePriority, verticalCompressionResistancePriority != 750 {
+        result.append("$0.setContentCompressionResistancePriority(\(resistancePriorityToCode(verticalCompressionResistancePriority)), for: .vertical)")
+    }
+    if let value = view.layoutMargins {
+        let top = value.top ?? 0
+        let left = value.left ?? 0
+        let bottom = value.bottom ?? 0
+        let right = value.right ?? 0
+        if top == 0, left == 0, bottom == 0, right == 0 {
+            result.append("$0.layoutMargins = .zero")
+        } else {
+            result.append("$0.layoutMargins = .init(top: \(top), left: \(left), bottom: \(bottom), right: \(right))")
+        }
+    }
     // contentMode should be parsed only in ImageView
 //    if let value = view.contentMode  {
 //        result.append("$0.contentMode = .\(value)")
@@ -52,32 +79,5 @@ func parseViewProtocol(of view: ViewProtocol) -> [String] {
 //    if let value = view.autoresizesSubviews {
 //        result.append("$0.autoresizesSubviews = \(value)")
 //    }
-    // Size Inspector properties
-    if let value = view.insetsLayoutMarginsFromSafeArea {
-        result.append("$0.insetsLayoutMarginsFromSafeArea = \(value)")
-    }
-    if let horizontalHuggingPriority = view.horizontalHuggingPriority, horizontalHuggingPriority != 250 {
-        result.append("$0.setContentHuggingPriority(\(resistancePriorityToCode(horizontalHuggingPriority)), for: .horizontal)")
-    }
-    if let verticalHuggingPriority = view.verticalHuggingPriority, verticalHuggingPriority != 250 {
-        result.append("$0.setContentHuggingPriority(\(resistancePriorityToCode(verticalHuggingPriority)), for: .vertical)")
-    }
-    if let horizontalCompressionResistancePriority = view.horizontalCompressionResistancePriority, horizontalCompressionResistancePriority != 750 {
-        result.append("$0.setContentCompressionResistancePriority(\(resistancePriorityToCode(horizontalCompressionResistancePriority)), for: .horizontal)")
-    }
-    if let verticalCompressionResistancePriority = view.verticalCompressionResistancePriority, verticalCompressionResistancePriority != 750 {
-        result.append("$0.setContentCompressionResistancePriority(\(resistancePriorityToCode(verticalCompressionResistancePriority)), for: .vertical)")
-    }
-    if let value = view.layoutMargins {
-        let top = value.top ?? 0
-        let left = value.left ?? 0
-        let bottom = value.bottom ?? 0
-        let right = value.right ?? 0
-        if top == 0, left == 0, bottom == 0, right == 0 {
-            result.append("$0.layoutMargins = .zero")
-        } else {
-            result.append("$0.layoutMargins = .init(top: \(top), left: \(left), bottom: \(bottom), right: \(right))")
-        }
-    }
     return result
 }
