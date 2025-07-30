@@ -8,33 +8,13 @@
 import StoryboardDecoder
 
 func convertOutletsToCode(of view: ViewProtocol) -> [String] {
-    var output = [String]()
+    var strings = [String]()
     if Context.shared.debugEnabled {
-        output.append(G.logLiteral + #function + " begin")
+        Context.shared.output.append(G.logLiteral + #function + ":" + String(#line) + " begin")
+        defer { Context.shared.output.append(G.logLiteral + #function + ":" + String(#line) + " end") }
     }
-    let outlets = view.connections?.compactMap { $0.connection as? Outlet }
-    outlets?.forEach { outlet in
-        output.append("$0.ibOutlet(&\(outlet.destination).\(outlet.property))")
-        output.append(outlet.destination + "." + outlet.property + " = $0" )
+    view.connections?.compactMap { $0.connection as? Outlet }.forEach { outlet in
+        strings.append("$0.\(outlet.property).ibOutlet(&\(outlet.destination))")
     }
-    Context.shared.ibOutlet.filter { outlet in
-        outlet.viewId == view.id
-    }.forEach { outlet in
-        if outlet.isOutletToDestination {
-            output.append("$0.\(outlet.property) = \(outlet.destination)")
-        } else {
-            output.append("$0.ibOutlet(&\(outlet.destination).\(outlet.property))")
-        }
-    }
-    output.append(G.logLiteral + #function + " end")
-    return output
-}
-
-func arrayViewIdToProperty(anyViewController: AnyViewController) -> [(viewId: String, property: String)]  {
-    //guard let outlets = (anyViewController.nested.connections?.compactMap { $0 as? Outlet }) else { return [] }
-    var outlets = (anyViewController.nested.connections?.compactMap { $0.connection as? Outlet })?
-        .reduce(into: [(String, String)]()) { acc, outlet in acc.append((outlet.destination, outlet.property))
-    } ?? []
-    outlets.append((anyViewController.nested.rootView!.id, "view"))
-    return outlets
+    return strings
 }

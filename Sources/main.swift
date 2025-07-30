@@ -11,24 +11,37 @@ import StoryboardDecoder
 let url = Bundle.module.url(forResource: "ToParse", withExtension: "xml")!
 let sb = try! StoryboardFile(url: url)
 let initialScene = sb.document.scenes!.first!
+let viewController: ViewControllerProtocol = initialScene.viewController!.viewController
+let rootView: ViewProtocol = viewController.rootView!
+
 Context.shared.debugEnabled = false
+Context.shared.viewControllerId = initialScene.viewController!.viewController.id
+Context.shared.rootViewId = initialScene.viewController!.viewController.rootView!.id
+Context.shared.referencingOutletsMgr = .init(scene: initialScene)
 Context.shared.actions = extractActions(of: initialScene)
-_ = {
-    var allConstraints = initialScene.children(of: Constraint.self)
-    var outlets: [Outlet] = []
-    _ = initialScene.browse { element in
-        guard let connectionsOwner = element as? IBConnectionOwner else { return true }
-        let currentOutlets = connectionsOwner.connections?.compactMap { $0.connection as? Outlet } ?? []
-        outlets.append(contentsOf: currentOutlets)
-        return true
-    }
-    outlets = outlets.filter { outlet in
-        allConstraints.contains(where: { $0.id == outlet.destination })
-    }
-    Context.shared.constraintsOutlets = outlets
-}() as Void
+Context.shared.gestures = extractGestures(of: initialScene)
+Context.shared.constraints = convertConstraintsToCode(rootView: rootView)
 
 convertStoryboard2Code(initialScene.viewController!)
+
+@MainActor
+func replaceIdsWithUserLabels() {
+    var userLabels: [(elementId: String, userLabel: String)] = []
+    rootView.browse { element in
+        guard let view = element as? ViewProtocol else { return true }
+        if let userLabel = view.userLabel {
+            userLabels.append((view.id, userLabel))
+        }
+        return true
+    }
+    userLabels.append((viewController.id, "self"))
+    userLabels.append((rootView.id, "view"))
+    userLabels.forEach { userLabel in
+        let result = Context.shared.output.map { $0.replacingOccurrences(of: userLabel.elementId, with: userLabel.userLabel)}
+        Context.shared.output = result
+    }
+}
+replaceIdsWithUserLabels()
 sanitizeIds()
 replaceColorToClientTheme()
 func replaceColorToClientTheme() {

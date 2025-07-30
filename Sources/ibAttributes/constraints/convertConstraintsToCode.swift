@@ -104,12 +104,6 @@ func convertConstraintsToCode(rootView: ViewProtocol) -> [ConstraintInCode] {
         constraints = result
     }() as Void
     assert(constraints.count == rootView.children(of: Constraint.self).count)
-    func getPropertyNameOfIBOutletIfExists(viewId: String) -> String? {
-        let firstIBOutlet = Context.shared.viewControllerIBOutlets.first { iboutlet in
-            iboutlet.viewId == viewId
-        }
-        return if let firstIBOutlet { firstIBOutlet.property } else { nil }
-    }
     var constraintsInCode: [(String, String, String)] = constraints.map { constraint in
         (
             constraint.id,
@@ -120,7 +114,7 @@ func convertConstraintsToCode(rootView: ViewProtocol) -> [ConstraintInCode] {
                     if constraint.firstItem == constraint.ownerItem {
                         result.append("$0")
                     } else {
-                        result.append(getPropertyNameOfIBOutletIfExists(viewId: constraint.firstItem) ?? constraint.firstItem)
+                        result.append(getPropertyNameOfIBOutletIfExists(destinationId: constraint.firstItem) ?? constraint.firstItem)
                     }
                     if let value = constraint.firstLayoutGuide {
                         result.append(value)
@@ -132,7 +126,7 @@ func convertConstraintsToCode(rootView: ViewProtocol) -> [ConstraintInCode] {
                 secondItem: {
                     if let secondItem = constraint.secondItem {
                         var result = [String]()
-                        result.append(getPropertyNameOfIBOutletIfExists(viewId: secondItem) ?? secondItem)
+                        result.append(getPropertyNameOfIBOutletIfExists(destinationId: secondItem) ?? secondItem)
                         if let secondLayoutGuide = constraint.secondLayoutGuide {
                             result.append(secondLayoutGuide)
                         }
@@ -151,14 +145,13 @@ func convertConstraintsToCode(rootView: ViewProtocol) -> [ConstraintInCode] {
         )
     }
     constraintsInCode = constraintsInCode.map { constraint in
-        let outlet = Context.shared.constraintsOutlets.first(where: { outlet in
-            outlet.destination == constraint.0
-        })
-        return if let outlet {
-            (constraint.0, constraint.1, constraint.2 + ".ibOutlet(&\(getPropertyNameOfIBOutletIfExists(viewId: outlet.destination) ?? outlet.destination))")
-        } else {
-            (constraint.0, constraint.1, constraint.2)
+        let outlets = Context.shared.referencingOutletsMgr.filterOutletIDsRecursively(matchingId: constraint.0)
+        var strings: [String] = []
+        outlets.forEach { outlet in
+            let referencingOutlet = (getPropertyNameOfIBOutletIfExists(destinationId: outlet.ownerId) ?? outlet.ownerId) + "." + outlet.property
+            strings.append(".ibOutlet(&\(referencingOutlet))")
         }
+        return (constraint.0, constraint.1, constraint.2 + strings.joined())
     }
     return constraintsInCode.map { .init(constraintId: $0.0, viewId: $0.1, code: $0.2) }
 }

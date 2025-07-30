@@ -7,26 +7,31 @@
 
 import StoryboardDecoder
 
-class Context: @unchecked Sendable, ParsingOutput {
+class Context: @unchecked Sendable, ParsingOutput, DebugEnabled {
 
     static let shared: Context = .init()
 
     private init() {}
 
     var viewController: AnyViewController!
-    var variableViewIbOutlet: [(viewId: String, viewClass: String)] = []
-    var viewControllerIBOutlets: [(viewId: String, property: String)] = []
-    var ibOutlet: [S2COutlet] = []
+    //var variableViewIbOutlet: [(viewId: String, viewClass: String)] = []
+    //var viewControllerIBOutlets: [(viewId: String, property: String)] = []
+    var viewControllerId: String!
+    var rootViewId: String!
     var constraints: [ConstraintInCode] = []
     var actions: [ExtractedAction] = []
-    var constraintsOutlets: [Outlet] = []
+    var gestures: [AnyGestureRecognizer] = []
     var output: [String] = []
-    //let setupOutletsController: SetupOutletsController = .init()
-    //var setupOutlets: [SetupOutlet] = []
     var debugEnabled = false
+    var parsedIBIdentifiables: [String] = []
+    var referencingOutletsMgr: ReferenceOutletsManager!
 }
 
 protocol ParsingOutput: AnyObject {
     typealias Item = String
     var output: [Item] { get set }
+}
+
+protocol DebugEnabled {
+    var debugEnabled: Bool { get }
 }

@@ -42,16 +42,18 @@ func parseButton(of view: Button) -> [String] {
         if let value = state.titleShadowColor, let stateKey = state.key {
             result.append("$0.setTitleShadowColor(\(value), for: .\(stateKey))")
         }
-        if let value = state.color { fatalError() }
+        if let value = state.color {
+            result.append("$0.Color(\(value), for: .\(state.key))")
+        }
     }
     if let value = view.titleEdgeInsets, let value = parseInset(value)  {
-        result.append("$0.titleEdgeInsets = \(value)")
+        result.append("$0.titleEdgeInsetsIgnoreDeprecated = \(value)") // TODO: remove  IgnoreDeprecated suffix which is specific to the main project
     }
     if let value = view.imageEdgeInsets, let value = parseInset(value)  {
-        result.append("$0.imageEdgeInsets = \(value)")
+        result.append("$0.imageEdgeInsetsIgnoreDeprecated = \(value)") // TODO: remove  IgnoreDeprecated suffix which is specific to the main project
     }
     if let value = view.contentEdgeInsets, let value = parseInset(value)  {
-        result.append("$0.contentEdgeInsets = \(value)")
+        result.append("$0.contentEdgeInsetsIgnoreDeprecated = \(value)") // TODO: remove  IgnoreDeprecated suffix which is specific to the main project
     }
     return result
 }

@@ -16,79 +16,97 @@ func printIbAttributes(of element: ViewProtocol) {
 }
 
 private func printIbAttributes(_ element: ViewProtocol) -> [String] {
+    var results = [String]()
     let viewId = element.id
-    var attributes = [String]()
     // Constraints
     _ = {
         let constraintsFound = Context.shared.constraints.filter { $0.viewId == viewId }.forEach { constraint in
-            attributes.append(constraint.code)
+            results.append(constraint.code)
             Context.shared.constraints.removeAll(where: { $0 == constraint })
         }
     }() as Void
-    // Outlets
-    if Context.shared.debugEnabled {
-        attributes.append("// log: convertOutletsToCode begin")
-        attributes.append(contentsOf: convertOutletsToCode(of: element))
-        attributes.append("// log: convertOutletsToCode end")
-    }
+    // Attributes
     if let view = element as? View {
-        attributes.append(contentsOf: parseView(of: view))
+        results.append(contentsOf: parseView(of: view))
     }
     if let label = element as? Label {
-        attributes.append(contentsOf: parseIbAttributes(of: label))
+        results.append(contentsOf: parseIbAttributes(of: label))
     }
     if let button = element as? Button {
-        attributes.append(contentsOf: parseButton(of: button))
+        results.append(contentsOf: parseButton(of: button))
     }
     if let imageView = element as? ImageView {
-        attributes.append(contentsOf: parseImageView(of: imageView))
+        results.append(contentsOf: parseImageView(of: imageView))
     }
     if let tableViewCell = element as? TableViewCell {
         //TODO: Add parsing for UITableViewCell subclass attributes
     }
     if let stackView = element as? StackView {
-        attributes.append(contentsOf: parseStackViewAttributes(stackView))
+        results.append(contentsOf: parseStackViewAttributes(stackView))
     }
     if let textField = element as? TextField {
-        attributes.append(contentsOf: parseTextField(of: textField))
+        results.append(contentsOf: parseTextField(of: textField))
     }
     if let tableView = element as? TableView {
         //TODO: Add parsing for TableView subclass attributes
     }
     if let uiswitch = element as? Switch {
-        attributes.append(contentsOf: parseSwitch(of: uiswitch))
+        results.append(contentsOf: parseSwitch(of: uiswitch))
     }
     if let scrollView = element as? ScrollView {
-        attributes.append(contentsOf: parseScrollView(of: scrollView))
+        results.append(contentsOf: parseScrollView(of: scrollView))
     }
     if let collectionViewcell = element as? CollectionViewCell {
         //TODO: Add parsing for UICollectionViewCell
     }
     if let datePicker = element as? DatePicker {
-        attributes.append(contentsOf: parseDatePicker(of: datePicker))
+        results.append(contentsOf: parseDatePicker(of: datePicker))
     }
     if let textView = element as? TextView {
-        attributes.append(contentsOf: parseUITextView(of: textView))
+        results.append(contentsOf: parseUITextView(of: textView))
     }
     if let pageControl = element as? PageControl {
-        attributes.append(contentsOf: parsePageControl(of: pageControl))
+        results.append(contentsOf: parsePageControl(of: pageControl))
     }
     if let collectionView = element as? CollectionView {
         //TODO: Add parsing for UICollectionView
     }
     if let pickerView = element as? PickerView {
-        attributes.append(contentsOf: parsePickerView(of: pickerView))
+        results.append(contentsOf: parsePickerView(of: pickerView))
     }
     if let activityIndicatorView = element as? ActivityIndicatorView {
-        attributes.append(contentsOf: parseActivityIndicatorView(of: activityIndicatorView))
+        results.append(contentsOf: parseActivityIndicatorView(of: activityIndicatorView))
     }
-    attributes.append(contentsOf: parseUserDefinedRuntimeAttributes(of: element))
+    // UserDefinedRuntimeAttributes
+    results.append(contentsOf: parseUserDefinedRuntimeAttributes(of: element))
+    // Referencing Outlets
+    let outlets = Context.shared.referencingOutletsMgr.filterOutletIDsRecursively(matchingId: element.id)
+    outlets.forEach {
+        $0.ownerId + "." + $0.property + " = $0" + G.logLiteral + " Referencing Outlet"
+    }
+    // Outlets
+    results.append(contentsOf: convertOutletsToCode(of: element))
     // Actions
     _ = {
         Context.shared.actions.filter { $0.ownerId == element.id }.forEach { viewAction in
-            attributes.append(viewAction.code)
+            results.append(viewAction.code)
             Context.shared.actions.removeAll(where: { $0 == viewAction })
         }
     }() as Void
-    return attributes
+    // Gestures
+    _ = {
+        guard let outletCollections = (element.connections?.compactMap { $0.connection as? OutletCollection }), !outletCollections.isEmpty else { return }
+        let refToGestureRecognizers = outletCollections.filter { $0.property == "gestureRecognizers" }
+        var foundGestures: [AnyGestureRecognizer] = []
+        refToGestureRecognizers.forEach { refToGesture in
+            guard let gesture = Context.shared.gestures.first(where: { gesture in
+                refToGesture.destination == gesture.gestureRecognizer.id
+            }) else { return }
+            foundGestures.append(gesture)
+        }
+        foundGestures.map {
+            results.append(contentsOf: parseTapGestureRecognizer($0))
+        }
+    }() as Void
+    return results
 }

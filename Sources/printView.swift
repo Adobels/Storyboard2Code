@@ -7,9 +7,10 @@
 
 import StoryboardDecoder
 
-func printRootView(_ rootView: View, ctx: ParsingOutput) -> [String] {
-    var results = [String]()
-    ctx.output.append("view \(printViewDiagnostics(of: rootView)))")
+func printRootView(_ rootView: View, ctx: ParsingOutput) {
+    ctx.output.append(printViewDiagnostics(of: rootView))
+    ctx.output.append("view")
+    Context.shared.parsedIBIdentifiables.append(rootView.id)
     if let subviews = rootView.subviews, !subviews.isEmpty {
         ctx.output.append(".ibSubviews {")
         printSubviews(elements: subviews.map { $0.view })
@@ -18,12 +19,14 @@ func printRootView(_ rootView: View, ctx: ParsingOutput) -> [String] {
     var properties = parseView(of: rootView)
     properties.removeAll(where: { $0 == #"$0.key = "view""# })
     properties.append("$0.backgroundColor = RootViewComponentTheme().background")
+    Context.shared.gestures.forEach {
+        properties.append(contentsOf: parseTapGestureRecognizer($0))
+    }
     if !properties.isEmpty {
         ctx.output.append(".ibAttributes {")
         ctx.output.append(contentsOf: properties)
         ctx.output.append("}")
     }
-    return results
 }
 
 
@@ -33,34 +36,14 @@ func printSubviews(elements: [ViewProtocol]) {
         _ = {
             if Context.shared.debugEnabled {
                 Context.shared.output.append(G.logLiteral + #function + ":" + String(#line) + " begin")
+                defer { Context.shared.output.append(G.logLiteral + #function + ":" + String(#line) + " end") }
             }
-            Context.shared.output.append(".ibOutlet(&" + element.id + ")")
-            if Context.shared.debugEnabled {
-                Context.shared.output.append(G.logLiteral + #function + ":" + String(#line) + " end")
-            }
-        }() as Void
-        _ = {
-            if Context.shared.debugEnabled {
-                Context.shared.output.append(G.logLiteral + #function + ":" + String(#line) + " begin")
-            }
-
-            let elementClass = element.customClass ?? element.elementClass
-            let elementId = element.id
-            Context.shared.variableViewIbOutlet.append((viewId: elementId, viewClass: elementClass))
-            _ = {
-                var viewIsOutletedInViewController: Bool = false
-                Context.shared.viewControllerIBOutlets.forEach { outlet in
-                    if outlet.viewId == elementId {
-                        Context.shared.output.append(".ibOutlet(&\(outlet.property))")
-                        viewIsOutletedInViewController = true
-                    }
-                }
-            }()
-
-            if Context.shared.debugEnabled {
-                Context.shared.output.append(G.logLiteral + #function + ":" + String(#line) + " end")
+            Context.shared.output.append(".ibOutlet(&" + (element.userLabel ?? element.id) + ")")
+            Context.shared.referencingOutletsMgr.filterOutletIDsRecursively(matchingId: element.id).forEach { outlet in
+                Context.shared.output.append(".ibOutlet(&" + outlet.ownerId + "." + outlet.property + ")")
             }
         }() as Void
+        Context.shared.parsedIBIdentifiables.append(element.id)
         if let subviews = element.subviews?.map { $0.view }, !subviews.isEmpty {
             Context.shared.output.append(".ibSubviews {")
             printSubviews(elements: subviews)
