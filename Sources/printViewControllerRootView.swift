@@ -23,7 +23,6 @@ struct S2COutlet: Equatable {
 @MainActor
 func printViewControllerRootView(_ anyViewController: AnyViewController) {
     guard let vc = anyViewController.viewController as? ViewController else { fatalError() }
-    Context.shared.viewController = anyViewController
     let rootView: View = vc.rootView as! View
     let elements: [ViewProtocol] = rootView.subviews!.map { $0.view }
     printRootView(rootView, ctx: Context.shared)

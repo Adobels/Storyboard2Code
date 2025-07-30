@@ -10,7 +10,6 @@ import StoryboardDecoder
 
 func printTableViewControllerRootView(_ anyViewController: AnyViewController) {
     guard let vc = anyViewController.viewController as? TableViewController else { fatalError() }
-    Context.shared.viewController = anyViewController
     let rootView: TableView = vc.rootView as! TableView
     let elements: [ViewProtocol] = rootView.subviews!.map { $0.view } + (rootView.prototypeCells?.map { $0.view } ?? [])
     _ = {

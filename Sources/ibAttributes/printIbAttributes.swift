@@ -79,13 +79,29 @@ private func printIbAttributes(_ element: ViewProtocol) -> [String] {
     }
     // UserDefinedRuntimeAttributes
     results.append(contentsOf: parseUserDefinedRuntimeAttributes(of: element))
-    // Referencing Outlets
-    let outlets = Context.shared.referencingOutletsMgr.filterOutletIDsRecursively(matchingId: element.id)
-    outlets.forEach {
-        $0.ownerId + "." + $0.property + " = $0" + G.logLiteral + " Referencing Outlet"
+    // Inversed Outlets
+    let outletsToApplyHere = Context.shared.referencingOutletsMgr.outletsToApplyLater.filter { $0.destination == element.id }
+    outletsToApplyHere.forEach { outlet in
+        results.append("\(outlet.ownerId).\(outlet.property) = $0" + G.logLiteral + "Inversed Outlet")
     }
     // Outlets
-    results.append(contentsOf: convertOutletsToCode(of: element))
+    _ = {
+        guard let connections = (element.connections?.compactMap { $0.connection as? Outlet }) else { return }
+        connections.forEach { connection in
+            if Context.shared.visitedIBIdentifiables.contains(where: { $0 == connection.destination }) {
+                results.append("$0.\(connection.property) = \(connection.destination)" + G.logLiteral + "Outlet")
+            } else {
+                Context.shared.referencingOutletsMgr.outletsToApplyLater.append(
+                    .init(
+                        ownerId: element.id,
+                        property: connection.property,
+                        destination: connection.destination,
+                        isOutletToDestination: true,
+                    )
+                )
+            }
+        }
+    }() as Void
     // Actions
     _ = {
         Context.shared.actions.filter { $0.ownerId == element.id }.forEach { viewAction in

@@ -13,18 +13,16 @@ class Context: @unchecked Sendable, ParsingOutput, DebugEnabled {
 
     private init() {}
 
-    var viewController: AnyViewController!
-    //var variableViewIbOutlet: [(viewId: String, viewClass: String)] = []
-    //var viewControllerIBOutlets: [(viewId: String, property: String)] = []
     var viewControllerId: String!
     var rootViewId: String!
+
+    var visitedIBIdentifiables: [String] = []
+    var referencingOutletsMgr: ReferenceOutletsManager!
     var constraints: [ConstraintInCode] = []
     var actions: [ExtractedAction] = []
     var gestures: [AnyGestureRecognizer] = []
     var output: [String] = []
     var debugEnabled = false
-    var parsedIBIdentifiables: [String] = []
-    var referencingOutletsMgr: ReferenceOutletsManager!
 }
 
 protocol ParsingOutput: AnyObject {

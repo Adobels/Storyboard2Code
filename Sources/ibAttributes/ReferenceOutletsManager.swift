@@ -10,6 +10,8 @@ import StoryboardDecoder
 class ReferenceOutletsManager {
 
     var referenceOutlets: [S2COutlet]
+    var viewControllerOutlets: [Outlet] = []
+    var outletsToApplyLater: [S2COutlet] = []
 
     init(scene: Scene) {
         referenceOutlets = Self.collectOutletsRecursively(in: scene)
@@ -47,16 +49,6 @@ class ReferenceOutletsManager {
 
     func filterOutletIDsRecursively(matchingId identifiableId: String) -> [S2COutlet] {
         referenceOutlets.filter { $0.destination == identifiableId }
-    }
-
-    func remove(_ element: S2COutlet) {
-        referenceOutlets.removeAll(where: { $0 == element })
-    }
-
-    func remove(_ elements: [S2COutlet]) {
-        elements.forEach { element in
-            referenceOutlets.removeAll(where: { $0 == element })
-        }
     }
 
 }

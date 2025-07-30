@@ -10,7 +10,7 @@ import StoryboardDecoder
 func printRootView(_ rootView: View, ctx: ParsingOutput) {
     ctx.output.append(printViewDiagnostics(of: rootView))
     ctx.output.append("view")
-    Context.shared.parsedIBIdentifiables.append(rootView.id)
+    Context.shared.visitedIBIdentifiables.append(rootView.id)
     if let subviews = rootView.subviews, !subviews.isEmpty {
         ctx.output.append(".ibSubviews {")
         printSubviews(elements: subviews.map { $0.view })
@@ -38,12 +38,12 @@ func printSubviews(elements: [ViewProtocol]) {
                 Context.shared.output.append(G.logLiteral + #function + ":" + String(#line) + " begin")
                 defer { Context.shared.output.append(G.logLiteral + #function + ":" + String(#line) + " end") }
             }
-            Context.shared.output.append(".ibOutlet(&" + (element.userLabel ?? element.id) + ")")
-            Context.shared.referencingOutletsMgr.filterOutletIDsRecursively(matchingId: element.id).forEach { outlet in
-                Context.shared.output.append(".ibOutlet(&" + outlet.ownerId + "." + outlet.property + ")")
-            }
+            Context.shared.output.append(".ibOutlet(&\(element.id))") // Each view have at this moment an outlet to its ID, compiler will help to eleminate the redundant outlets
+            Context.shared.referencingOutletsMgr.viewControllerOutlets // These are view controller level outlets
+                .filter { $0.destination == element.id }
+                .forEach { Context.shared.output.append(".ibOutlet(&" + $0.property + ")") }
         }() as Void
-        Context.shared.parsedIBIdentifiables.append(element.id)
+        Context.shared.visitedIBIdentifiables.append(element.id)
         if let subviews = element.subviews?.map { $0.view }, !subviews.isEmpty {
             Context.shared.output.append(".ibSubviews {")
             printSubviews(elements: subviews)

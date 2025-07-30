@@ -145,6 +145,7 @@ func convertConstraintsToCode(rootView: ViewProtocol) -> [ConstraintInCode] {
         )
     }
     constraintsInCode = constraintsInCode.map { constraint in
+        // TODO: Improve Outlets for constraints
         let outlets = Context.shared.referencingOutletsMgr.filterOutletIDsRecursively(matchingId: constraint.0)
         var strings: [String] = []
         outlets.forEach { outlet in

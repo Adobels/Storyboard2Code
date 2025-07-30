@@ -10,7 +10,8 @@ import StoryboardDecoder
 func printViewClassAndInit(_ view: ViewProtocol) -> [String] {
     var strings: [String] = []
     if Context.shared.debugEnabled {
-       strings.append(G.logLiteral + #function + " begin")
+        strings.append(G.logLiteral + #function + " begin")
+        defer { strings.append(G.logLiteral + #function + " end") }
     }
     let elementId = view.id
     _ = {
@@ -45,9 +46,6 @@ func printViewClassAndInit(_ view: ViewProtocol) -> [String] {
     } else {
         let viewClass = view.customClass ?? view.elementClass
         strings.append(viewClass + "()")
-    }
-    if Context.shared.debugEnabled {
-       strings.append(G.logLiteral + #function + " end")
     }
     return strings
 }
