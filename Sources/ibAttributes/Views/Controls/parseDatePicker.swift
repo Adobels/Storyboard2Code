@@ -14,7 +14,7 @@ func parseDatePicker(of view: DatePicker) -> [String] {
     if let value = view.style {
         result.append("$0.datePickerStyle = .\(value)") // automatic, compact, inline, wheels
     }
-    if let value = view.contentMode {
+    if let value = view.datePickerMode {
         result.append("$0.datePickerMode = .\(value)") // time, date, dateAndTime, yearAndMonth, countDownTimer
     }
     if let value = view.locale {
