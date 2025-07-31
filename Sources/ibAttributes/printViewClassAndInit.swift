@@ -14,15 +14,7 @@ func printViewClassAndInit(_ view: ViewProtocol) -> [String] {
         defer { strings.append(G.logLiteral + #function + " end") }
     }
     let elementId = view.id
-    _ = {
-        var resultsLog: [String] = []
-        resultsLog.append(G.logLiteral)
-        resultsLog.append("id: " + elementId)
-        resultsLog.append("sid: " + sanitizedOutletName(from: elementId)!)
-        if let value = view.userLabel { resultsLog.append("userLabel: " + value) }
-        if let value = view.key {resultsLog.append("key: " + value) }
-        strings.append(resultsLog.joined(separator: ", "))
-    }() as Void
+    strings.append(contentsOf: printViewDiagnostics(of: view))
     if let stackView = view as? StackView {
         var resultsStackView = [String]()
         if stackView.axis == "vertical" {

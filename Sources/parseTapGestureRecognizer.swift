@@ -14,10 +14,10 @@ func parseTapGestureRecognizer(_ gesture: AnyGestureRecognizer) -> [String] {
     let actions: [Action] = tapGesture.connections?.compactMap { $0.connection as? Action } ?? []
     if actions.count == 1 {
         let action = actions.first!
-        results.append("UITapGestureRecognizer(target: \(action.destination), action: \(action.selector))")
+        results.append("UITapGestureRecognizer(target: \(action.destination), action: #selector(\(transformMethodName(action.selector))))")
     } else {
         actions.forEach { action in
-            results.append("UITapGestureRecognizer(target: \(action.destination), action: \(action.selector))")
+            results.append("UITapGestureRecognizer(target: \(action.destination), action: #selector(\(transformMethodName(action.selector))))")
         }
         results.append("Warning: many actions")
     }

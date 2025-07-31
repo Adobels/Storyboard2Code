@@ -12,7 +12,6 @@ import StoryboardDecoder
 public func convertStoryboard2Code(_ anyViewController: AnyViewController) -> [String] {
     if let viewController = anyViewController.viewController as? ViewController {
         printViewControllerRootView(anyViewController)
-        Context.shared.output.append(contentsOf: parseViewController(viewController))
     }
     if let vc = anyViewController.viewController as? TableViewController {
         printTableViewControllerRootView(anyViewController)

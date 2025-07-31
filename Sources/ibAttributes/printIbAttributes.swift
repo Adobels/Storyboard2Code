@@ -7,10 +7,17 @@
 
 import StoryboardDecoder
 
+extension Array<String> {
+    mutating func appendToLastElement(_ value: String) {
+        append(removeLast() + value)
+    }
+}
+
 func printIbAttributes(of element: ViewProtocol) {
     let content = printIbAttributes(element)
     guard !content.isEmpty else { return }
-    Context.shared.output.append(".ibAttributes {")
+    //Context.shared.output.append(".ibAttributes {")
+    Context.shared.output.appendToLastElement(".ibAttributes {")
     Context.shared.output.append(contentsOf: content)
     Context.shared.output.append("}")
 }

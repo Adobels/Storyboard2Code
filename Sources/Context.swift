@@ -23,6 +23,7 @@ class Context: @unchecked Sendable, ParsingOutput, DebugEnabled {
     var gestures: [AnyGestureRecognizer] = []
     var output: [String] = []
     var debugEnabled = false
+    var debugViewMetaEnabled = false
 }
 
 protocol ParsingOutput: AnyObject {
