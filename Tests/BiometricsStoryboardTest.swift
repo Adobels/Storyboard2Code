@@ -18,7 +18,7 @@ struct BiometricsTests {
         let sb = try! StoryboardFile(url: url)
         let initialScene = sb.document.scenes!.first!
 
-        let output: [String] = convertStoryboard2Code(initialScene.viewController!)
+        let output: [String] = convertStoryboard2Code(scene: initialScene)
         print(output)
         let outputBiometricsLines = outputBiometrics.components(separatedBy: "\n").map { String($0) }
         #expect(outputBiometricsLines.count == 169)

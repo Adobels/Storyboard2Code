@@ -10,6 +10,7 @@ import Foundation
 import StoryboardDecoder
 @testable import story2code
 
+@MainActor
 struct StoryboardLoginTests {
 
     @Test func constraints() throws {

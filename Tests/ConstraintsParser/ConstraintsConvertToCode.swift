@@ -15,7 +15,7 @@ import Testing
     let url = Bundle.module.url(forResource: "Biometrics", withExtension: "xml")!
     let sb = try! StoryboardFile(url: url)
     let initialScene = sb.document.scenes!.first!
-    convertStoryboard2Code(initialScene.viewController!)
+    convertStoryboard2Code(scene: initialScene)
 
     let expectedArrayConstrains = [
         (viewId: "qf_uh_shm", "$0.topAnchor.constraint(equalTo: per_y_qqk.topAnchor)"),

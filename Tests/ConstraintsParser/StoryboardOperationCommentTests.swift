@@ -10,6 +10,7 @@ import Foundation
 import StoryboardDecoder
 @testable import story2code
 
+@MainActor
 struct StoryboardOperationCommentTests {
 
     private let resource = "OperationComment"

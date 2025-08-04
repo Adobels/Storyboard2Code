@@ -10,7 +10,7 @@ import Foundation
 import StoryboardDecoder
 @testable import story2code
 
-
+@MainActor
 @Suite("Alignement Constraints Tests")
 struct AlignementConstraintsTests {
 
