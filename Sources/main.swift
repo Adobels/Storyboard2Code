@@ -23,7 +23,7 @@ func parseScene(_ scene: Scene) -> [String] {
     Context.shared.gestures = extractGestures(of: initialScene)
     Context.shared.constraints = convertConstraintsToCode(rootView: rootView)
 
-    convertStoryboard2Code(initialScene.viewController!)
+    convertStoryboard2Code(scene: initialScene)
 
     replaceIdsWithUserLabels(rootView: rootView, viewControllerId: viewController.id)
     sanitizeIds()

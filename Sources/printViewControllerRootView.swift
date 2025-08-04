@@ -24,7 +24,6 @@ struct S2COutlet: Equatable {
 func printViewControllerRootView(_ anyViewController: AnyViewController) {
     guard let vc = anyViewController.viewController as? ViewController else { fatalError() }
     var results = [String]()
-    results.append("class \(vc.customClass ?? "CustomClassIsMissing"): UIViewController {")
     results.append("required init?(coder: NSCoder) { super.init(coder: coder) }")
     results.append("override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {")
     results.append("super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)")
@@ -70,5 +69,4 @@ func printViewControllerRootView(_ anyViewController: AnyViewController) {
     Context.shared.output.append(contentsOf: outletsToEachView)
     printRootView(rootView, ctx: Context.shared)
     Context.shared.output.append("} \(G.logLiteral) loadView end ") // closing brace of loadView method
-    Context.shared.output.append("} \(G.logLiteral) class end") // closing brace of class
 }

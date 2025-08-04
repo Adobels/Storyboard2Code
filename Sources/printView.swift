@@ -28,7 +28,6 @@ func printRootView(_ rootView: View, ctx: ParsingOutput) {
     }
 }
 
-
 func printSubviews(elements: [ViewProtocol]) {
     elements.forEach { element in
         Context.shared.output.append(contentsOf: printViewClassAndInit(element))

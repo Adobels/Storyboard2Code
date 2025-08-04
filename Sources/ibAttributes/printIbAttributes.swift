@@ -7,12 +7,6 @@
 
 import StoryboardDecoder
 
-extension Array<String> {
-    mutating func appendToLastElement(_ value: String) {
-        append(removeLast() + value)
-    }
-}
-
 func printIbAttributes(of element: ViewProtocol) {
     let content = printIbAttributes(element)
     guard !content.isEmpty else { return }
