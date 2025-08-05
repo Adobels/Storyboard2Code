@@ -17,9 +17,9 @@ struct StoryboardLoginTests {
         let url = Bundle.module.url(forResource: "Login", withExtension: "xml")!
         let sb = try StoryboardFile(url: url)
         guard let initialScene = sb.document.scenes?.first else { throw AppError.isNill }
-        guard let viewController = initialScene.viewController else { throw AppError.isNill }
-        guard let rootView = viewController.viewController.rootView as? View else { throw AppError.isNill }
-        var result: [ConstraintInCode] = convertConstraintsToCode(rootView: rootView).reversed()
+        guard let rootView = initialScene.viewController?.viewController.rootView as? View else { throw AppError.isNill }
+        let ctx = try! Context(scene: initialScene)
+        var result: [ConstraintInCode] = convertConstraintsToCode(rootView: rootView, ctx: ctx).reversed()
         let resultOrdered = {
             var tmp = [ConstraintInCode]()
             expected.forEach { expected in

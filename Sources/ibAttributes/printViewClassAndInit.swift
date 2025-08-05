@@ -7,14 +7,14 @@
 
 import StoryboardDecoder
 
-func printViewClassAndInit(_ view: ViewProtocol) -> [String] {
+func printViewClassAndInit(_ view: ViewProtocol, ctx: Context) -> [String] {
     var strings: [String] = []
-    if Context.shared.debugEnabled {
+    if ctx.debugEnabled {
         strings.append(G.logLiteral + #function + " begin")
         defer { strings.append(G.logLiteral + #function + " end") }
     }
     let elementId = view.id
-    strings.append(contentsOf: printViewDiagnostics(of: view))
+    strings.append(contentsOf: printViewDiagnostics(of: view, ctx: ctx))
     if let stackView = view as? StackView {
         var resultsStackView = [String]()
         if stackView.axis == "vertical" {

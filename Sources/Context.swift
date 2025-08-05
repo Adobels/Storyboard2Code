@@ -7,15 +7,16 @@
 
 import StoryboardDecoder
 
-class Context: @unchecked Sendable, ParsingOutput, DebugEnabled {
+public class Context: @unchecked Sendable, ParsingOutput, DebugEnabled {
 
-    static let shared: Context = .init()
+    //static let shared: Context = .init()
 
-    private init() {}
+    private let scene: Scene
+    private let viewController: ViewControllerProtocol
+    private let rootView: ViewProtocol
 
-    var viewControllerId: String!
-    var rootViewId: String!
-
+    let viewControllerId: String
+    var rootViewId: String
     var visitedIBIdentifiables: [String] = []
     var referencingOutletsMgr: ReferenceOutletsManager!
     var constraints: [ConstraintInCode] = []
@@ -24,6 +25,21 @@ class Context: @unchecked Sendable, ParsingOutput, DebugEnabled {
     var output: [String] = []
     var debugEnabled = false
     var debugViewMetaEnabled = false
+
+    init(scene: Scene) throws {
+        self.scene = scene
+        guard let viewController = scene.viewController?.viewController else { throw AppError.isNill }
+        self.viewController = viewController
+        guard let rootView = viewController.rootView else { throw AppError.isNill }
+        self.rootView = rootView
+        self.viewControllerId = viewController.id
+        self.rootViewId = rootView.id
+        self.referencingOutletsMgr = try! .init(scene: scene)
+        self.actions = extractActions(of: scene)
+        self.gestures = extractGestures(of: scene)
+        self.constraints = convertConstraintsToCode(rootView: rootView, ctx: self)
+    }
+
 }
 
 protocol ParsingOutput: AnyObject {

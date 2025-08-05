@@ -7,7 +7,7 @@
 
 import StoryboardDecoder
 
-func parseTapGestureRecognizer(_ gesture: AnyGestureRecognizer) -> [String] {
+func parseTapGestureRecognizer(_ gesture: AnyGestureRecognizer, ctx: Context) -> [String] {
     guard let tapGesture: TapGestureRecognizer = gesture.gestureRecognizer as? TapGestureRecognizer else { return [] }
     var results = [String]()
     results.append("$0.addGestureRecognizer(")
@@ -23,7 +23,7 @@ func parseTapGestureRecognizer(_ gesture: AnyGestureRecognizer) -> [String] {
     }
     results.append(")")
     actions.forEach { action in
-        Context.shared.actions.removeAll { extractedAction in
+        ctx.actions.removeAll { extractedAction in
             extractedAction.actionId == action.id
         }
     }

@@ -15,13 +15,14 @@ struct StoryboardOperationCommentTests {
 
     private let resource = "OperationComment"
 
+    @MainActor
     @Test func constraints() throws {
         let url = Bundle.module.url(forResource: resource, withExtension: "xml")!
         let sb = try StoryboardFile(url: url)
         guard let initialScene = sb.document.scenes?.first else { throw AppError.isNill }
-        guard let viewController = initialScene.viewController else { throw AppError.isNill }
-        guard let rootView = viewController.viewController.rootView as? View else { throw AppError.isNill }
-        var result: [ConstraintInCode] = convertConstraintsToCode(rootView: rootView).reversed()
+        guard let rootView = initialScene.viewController?.viewController.rootView as? View else { throw AppError.isNill }
+        let ctx = try Context(scene: initialScene)
+        var result: [ConstraintInCode] = convertConstraintsToCode(rootView: rootView, ctx: ctx).reversed()
         result.forEach {
             print(".init(constraintId: \"\($0.constraintId)\", viewId: \"\($0.viewId)\", code: \"\($0.code)\"),")
         }
@@ -57,9 +58,11 @@ struct StoryboardOperationCommentTests {
         different.forEach {
             print("\($0.constraintId), \($0.viewId), \($0.code)", separator: "\n")
         }
+        print(different)
         #expect(different.isEmpty == true)
     }
 
+    @MainActor
     @Test func def() throws {
         let url = Bundle.module.url(forResource: resource, withExtension: "xml")!
         let sb = try StoryboardFile(url: url)

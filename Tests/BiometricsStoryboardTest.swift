@@ -17,8 +17,8 @@ struct BiometricsTests {
         let url = Bundle.module.url(forResource: "Biometrics", withExtension: "xml")!
         let sb = try! StoryboardFile(url: url)
         let initialScene = sb.document.scenes!.first!
-
-        let output: [String] = convertStoryboard2Code(scene: initialScene)
+        let ctx = try! Context(scene: initialScene)
+        let output: [String] = convertStoryboard2Code(scene: initialScene, ctx: ctx)
         print(output)
         let outputBiometricsLines = outputBiometrics.components(separatedBy: "\n").map { String($0) }
         #expect(outputBiometricsLines.count == 169)

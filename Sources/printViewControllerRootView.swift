@@ -21,7 +21,7 @@ struct S2COutlet: Equatable {
 }
 
 @MainActor
-func printViewControllerRootView(_ anyViewController: AnyViewController) {
+func printViewControllerRootView(_ anyViewController: AnyViewController, ctx: Context) {
     guard let vc = anyViewController.viewController as? ViewController else { fatalError() }
     var results = [String]()
     results.append("required init?(coder: NSCoder) { super.init(coder: coder) }")
@@ -51,8 +51,8 @@ func printViewControllerRootView(_ anyViewController: AnyViewController) {
     results.append("}")
     results.append("override func loadView() {")
     results.append("super.loadView()")
-    Context.shared.output.append(contentsOf: results)
-    Context.shared.visitedIBIdentifiables.append(vc.id)
+    ctx.output.append(contentsOf: results)
+    ctx.visitedIBIdentifiables.append(vc.id)
     let rootView: View = vc.rootView as! View
     // OutletsForConstraints
     var outletsToEachView: [String] = []
@@ -66,7 +66,7 @@ func printViewControllerRootView(_ anyViewController: AnyViewController) {
         outletsToEachView.insert("// swiftlint:disable identifier_name", at: 0)
         outletsToEachView.append("// swiftlint:enable identifier_name")
     }
-    Context.shared.output.append(contentsOf: outletsToEachView)
-    printRootView(rootView, ctx: Context.shared)
-    Context.shared.output.append("} \(G.logLiteral) loadView end ") // closing brace of loadView method
+    ctx.output.append(contentsOf: outletsToEachView)
+    printRootView(rootView, ctx: ctx)
+    ctx.output.append("} \(G.logLiteral) loadView end ") // closing brace of loadView method
 }

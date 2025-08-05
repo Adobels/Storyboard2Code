@@ -7,14 +7,19 @@
 
 import Foundation
 
-func getPropertyNameOfIBOutletIfExists(destinationId: String) -> String? {
-    if destinationId == Context.shared.viewControllerId {
+func getPropertyNameOfIBOutletIfExists(destinationId: String, ctx: Context) -> String? {
+    if destinationId == ctx.viewControllerId {
         return "self"
-    } else if destinationId == Context.shared.rootViewId {
+    } else if destinationId == ctx.rootViewId {
         return "view"
     } else {
-        let referencingOutlet = Context.shared.referencingOutletsMgr.filterOutletIDsRecursively(matchingId: destinationId).first
+        let referencingOutlet = ctx.referencingOutletsMgr.filterOutletIDsRecursively(matchingId: destinationId).first
         guard let referencingOutlet else { return nil }
-        return referencingOutlet.ownerId + "." + referencingOutlet.property
+        if referencingOutlet.ownerId == ctx.viewControllerId {
+            return referencingOutlet.property
+        } else {
+            return referencingOutlet.ownerId + "." + referencingOutlet.property
+        }
+
     }
 }
