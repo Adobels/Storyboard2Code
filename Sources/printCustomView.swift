@@ -21,7 +21,7 @@ func printSceneCustomView(_ customView: ViewProtocol, ctx: Context) {
     }() as Void
     ctx.visitedIBIdentifiables.append(customView.id)
     if let subviews = customView.subviews, subviews.hasContent {
-        ctx.output.appendToLastElement(".ibSubviews {")
+        ctx.output.appendToLastElement(".ibSubviews { view in")
         _ = {
             var outletsToEachView: [String] = []
             customView.browse(skipSelf: true) { element in
