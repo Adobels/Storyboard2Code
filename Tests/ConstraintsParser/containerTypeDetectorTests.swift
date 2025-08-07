@@ -9,6 +9,7 @@ import Testing
 import Foundation
 @testable import story2code
 
+@MainActor
 struct ContainerTypeDetectorTests {
 
     @Test func detectDimensionConstraint() throws {

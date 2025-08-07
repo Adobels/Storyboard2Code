@@ -9,6 +9,7 @@ import Testing
 import Foundation
 @testable import story2code
 
+@MainActor
 @Test func fixLocKey() async throws {
     #expect(
         fixLocKey(value: "login.button.sign_in") == "Loc.Login.Button.signIn"

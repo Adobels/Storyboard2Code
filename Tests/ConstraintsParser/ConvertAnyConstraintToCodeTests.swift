@@ -8,6 +8,7 @@
 import Testing
 @testable import story2code
 
+@MainActor
 struct ConvertAnyConstraintToCodeTests {
 
     @Test func def() throws {

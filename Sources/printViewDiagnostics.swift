@@ -7,9 +7,9 @@
 
 import StoryboardDecoder
 
-func printViewDiagnostics(of view: ViewProtocol) -> [ParsingOutput.Item] {
+func printViewDiagnostics(of view: ViewProtocol, ctx: Context) -> [ParsingOutput.Item] {
     var results = [String]()
-    guard Context.shared.debugViewMetaEnabled else { return [] }
+    guard ctx.debugViewMetaEnabled else { return [] }
     results.append(G.logLiteral)
     results.append("id: " + view.id)
     results.append("sid: " + sanitizedOutletName(from: view.id)!)

@@ -7,7 +7,7 @@
 
 import StoryboardDecoder
 
-func convertConstraintsToCode(rootView: ViewProtocol) -> [ConstraintInCode] {
+func convertConstraintsToCode(rootView: ViewProtocol, ctx: Context) -> [ConstraintInCode] {
     var hierarchyOfViews = [ViewProtocol]()
     _ = rootView.browse { item in
         guard let view = item as? ViewProtocol else { return true }
@@ -114,7 +114,7 @@ func convertConstraintsToCode(rootView: ViewProtocol) -> [ConstraintInCode] {
                     if constraint.firstItem == constraint.ownerItem {
                         result.append("$0")
                     } else {
-                        result.append(getPropertyNameOfIBOutletIfExists(destinationId: constraint.firstItem) ?? constraint.firstItem)
+                        result.append(getPropertyNameOfIBOutletIfExists(destinationId: constraint.firstItem, ctx: ctx) ?? constraint.firstItem)
                     }
                     if let value = constraint.firstLayoutGuide {
                         result.append(value)
@@ -126,7 +126,7 @@ func convertConstraintsToCode(rootView: ViewProtocol) -> [ConstraintInCode] {
                 secondItem: {
                     if let secondItem = constraint.secondItem {
                         var result = [String]()
-                        result.append(getPropertyNameOfIBOutletIfExists(destinationId: secondItem) ?? secondItem)
+                        result.append(getPropertyNameOfIBOutletIfExists(destinationId: secondItem, ctx: ctx) ?? secondItem)
                         if let secondLayoutGuide = constraint.secondLayoutGuide {
                             result.append(secondLayoutGuide)
                         }
@@ -146,10 +146,10 @@ func convertConstraintsToCode(rootView: ViewProtocol) -> [ConstraintInCode] {
     }
     constraintsInCode = constraintsInCode.map { constraint in
         // TODO: Improve Outlets for constraints
-        let outlets = Context.shared.referencingOutletsMgr.filterOutletIDsRecursively(matchingId: constraint.0)
+        let outlets = ctx.referencingOutletsMgr.filterOutletIDsRecursively(matchingId: constraint.0)
         var strings: [String] = []
         outlets.forEach { outlet in
-            let referencingOutlet = (getPropertyNameOfIBOutletIfExists(destinationId: outlet.ownerId) ?? outlet.ownerId) + "." + outlet.property
+            let referencingOutlet = (getPropertyNameOfIBOutletIfExists(destinationId: outlet.ownerId, ctx: ctx) ?? outlet.ownerId) + "." + outlet.property
             strings.append(".ibOutlet(&\(referencingOutlet))")
         }
         return (constraint.0, constraint.1, constraint.2 + strings.joined())

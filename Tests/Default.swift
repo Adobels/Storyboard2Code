@@ -8,6 +8,7 @@
 import Testing
 @testable import story2code
 
+@MainActor
 @Test func translateActionSelectorToCode() throws {
     #expect(transformMethodName("didTapWithButton:") == "didTap(button:)")
     #expect(transformMethodName("didTap") == "didTap")

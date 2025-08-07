@@ -8,22 +8,22 @@
 import StoryboardDecoder
 
 
-func printTableViewControllerRootView(_ anyViewController: AnyViewController) {
+func printTableViewControllerRootView(_ anyViewController: AnyViewController, ctx: Context) {
     guard let vc = anyViewController.viewController as? TableViewController else { fatalError() }
     let rootView: TableView = vc.rootView as! TableView
     let elements: [ViewProtocol] = rootView.subviews!.map { $0.view } + (rootView.prototypeCells?.map { $0.view } ?? [])
     _ = {
-        Context.shared.constraints = convertConstraintsToCode(rootView: rootView)
+        ctx.constraints = convertConstraintsToCode(rootView: rootView, ctx: ctx)
     }()
 //    guard !elements.isEmpty else { return }
-//    Context.shared.output.append(".ibSubviews {")
+//    ctx.output.append(".ibSubviews {")
 //    elements.forEach { element in
 //        let elementClass = element.customClass ?? element.elementClass
 //        let elementId = element.id
-//        Context.shared.output.append(contentsOf: printViewClassAndInit(element))
-//        Context.shared.variableViewIbOutlet.append((viewId: elementId, viewClass: elementClass))
+//        ctx.output.append(contentsOf: printViewClassAndInit(element))
+//        ctx.variableViewIbOutlet.append((viewId: elementId, viewClass: elementClass))
 //        if let viewIbOutlet = getIbOutletToVariable(of: element) {
-//            Context.shared.output.append(viewIbOutlet)
+//            ctx.output.append(viewIbOutlet)
 //        }
 //        let subviews = element.subviews?.map { $0.view }
 //        if let subviews, subviews.count > 0 {
@@ -31,6 +31,6 @@ func printTableViewControllerRootView(_ anyViewController: AnyViewController) {
 //        }
 //        printIbAttributes(of: element)
 //    }
-//    Context.shared.output.append("}")
-//    Context.shared.output.insert(contentsOf: ibOutletsToViews, at: 0)
+//    ctx.output.append("}")
+//    ctx.output.insert(contentsOf: ibOutletsToViews, at: 0)
 }

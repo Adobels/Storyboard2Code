@@ -8,7 +8,7 @@
 import StoryboardDecoder
 
 @MainActor
-func replaceIdsWithUserLabels(rootView: ViewProtocol, viewControllerId: String) {
+func replaceIdsWithUserLabels(rootView: ViewProtocol, viewControllerId: String, ctx: Context) {
     var userLabels: [(elementId: String, userLabel: String)] = []
     rootView.browse { element in
         guard let view = element as? ViewProtocol else { return true }
@@ -20,7 +20,7 @@ func replaceIdsWithUserLabels(rootView: ViewProtocol, viewControllerId: String) 
     userLabels.append((viewControllerId, "self"))
     userLabels.append((rootView.id, "view"))
     userLabels.forEach { userLabel in
-        let result = Context.shared.output.map { $0.replacingOccurrences(of: userLabel.elementId, with: userLabel.userLabel)}
-        Context.shared.output = result
+        let result = ctx.output.map { $0.replacingOccurrences(of: userLabel.elementId, with: userLabel.userLabel)}
+        ctx.output = result
     }
 }

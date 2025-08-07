@@ -40,4 +40,3 @@ struct HierarchyElement: Equatable {
 
 typealias ConstraintOwnerId = String
 typealias ViewId = String
-

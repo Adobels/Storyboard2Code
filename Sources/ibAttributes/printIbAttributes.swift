@@ -7,29 +7,23 @@
 
 import StoryboardDecoder
 
-extension Array<String> {
-    mutating func appendToLastElement(_ value: String) {
-        append(removeLast() + value)
-    }
-}
-
-func printIbAttributes(of element: ViewProtocol) {
-    let content = printIbAttributes(element)
+func printIbAttributes(of element: ViewProtocol, ctx: Context) {
+    let content = printIbAttributes(element, ctx: ctx)
     guard !content.isEmpty else { return }
-    //Context.shared.output.append(".ibAttributes {")
-    Context.shared.output.appendToLastElement(".ibAttributes {")
-    Context.shared.output.append(contentsOf: content)
-    Context.shared.output.append("}")
+    //ctx.output.append(".ibAttributes {")
+    ctx.output.appendToLastElement(".ibAttributes {")
+    ctx.output.append(contentsOf: content)
+    ctx.output.append("}")
 }
 
-private func printIbAttributes(_ element: ViewProtocol) -> [String] {
+private func printIbAttributes(_ element: ViewProtocol, ctx: Context) -> [String] {
     var results = [String]()
     let viewId = element.id
     // Constraints
     _ = {
-        let constraintsFound = Context.shared.constraints.filter { $0.viewId == viewId }.forEach { constraint in
+        let constraintsFound = ctx.constraints.filter { $0.viewId == viewId }.forEach { constraint in
             results.append(constraint.code)
-            Context.shared.constraints.removeAll(where: { $0 == constraint })
+            ctx.constraints.removeAll(where: { $0 == constraint })
         }
     }() as Void
     // Attributes
@@ -87,7 +81,7 @@ private func printIbAttributes(_ element: ViewProtocol) -> [String] {
     // UserDefinedRuntimeAttributes
     results.append(contentsOf: parseUserDefinedRuntimeAttributes(of: element))
     // Inversed Outlets
-    let outletsToApplyHere = Context.shared.referencingOutletsMgr.outletsToApplyLater.filter { $0.destination == element.id }
+    let outletsToApplyHere = ctx.referencingOutletsMgr.outletsToApplyLater.filter { $0.destination == element.id }
     outletsToApplyHere.forEach { outlet in
         results.append("\(outlet.ownerId).\(outlet.property) = $0" + G.logLiteral + "Inversed Outlet")
     }
@@ -95,10 +89,10 @@ private func printIbAttributes(_ element: ViewProtocol) -> [String] {
     _ = {
         guard let connections = (element.connections?.compactMap { $0.connection as? Outlet }) else { return }
         connections.forEach { connection in
-            if Context.shared.visitedIBIdentifiables.contains(where: { $0 == connection.destination }) {
+            if ctx.visitedIBIdentifiables.contains(where: { $0 == connection.destination }) {
                 results.append("$0.\(connection.property) = \(connection.destination)" + G.logLiteral + "Outlet")
             } else {
-                Context.shared.referencingOutletsMgr.outletsToApplyLater.append(
+                ctx.referencingOutletsMgr.outletsToApplyLater.append(
                     .init(
                         ownerId: element.id,
                         property: connection.property,
@@ -111,9 +105,9 @@ private func printIbAttributes(_ element: ViewProtocol) -> [String] {
     }() as Void
     // Actions
     _ = {
-        Context.shared.actions.filter { $0.ownerId == element.id }.forEach { viewAction in
+        ctx.actions.filter { $0.ownerId == element.id }.forEach { viewAction in
             results.append(viewAction.code)
-            Context.shared.actions.removeAll(where: { $0 == viewAction })
+            ctx.actions.removeAll(where: { $0 == viewAction })
         }
     }() as Void
     // Gestures
@@ -122,13 +116,13 @@ private func printIbAttributes(_ element: ViewProtocol) -> [String] {
         let refToGestureRecognizers = outletCollections.filter { $0.property == "gestureRecognizers" }
         var foundGestures: [AnyGestureRecognizer] = []
         refToGestureRecognizers.forEach { refToGesture in
-            guard let gesture = Context.shared.gestures.first(where: { gesture in
+            guard let gesture = ctx.gestures.first(where: { gesture in
                 refToGesture.destination == gesture.gestureRecognizer.id
             }) else { return }
             foundGestures.append(gesture)
         }
         foundGestures.map {
-            results.append(contentsOf: parseTapGestureRecognizer($0))
+            results.append(contentsOf: parseTapGestureRecognizer($0, ctx: ctx))
         }
     }() as Void
     return results

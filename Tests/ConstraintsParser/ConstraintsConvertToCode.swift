@@ -11,11 +11,12 @@ import Testing
 @testable import story2code
 
 @MainActor
- @Test(.disabled("check the file")) func widthConstraint() throws {
-    let url = Bundle.module.url(forResource: "Biometrics", withExtension: "xml")!
-    let sb = try! StoryboardFile(url: url)
-    let initialScene = sb.document.scenes!.first!
-    convertStoryboard2Code(initialScene.viewController!)
+@Test(.disabled("check the file")) func widthConstraint() throws {
+     let url = Bundle.module.url(forResource: "Biometrics", withExtension: "xml")!
+     let sb = try! StoryboardFile(url: url)
+     let initialScene = sb.document.scenes!.first!
+     let ctx = try! Context(scene: initialScene)
+     convertStoryboard2Code(scene: initialScene, ctx: ctx)
 
     let expectedArrayConstrains = [
         (viewId: "qf_uh_shm", "$0.topAnchor.constraint(equalTo: per_y_qqk.topAnchor)"),
@@ -23,7 +24,7 @@ import Testing
         (viewId: "qf_uh_shm", "$0.trailingAnchor.constraint(equalTo: per_y_qqk.trailingAnchor)"),
         (viewId: "qf_uh_shm", "$0.bottomAnchor.constraint(equalTo: per_y_qqk.bottomAnchor)"),
     ]
-    let arrayConstraints = Context.shared.constraints.filter { $0.viewId == "qf_uh_shm" }
+    let arrayConstraints = ctx.constraints.filter { $0.viewId == "qf_uh_shm" }
     #expect(arrayConstraints.count == 4)
     arrayConstraints.forEach { item in
         let result = expectedArrayConstrains.contains {

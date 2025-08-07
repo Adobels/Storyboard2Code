@@ -15,6 +15,8 @@ class ReferenceOutletsManager {
 
     init(scene: Scene) {
         referenceOutlets = Self.collectOutletsRecursively(in: scene)
+        let outlets = (scene.viewController?.viewController.connections?.compactMap { $0.connection as? Outlet })
+        viewControllerOutlets = outlets ?? []
     }
 
     static func collectOutletsRecursively(in scene: Scene) -> [S2COutlet] {
