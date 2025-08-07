@@ -9,27 +9,23 @@ import StoryboardDecoder
 
 func parseTableViewController(_ viewController: TableViewController) -> [String] {
     var result = [String]()
-    result.append("let vc = \(viewController.customClass ?? viewController.elementClass)()")
-//    if let value = viewController.modalPresentationStyle {
-//        result.append("vc.modalPresentationStyle = \(value)")
-//    }
     if let value = viewController.storyboardIdentifier {
-        result.append("vc.storyboardIdentifier = \(value)")
+        result.append("storyboardIdentifier = \(value)")
     }
     // No need of sceneMemberID in code
     if let value = viewController.tabBarItem {
-        result.append("vc.tabBarItem = \(value)")
+        result.append("tabBarItem = \(value)")
     }
     if let value = viewController.automaticallyAdjustsScrollViewInsets {
-        result.append("vc.automaticallyAdjustsScrollViewInsets = \(value)")
+        result.append("automaticallyAdjustsScrollViewInsets = \(value)")
     }
     if let value = viewController.hidesBottomBarWhenPushed {
-        result.append("vc.hidesBottomBarWhenPushed = \(value)")
+        result.append("hidesBottomBarWhenPushed = \(value)")
     }
     // No need of autoresizesArchivedViewToFullSize in code
     // No need of wantsFullScreenLayout
     if let value = viewController.extendedLayoutIncludesOpaqueBars {
-        result.append("vc.extendedLayoutIncludesOpaqueBars = \(value)")
+        result.append("extendedLayoutIncludesOpaqueBars = \(value)")
     }
     return result
 }
