@@ -11,7 +11,7 @@ func parseScrollViewProtocol(of scrollView: ScrollViewProtocol) -> [String] {
     var result = [String]()
     let scrollView = UIKitUIScrollView(scrollView: scrollView)
     if let value = scrollView.contentInsetAdjustmentBehavior {
-        result.append("$0.contentInsetAdjustmentBehavior = \(value)")
+        result.append("$0.contentInsetAdjustmentBehavior = .\(value)")
     }
     if let value = scrollView.scrollIndicatorInsets {
         result.append("$0.scrollIndicatorInsets = \(value)")
