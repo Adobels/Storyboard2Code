@@ -49,7 +49,7 @@ private func printIbAttributes(_ element: ViewProtocol, ctx: Context) -> [String
         results.append(contentsOf: parseTextField(of: textField))
     }
     if let tableView = element as? TableView {
-        //TODO: Add parsing for TableView subclass attributes
+        results.append(contentsOf: parseTableView(tableView))
     }
     if let uiswitch = element as? Switch {
         results.append(contentsOf: parseSwitch(of: uiswitch))
