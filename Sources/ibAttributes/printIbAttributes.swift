@@ -42,6 +42,9 @@ private func printIbAttributes(_ element: ViewProtocol, ctx: Context) -> [String
     if let tableViewCell = element as? TableViewCell {
         results.append(contentsOf: parseAttributes(of: tableViewCell))
     }
+    if let tableViewCellContentView = element as? TableViewCell.TableViewContentView {
+        results.append(contentsOf: parseViewProtocol(of: tableViewCellContentView))
+    }
     if let stackView = element as? StackView {
         results.append(contentsOf: parseStackViewAttributes(stackView))
     }
