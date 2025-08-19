@@ -39,29 +39,17 @@ private func printIbAttributes(_ element: ViewProtocol, ctx: Context) -> [String
     if let imageView = element as? ImageView {
         results.append(contentsOf: parseImageView(of: imageView))
     }
-    if let tableViewCell = element as? TableViewCell {
-        results.append(contentsOf: parseAttributes(of: tableViewCell))
-    }
-    if let tableViewCellContentView = element as? TableViewCell.TableViewContentView {
-        results.append(contentsOf: parseViewProtocol(of: tableViewCellContentView))
-    }
     if let stackView = element as? StackView {
         results.append(contentsOf: parseStackViewAttributes(stackView))
     }
     if let textField = element as? TextField {
         results.append(contentsOf: parseTextField(of: textField))
     }
-    if let tableView = element as? TableView {
-        results.append(contentsOf: parseTableView(tableView))
-    }
     if let uiswitch = element as? Switch {
         results.append(contentsOf: parseSwitch(of: uiswitch))
     }
     if let scrollView = element as? ScrollView {
         results.append(contentsOf: parseScrollView(of: scrollView))
-    }
-    if let collectionViewcell = element as? CollectionViewCell {
-        //TODO: Add parsing for UICollectionViewCell
     }
     if let datePicker = element as? DatePicker {
         results.append(contentsOf: parseDatePicker(of: datePicker))
@@ -72,14 +60,29 @@ private func printIbAttributes(_ element: ViewProtocol, ctx: Context) -> [String
     if let pageControl = element as? PageControl {
         results.append(contentsOf: parsePageControl(of: pageControl))
     }
-    if let collectionView = element as? CollectionView {
-        //TODO: Add parsing for UICollectionView
-    }
     if let pickerView = element as? PickerView {
         results.append(contentsOf: parsePickerView(of: pickerView))
     }
     if let activityIndicatorView = element as? ActivityIndicatorView {
         results.append(contentsOf: parseActivityIndicatorView(of: activityIndicatorView))
+    }
+    if let element = element as? TableView {
+        results.append(contentsOf: parseTableView(element))
+    }
+    if let element = element as? TableViewCell {
+        results.append(contentsOf: parseAttributes(of: element))
+    }
+    if let element = element as? TableViewCell.TableViewContentView {
+        results.append(contentsOf: parseViewProtocol(of: element))
+    }
+    if let collectionView = element as? CollectionView {
+        //TODO: Add parsing for UICollectionView
+    }
+    if let collectionViewcell = element as? CollectionViewCell {
+        //TODO: Add parsing for UICollectionViewCell
+    }
+    if let element = element as? CollectionViewCell.CollectionViewContentView {
+        //TODO: Add parsing for CollectionViewCell.CollectionViewContentView
     }
     // UserDefinedRuntimeAttributes
     results.append(contentsOf: parseUserDefinedRuntimeAttributes(of: element))
