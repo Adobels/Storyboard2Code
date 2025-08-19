@@ -26,7 +26,11 @@ public func convertStoryboard2Code(scene: Scene, ctx: Context) -> [String] {
     scene.customViews?.map { $0.nested }.forEach { customView in
         ctx.rootViewId = customView.id
         ctx.constraints = convertConstraintsToCode(rootView: customView, ctx: ctx)
-        printSceneCustomView(customView, ctx: ctx)
+        if let view = customView as? TableViewCell {
+            printSceneCustomView(view, ctx: ctx)
+        } else {
+            printSceneCustomView(customView, ctx: ctx)
+        }
     }
     ctx.output.append("} \(G.logLiteral) viewDidLoad end")
     ctx.output.append("} \(G.logLiteral) class end")

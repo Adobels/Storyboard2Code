@@ -35,6 +35,8 @@ func printViewClassAndInit(_ view: ViewProtocol, ctx: Context) -> [String] {
         resultsStackView.append(arguments.joined(separator: ", "))
         resultsStackView.append(")")
         strings.append(resultsStackView.joined())
+    } else if let view = view as? TableViewCell.TableViewContentView {
+        strings.append("contentView")
     } else {
         let viewClass = view.customClass ?? view.elementClass
         strings.append(viewClass + "()")
