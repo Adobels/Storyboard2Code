@@ -40,7 +40,7 @@ private func printIbAttributes(_ element: ViewProtocol, ctx: Context) -> [String
         results.append(contentsOf: parseImageView(of: imageView))
     }
     if let tableViewCell = element as? TableViewCell {
-        //TODO: Add parsing for UITableViewCell subclass attributes
+        results.append(contentsOf: parseAttributes(of: tableViewCell))
     }
     if let stackView = element as? StackView {
         results.append(contentsOf: parseStackViewAttributes(stackView))
