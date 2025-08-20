@@ -15,7 +15,7 @@ func printTableViewControllerRootView(_ anyViewController: AnyViewController, ct
     _ = {
         ctx.constraints = convertConstraintsToCode(rootView: rootView, ctx: ctx)
     }()
-    ctx.output.append("func loadView() {")
+    ctx.output.append("override func loadView() {")
     ctx.output.append("super.loadView()")
     ctx.output.append("tableView")
     printIbAttributes(of: rootView, ctx: ctx)

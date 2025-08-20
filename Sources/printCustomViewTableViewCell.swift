@@ -25,7 +25,7 @@ import StoryboardDecoder
 
 func printSceneCustomView(_ customView: TableViewCell, ctx: Context) {
     ctx.output.append(contentsOf: printViewDiagnostics(of: customView, ctx: ctx))
-    ctx.output.append("class \(customView.userLabel ?? customView.id): \(customView.customClass ?? customView.elementClass) {")
+    ctx.output.append("class \(customView.userLabel ?? customView.customClass ?? customView.id): \(customView.elementClass) {")
     ctx.output.append("override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {")
     ctx.output.append("super.init(style: style, reuseIdentifier: reuseIdentifier)")
     ctx.visitedIBIdentifiables.append(customView.id)
@@ -50,6 +50,5 @@ func printSceneCustomView(_ customView: TableViewCell, ctx: Context) {
     }
     ctx.output.append("self")
     printIbAttributes(of: customView, ctx: ctx)
-    ctx.output.append("}")
     ctx.output.append("}")
 }

@@ -18,16 +18,21 @@ public func convertStoryboard2Code(scene: Scene, ctx: Context) -> [String] {
         printViewControllerRootView(anyViewController, ctx: ctx)
     }
     if let vc = anyViewController.viewController as? TableViewController {
-        printTableViewControllerRootView(anyViewController, ctx: ctx)
+        ctx.output.append("@available(*, unavailable)")
+        ctx.output.append("required init?(coder: NSCoder) { super.init(coder: coder) }")
+        ctx.output.append("override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {")
+        ctx.output.append("super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)")
         ctx.output.append(contentsOf: parseTableViewController(vc))
+        ctx.output.append("}")
+        printTableViewControllerRootView(anyViewController, ctx: ctx)
     }
-    ctx.output.append("func viewDidLoad() {")
+    ctx.output.append("override func viewDidLoad() {")
     ctx.output.append("super.viewDidLoad()")
     scene.customViews?.map { $0.nested }.forEach { customView in
         ctx.rootViewId = customView.id
         ctx.constraints = convertConstraintsToCode(rootView: customView, ctx: ctx)
-        if let view = customView as? TableViewCell {
-            printSceneCustomView(view, ctx: ctx)
+        if let customView = customView as? TableViewCell {
+            printSceneCustomView(customView, ctx: ctx)
         } else {
             printSceneCustomView(customView, ctx: ctx)
         }
