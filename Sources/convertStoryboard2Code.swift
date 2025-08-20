@@ -12,7 +12,7 @@ import StoryboardDecoder
 public func convertStoryboard2Code(scene: Scene, ctx: Context) -> [String] {
     guard let anyViewController = scene.viewController else { fatalError() }
     ctx.output.append(
-        "class \(anyViewController.nested.customClass ?? "CustomClassIsMissing"): UIViewController {"
+        "class \(anyViewController.nested.customClass ?? "CustomClassIsMissing"): \(anyViewController.viewController.elementClass) {"
     )
     if let viewController = anyViewController.viewController as? ViewController {
         printViewControllerRootView(anyViewController, ctx: ctx)
