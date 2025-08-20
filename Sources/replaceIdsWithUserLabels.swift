@@ -8,17 +8,28 @@
 import StoryboardDecoder
 
 @MainActor
-func replaceIdsWithUserLabels(rootView: ViewProtocol, viewControllerId: String, ctx: Context) {
-    var userLabels: [(elementId: String, userLabel: String)] = []
-    rootView.browse { element in
-        guard let view = element as? ViewProtocol else { return true }
-        if let userLabel = view.userLabel {
-            userLabels.append((view.id, userLabel))
+func replaceIdsWithUserLabels(scene: Scene, ctx: Context) {
+    guard let viewController = scene.viewController?.viewController,
+          let rootView = viewController.rootView else { return }
+
+    let base: [(elementId: String, userLabel: String)] = [
+        (viewController.id, "self"),
+        (rootView.id, "view")
+    ]
+
+    let userLabels = ([rootView] + (scene.customViews ?? []) + ((scene.customObjects ?? []) as [IBIdentifiable]))
+        .reduce(into: base) { acc, container in
+            container.browse { element in
+                guard let view = element as? ViewProtocol, let label = view.userLabel else { return true }
+                acc.append((view.id, label))
+                return true
+            }
         }
-        return true
-    }
-    userLabels.append((viewControllerId, "self"))
-    userLabels.append((rootView.id, "view"))
+
+    replaceIdsWithUserLabel(userLabels, ctx)
+}
+
+fileprivate func replaceIdsWithUserLabel(_ userLabels: [(elementId: String, userLabel: String)], _ ctx: Context) {
     userLabels.forEach { userLabel in
         let result = ctx.output.map { $0.replacingOccurrences(of: userLabel.elementId, with: userLabel.userLabel)}
         ctx.output = result

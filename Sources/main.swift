@@ -17,8 +17,7 @@ func parseScene(_ scene: Scene) -> [String] {
     ctx.debugEnabled = false
 
     convertStoryboard2Code(scene: scene, ctx: ctx)
-
-    replaceIdsWithUserLabels(rootView: rootView, viewControllerId: viewController.id, ctx: ctx)
+    replaceIdsWithUserLabels(scene: scene, ctx: ctx)
     sanitizeIds(scene, ctx: ctx)
     replaceColorToClientTheme()
     func replaceColorToClientTheme() {
