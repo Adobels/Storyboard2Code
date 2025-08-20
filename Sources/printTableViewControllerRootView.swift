@@ -15,6 +15,11 @@ func printTableViewControllerRootView(_ anyViewController: AnyViewController, ct
     _ = {
         ctx.constraints = convertConstraintsToCode(rootView: rootView, ctx: ctx)
     }()
+    ctx.output.append("func loadView() {")
+    ctx.output.append("super.loadView()")
+    ctx.output.append("tableView")
+    printIbAttributes(of: rootView, ctx: ctx)
+    ctx.output.append("}")
 //    guard !elements.isEmpty else { return }
 //    ctx.output.append(".ibSubviews {")
 //    elements.forEach { element in
