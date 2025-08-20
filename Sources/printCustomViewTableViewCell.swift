@@ -46,9 +46,9 @@ func printSceneCustomView(_ customView: TableViewCell, ctx: Context) {
             ctx.output.append(contentsOf: outletsToEachView)
         }() as Void
         printSubviews(elements: subviews.map { $0.view }, ctx: ctx)
-        ctx.output.append("}")
     }
     ctx.output.append("self")
     printIbAttributes(of: customView, ctx: ctx)
+    ctx.output.append("}")
     ctx.output.append("}")
 }
