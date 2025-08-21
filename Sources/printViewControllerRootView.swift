@@ -28,10 +28,10 @@ func printViewControllerRootView(_ anyViewController: AnyViewController, ctx: Co
     results.append("override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {")
     results.append("super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)")
     if let value = vc.modalPresentationStyle {
-        results.append("modalPresentationStyle = \(value)")
+        results.append("modalPresentationStyle = .\(value)")
     }
     if let value = vc.storyboardIdentifier {
-        results.append("storyboardIdentifier = \(value)")
+        results.append("storyboardIdentifier = \"\(value)\"")
     }
     // No need of sceneMemberID in code
     if let value = vc.tabBarItem {
