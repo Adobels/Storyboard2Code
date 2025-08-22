@@ -41,9 +41,11 @@ func parseIbAttributes(of view: Label) -> [String] {
     }
     if let minimumScaleFactor = view.minimumScaleFactor {
         attributes.append("$0.minimumScaleFactor = \(minimumScaleFactor)")
+        attributes.append("$0.adjustsFontSizeToFitWidth = true")
     }
     if let value = view.minimumFontSize {
         attributes.append("$0.minimumFontSize = \(value)")
+        attributes.append("$0.adjustsFontSizeToFitWidth = true")
     }
     if let numberOfLines = view.numberOfLines {
         attributes.append("$0.numberOfLines = \(numberOfLines)")
