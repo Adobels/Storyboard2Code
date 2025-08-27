@@ -29,7 +29,7 @@ func parseAttributes(of cell: TableViewCell) -> [String] {
         results.append("$0.focusStyle = .\(value)")
     }
     if let value = cell.indentationLevel {
-        results.append("$0.indentationLavel = \(value)")
+        results.append("$0.indentationLevel = \(value)")
     }
     if let value = cell.indentationWidth, value != 10 {
         results.append("$0.indentationWidth = \(value)")
